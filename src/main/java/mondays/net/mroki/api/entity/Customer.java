@@ -1,27 +1,22 @@
 package mondays.net.mroki.api.entity;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import javax.persistence.Entity;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIgnoreProperties({ "password", "email", "phone", "role" })
-public class User {
+@Builder
+@JsonIgnoreProperties({ "password", "email", "phone", "isVerifiedEmail", "role" })
+public class Customer {
 
     @Id
     @GeneratedValue
@@ -37,6 +32,12 @@ public class User {
 
     private String phone;
 
-    @JoinColumn()
+    private boolean isVerifiedEmail;
+
+    @ManyToOne
     private Role role;
+
+    @OneToMany(mappedBy = "customer")
+    private List<Orders> orders;
+
 }
