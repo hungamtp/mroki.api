@@ -2,6 +2,8 @@ package mondays.net.mroki.api.entity;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,6 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIgnoreProperties({"product" })
 public class Comment {
 
     @Id
@@ -23,5 +26,8 @@ public class Comment {
 
     @ManyToOne(cascade = CascadeType.REMOVE)
     private Product product;
+
+    @ManyToOne
+    private Customer customer;
 
 }

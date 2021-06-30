@@ -2,8 +2,7 @@ package mondays.net.mroki.api.entity;
 
 import javax.persistence.*;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,6 +16,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties({"comments" , "orders" ,"createdDate" , "isDelete" , "modifiedDate" })
 public class Product {
 
     @Id
@@ -42,18 +42,13 @@ public class Product {
     private Category category;
 
     @ManyToMany
-    @JsonIgnore
     private List<Orders> orders;
 
     @OneToMany(mappedBy = "product")
     private List<Comment> comments;
 
-    public Product(Long id , String name , String thumbnail , float price ){
+    public Product(Long id){
         this.id = id;
-        this.name = name;
-        this.productImage.setThumbnail(thumbnail);
-        this.price = price;
     }
-
 
 }
