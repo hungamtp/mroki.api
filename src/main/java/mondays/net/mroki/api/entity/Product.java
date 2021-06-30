@@ -15,8 +15,8 @@ import java.util.List;
 
 @Entity
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class Product {
 
     @Id
@@ -35,6 +35,9 @@ public class Product {
     @LastModifiedDate
     private LocalDate modifiedDate;
 
+    @Embedded
+    private ProductImage productImage;
+
     @ManyToOne
     private Category category;
 
@@ -45,6 +48,12 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<Comment> comments;
 
+    public Product(Long id , String name , String thumbnail , float price ){
+        this.id = id;
+        this.name = name;
+        this.productImage.setThumbnail(thumbnail);
+        this.price = price;
+    }
 
 
 }
