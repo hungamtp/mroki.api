@@ -1,32 +1,22 @@
-package mondays.net.mroki.api.controller;
-
+package mondays.net.mroki.api.controller.admin;
 
 import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.entity.Product;
 import mondays.net.mroki.api.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
 @RestController
-@RequestMapping("product")
+@RequestMapping("admin")
 @AllArgsConstructor
-public class ProductController {
+public class ProductAdminController {
 
     @Autowired
     private final ProductService productService;
 
-    @GetMapping
-    public Page<Product> homePage(@RequestParam(required = false) Optional<Integer> page){
-
-        return productService.findAllProduct(page.orElse(0));
-    }
-
-    @GetMapping("/{id}")
-    public Product getProductById(@PathVariable Long id) throws Exception {
-        return productService.getProductById(id);
+    @PostMapping
+    public void addProduct(@RequestBody Product product){
+        productService.save(product);
     }
 
     @PutMapping("/{id}")
