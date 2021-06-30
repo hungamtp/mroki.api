@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("product")
+@RequestMapping("user/product")
 @AllArgsConstructor
 public class ProductController {
 
