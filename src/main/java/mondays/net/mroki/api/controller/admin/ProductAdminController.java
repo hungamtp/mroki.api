@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("admin")
 @AllArgsConstructor
+@CrossOrigin
 public class ProductAdminController {
 
     @Autowired

@@ -26,4 +26,7 @@ public class Category {
     @JsonIgnore
     private List<Product> products;
 
+    public Category(String categoryId) {
+        this.id = categoryId;
+    }
 }

@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-
 @RestController
 @RequestMapping("user/comment")
 @AllArgsConstructor
+@CrossOrigin
 public class CommentController {
 
     @Autowired
@@ -39,6 +39,5 @@ public class CommentController {
         return commentService.getComment(page.orElse(0) , productId);
 
     }
-
 
 }

@@ -13,6 +13,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("user/product")
 @AllArgsConstructor
+@CrossOrigin
 public class ProductController {
 
     @Autowired
@@ -27,6 +28,12 @@ public class ProductController {
     @GetMapping("/{id}")
     public Product getProductById(@PathVariable Long id) throws Exception {
         return productService.getProductById(id);
+    }
+
+    @GetMapping("/category/{categoryId}")
+    public Page<Product> getProductByCategory(@PathVariable String categoryId , @RequestParam(required = false) Optional<Integer> page){
+
+        return productService.findProductByCategory(categoryId ,page.orElse(0));
     }
 
 
