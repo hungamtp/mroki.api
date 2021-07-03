@@ -17,7 +17,7 @@ public interface ProductRepository extends JpaRepository<Product , Long> {
 
     // too much column needed
     @Query(value ="SELECT p from Product p WHERE is_delete = false")
-    Page<Product> findProductByPage(@Param("page") Pageable page);
+    Page<Product> findProductByPage(Pageable page);
 
     @Modifying
     @Transactional
@@ -28,5 +28,7 @@ public interface ProductRepository extends JpaRepository<Product , Long> {
     Long getProductId(Long id);
 
     Page<Product> findProductByCategory(Category category , Pageable pageable );
+
+    Page<Product> findByNameLike(String name ,Pageable pageable);
 
 }

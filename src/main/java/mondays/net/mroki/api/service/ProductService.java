@@ -54,6 +54,11 @@ public class ProductService {
         return productRepository.findProductByCategory(category , pageable);
     }
 
+    public Page<Product> findProductByName(String name , int page){
+        Pageable pageable = PageRequest.of(page , PAGE_SIZE);
+        return productRepository.findByNameLike(name , pageable);
+    }
+
 
 
 

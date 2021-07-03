@@ -16,7 +16,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIgnoreProperties({"comments" , "orders" ,"createdDate" , "isDelete" , "modifiedDate" })
+@JsonIgnoreProperties({"comments" , "orders" ,"createdDate" , "isDelete" , "modifiedDate" , "shoppingCarts" })
 public class Product {
 
     @Id
@@ -42,10 +42,13 @@ public class Product {
     private Category category;
 
     @ManyToMany
-    private List<Orders> orders;
+    private List<Orders> order;
 
     @OneToMany(mappedBy = "product")
     private List<Comment> comments;
+
+    @ManyToMany(mappedBy = "product")
+    private List<Cart> cart;
 
     public Product(Long id){
         this.id = id;

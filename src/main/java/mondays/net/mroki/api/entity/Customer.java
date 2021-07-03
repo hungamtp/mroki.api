@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@JsonIgnoreProperties({ "password", "email", "phone", "isVerifiedEmail", "role" , "comment"  , "orders"})
+@JsonIgnoreProperties({ "password", "email", "phone", "isVerifiedEmail", "role" , "comment"  , "orders" , "shoppingCart"})
 public class Customer {
 
     @Id
@@ -42,6 +42,9 @@ public class Customer {
 
     @OneToMany(mappedBy = "customer")
     private List<Comment> comment;
+
+//    @OneToOne(mappedBy = "customer")
+//    private ShoppingCart shoppingCart;
 
     public Customer(Long id){
         this.id = id;

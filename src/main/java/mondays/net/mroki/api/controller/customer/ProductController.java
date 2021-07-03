@@ -36,6 +36,11 @@ public class ProductController {
         return productService.findProductByCategory(categoryId ,page.orElse(0));
     }
 
+    @GetMapping("/name")
+    public Page<Product> findByName(@RequestParam String name , @RequestParam(required = false) Optional<Integer> page){
+       return productService.findProductByName(name , page.orElse(0));
+    }
+
 
 
 
