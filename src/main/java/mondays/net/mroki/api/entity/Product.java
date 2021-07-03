@@ -16,7 +16,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIgnoreProperties({"comments" , "orders" ,"createdDate" , "isDelete" , "modifiedDate" , "shoppingCarts" })
+@JsonIgnoreProperties({"comments" , "order" ,"createdDate" , "isDelete" , "modifiedDate" , "shoppingCarts" , "cart" , "isDelete" })
 public class Product {
 
     @Id

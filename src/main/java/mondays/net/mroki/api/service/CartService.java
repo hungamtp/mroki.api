@@ -30,11 +30,15 @@ public class CartService {
         return cartRepository.findCartByCustomer(customer);
     }
 
-    public void addProductToCart(Long cartId , Long productId){
+    public String addProductToCart(Long cartId , Long productId){
 
         //just add product to cart if not exists
         if(!Optional.ofNullable(cartRepository.productId(productId , cartId)).isPresent()){
             cartRepository.addProductToCart(cartId   , productId);
+            return "Add successfully";
+        }
+        else{
+            return "Product was already in cart";
         }
 
     }

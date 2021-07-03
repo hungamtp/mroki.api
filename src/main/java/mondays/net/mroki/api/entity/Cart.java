@@ -1,6 +1,7 @@
 package mondays.net.mroki.api.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,10 +20,11 @@ public class Cart {
     @GeneratedValue
     private Long id;
 
-    @JsonIgnore
+    @JsonIgnoreProperties({"username" ,"avatar" , "verifiedEmail"})
     @OneToOne
     private Customer customer;
 
+    @JsonIgnoreProperties({"category"})
     @ManyToMany
-    List<Product> product;
+    private List<Product> product;
 }

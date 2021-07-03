@@ -1,6 +1,8 @@
 package mondays.net.mroki.api.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,7 +12,6 @@ import javax.persistence.*;
 
 import java.time.LocalDate;
 import java.util.List;
-
 
 @Entity
 @Data
@@ -31,14 +32,22 @@ public class Orders {
 
     private boolean isInArchiveBox;
 
+
+    @JsonIgnore
     @ManyToOne
     private Customer customer;
 
     @ManyToMany
     private List<Product> product;
 
+    @JsonIgnoreProperties({"isAvailable" , "orders" })
     @OneToOne
     private ArchiveBox archiveBox;
+
+    public Orders(Cart cart){
+        this.customer = cart.getCustomer();
+        this.product = cart.getProduct();
+    }
 
 
 

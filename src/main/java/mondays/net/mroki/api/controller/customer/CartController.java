@@ -20,8 +20,8 @@ public class CartController {
     }
 
     @PostMapping
-    public void addProductToCart(@RequestParam Long cartId ,@RequestParam Long productId){
-        cartService.addProductToCart(cartId , productId);
+    public String addProductToCart(@RequestParam Long cartId ,@RequestParam Long productId){
+        return cartService.addProductToCart(cartId , productId);
     }
     
 }

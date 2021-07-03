@@ -23,5 +23,9 @@ public class ArchiveBox {
     @OneToOne(mappedBy = "archiveBox")
     private Orders orders;
 
+    public ArchiveBox(Long id){
+        this.id = id;
+    }
+
     
 }
