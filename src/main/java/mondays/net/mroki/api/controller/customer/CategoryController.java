@@ -3,7 +3,7 @@ package mondays.net.mroki.api.controller.customer;
 
 import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.entity.Category;
-import mondays.net.mroki.api.service.CategoryService;
+import mondays.net.mroki.api.service.impl.CategoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +19,7 @@ import java.util.List;
 public class CategoryController {
 
     @Autowired
-    private  final CategoryService categoryService;
+    private  final CategoryServiceImpl categoryService;
 
     @GetMapping
     public List<Category> getAllCategory(){

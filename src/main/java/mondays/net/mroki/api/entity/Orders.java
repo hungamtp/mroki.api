@@ -32,16 +32,16 @@ public class Orders {
 
     private boolean isInArchiveBox;
 
-
-    @JsonIgnore
     @ManyToOne
+    @JsonIgnore
     private Customer customer;
 
     @ManyToMany
+    @JsonIgnoreProperties({"category" ,"delete"})
     private List<Product> product;
 
-    @JsonIgnoreProperties({"isAvailable" , "orders" })
     @OneToOne
+    @JsonIgnoreProperties({"isAvailable" , "orders" })
     private ArchiveBox archiveBox;
 
     public Orders(Cart cart){

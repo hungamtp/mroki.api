@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.entity.Comment;
 import mondays.net.mroki.api.entity.Customer;
 import mondays.net.mroki.api.entity.Product;
-import mondays.net.mroki.api.service.CommentService;
+import mondays.net.mroki.api.service.impl.CommentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +18,7 @@ import java.util.Optional;
 public class CommentController {
 
     @Autowired
-    private final CommentService commentService;
+    private final CommentServiceImpl commentService;
 
     @PostMapping
     public void comment(@RequestBody Comment comment ,

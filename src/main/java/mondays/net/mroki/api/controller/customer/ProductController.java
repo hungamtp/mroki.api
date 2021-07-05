@@ -3,7 +3,7 @@ package mondays.net.mroki.api.controller.customer;
 
 import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.entity.Product;
-import mondays.net.mroki.api.service.ProductService;
+import mondays.net.mroki.api.service.impl.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -17,12 +17,12 @@ import java.util.Optional;
 public class ProductController {
 
     @Autowired
-    private final ProductService productService;
+    private final ProductServiceImpl productService;
 
     @GetMapping
     public Page<Product> homePage(@RequestParam(required = false) Optional<Integer> page){
 
-        return productService.findAllProduct(page.orElse(0));
+        return productService.getAllProduct(page.orElse(0));
     }
 
     @GetMapping("/{id}")
@@ -33,12 +33,12 @@ public class ProductController {
     @GetMapping("/category/{categoryId}")
     public Page<Product> getProductByCategory(@PathVariable String categoryId , @RequestParam(required = false) Optional<Integer> page){
 
-        return productService.findProductByCategory(categoryId ,page.orElse(0));
+        return productService.getProductByCategory(categoryId ,page.orElse(0));
     }
 
     @GetMapping("/name")
     public Page<Product> findByName(@RequestParam String name , @RequestParam(required = false) Optional<Integer> page){
-       return productService.findProductByName(name , page.orElse(0));
+       return productService.getProductByName(name , page.orElse(0));
     }
 
 

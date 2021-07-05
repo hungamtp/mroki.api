@@ -22,6 +22,7 @@ public class Customer {
     @GeneratedValue
     private Long id;
 
+
     private String username;
 
     private String password;
@@ -42,9 +43,6 @@ public class Customer {
 
     @OneToMany(mappedBy = "customer")
     private List<Comment> comment;
-
-//    @OneToOne(mappedBy = "customer")
-//    private ShoppingCart shoppingCart;
 
     public Customer(Long id){
         this.id = id;

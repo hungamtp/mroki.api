@@ -2,7 +2,7 @@ package mondays.net.mroki.api.controller.customer;
 
 import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.entity.Cart;
-import mondays.net.mroki.api.service.CartService;
+import mondays.net.mroki.api.service.impl.CartServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,8 +11,9 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class CartController {
 
+
     @Autowired
-    private final CartService cartService;
+    private final CartServiceImpl cartService;
 
     @GetMapping("/{customerId}")
     public Cart getCart(@PathVariable Long customerId){
