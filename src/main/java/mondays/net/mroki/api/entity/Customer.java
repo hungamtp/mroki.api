@@ -44,6 +44,9 @@ public class Customer {
     @OneToMany(mappedBy = "customer")
     private List<Comment> comment;
 
+    @OneToOne
+    private PRNew prNew;
+
     public Customer(Long id){
         this.id = id;
     }

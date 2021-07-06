@@ -25,6 +25,7 @@ public class Product {
 
     private String name;
     private float price;
+    private float retail;
     private int quantity;
     private int saleOff;
     private boolean isDelete;
@@ -49,6 +50,9 @@ public class Product {
 
     @ManyToMany(mappedBy = "product")
     private List<Cart> cart;
+
+    @OneToOne
+    private PRNew prNew;
 
     public Product(Long id){
         this.id = id;
