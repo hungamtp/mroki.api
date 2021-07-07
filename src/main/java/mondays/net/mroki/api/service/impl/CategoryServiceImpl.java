@@ -5,6 +5,7 @@ import mondays.net.mroki.api.dto.CategoryDTO;
 import mondays.net.mroki.api.entity.Category;
 import mondays.net.mroki.api.repository.CategoryRepository;
 import mondays.net.mroki.api.service.CategoryService;
+import org.hibernate.boot.model.naming.IllegalIdentifierException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,5 +44,15 @@ public class CategoryServiceImpl implements CategoryService {
 
         categoryRepository.save(category);
 
+    }
+
+    @Override
+    public void delete(String id) {
+
+        if(categoryRepository.findAllCategory().isEmpty()){
+            throw  new IllegalIdentifierException("Id is not exist");
+        }
+
+        categoryRepository.deleteById(id);
     }
 }

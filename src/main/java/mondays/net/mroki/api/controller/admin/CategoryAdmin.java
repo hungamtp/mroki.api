@@ -4,12 +4,10 @@ import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.dto.CategoryDTO;
 import mondays.net.mroki.api.service.impl.CategoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("admin/category")
@@ -26,9 +24,14 @@ public class CategoryAdmin {
 
     }
 
+    @DeleteMapping("/{id}")
+    public void deleteCategory(@PathVariable String id){
 
+        if(!Optional.ofNullable(id).isPresent()){
+            throw new RuntimeException("Id is null");
+        }
 
+        categoryService.delete(id);
 
-
-
+    }
 }
