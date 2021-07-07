@@ -14,7 +14,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,10 +28,10 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private final ProductRepository productRepository;
 
-    public Page<ProductDTO> getAllProduct(int page){
+    public List<ProductDTO> getAllProductByPage(int page){
         int offset = page* PAGE_SIZE;
-        List<ProductDTO> productDTOS =convertEntityToProductDto(productRepository.findProductByPage(PAGE_SIZE , offset));
-        Page<ProductDTO> result =new PageImpl<ProductDTO> (productDTOS , PageRequest.of(0 , PAGE_SIZE) ,PAGE_SIZE );
+        List<ProductDTO> result =convertEntityToProductDto(productRepository.findProductByPage(PAGE_SIZE , offset));
+
         return result;
     }
 
@@ -68,7 +67,7 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findByNameLike(name , pageable);
     }
 
-    protected List<ProductDTO> convertEntityToProductDto(List<Object[]> products){
+     List<ProductDTO> convertEntityToProductDto(List<Object[]> products){
 
         List<ProductDTO> result = new ArrayList<>();
 

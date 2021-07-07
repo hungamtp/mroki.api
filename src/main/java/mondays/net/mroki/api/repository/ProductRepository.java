@@ -16,7 +16,6 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<Product , Long> {
 
 
-    // too much column needed
     @Query(value ="SELECT p.id , p.name  , p.thumbnail ,p.price ,avg(c.rate) as rate, p.category_id FROM product"+
                    " p LEFT JOIN comment c on p.id = c.product_id " +
                    "GROUP BY p.id limit ?1 offset ?1" , nativeQuery = true)

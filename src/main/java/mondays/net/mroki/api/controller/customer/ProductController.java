@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -21,9 +22,9 @@ public class ProductController {
     private final ProductServiceImpl productService;
 
     @GetMapping
-    public Page<ProductDTO> homePage(@RequestParam(required = false) Optional<Integer> page){
+    public List<ProductDTO> homePage(@RequestParam(required = false) Optional<Integer> page){
 
-        return productService.getAllProduct(page.orElse(0));
+        return productService.getAllProductByPage(page.orElse(0));
     }
 
     @GetMapping("/{id}")

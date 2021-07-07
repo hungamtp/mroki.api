@@ -2,6 +2,7 @@ package mondays.net.mroki.api.controller.customer;
 
 
 import lombok.AllArgsConstructor;
+import mondays.net.mroki.api.dto.CategoryDTO;
 import mondays.net.mroki.api.entity.Category;
 import mondays.net.mroki.api.service.impl.CategoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class CategoryController {
     private  final CategoryServiceImpl categoryService;
 
     @GetMapping
-    public List<Category> getAllCategory(){
+    public List<CategoryDTO> getAllCategory(){
         return categoryService.getAllCategory();
     }
 }
