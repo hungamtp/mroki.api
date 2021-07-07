@@ -2,6 +2,7 @@ package mondays.net.mroki.api.controller.admin;
 
 import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.dto.CategoryDTO;
+import mondays.net.mroki.api.entity.Category;
 import mondays.net.mroki.api.service.impl.CategoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +33,13 @@ public class CategoryAdmin {
         }
 
         categoryService.delete(id);
+
+    }
+
+    @PutMapping
+    public void updateCategory(@Valid @RequestBody CategoryDTO categoryDTO){
+
+        categoryService.update(categoryDTO);
 
     }
 }

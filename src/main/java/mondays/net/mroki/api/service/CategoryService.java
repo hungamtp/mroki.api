@@ -5,7 +5,13 @@ import mondays.net.mroki.api.dto.CategoryDTO;
 import java.util.List;
 
 public interface CategoryService {
-    public List<CategoryDTO> getAllCategory();
-    public void save(CategoryDTO categoryDTO);
-    public void delete(String id);
+
+    List<CategoryDTO> getAllCategory();
+
+    void save(CategoryDTO categoryDTO);
+
+    void delete(String id);
+
+    void update(CategoryDTO categoryDTO);
+
 }

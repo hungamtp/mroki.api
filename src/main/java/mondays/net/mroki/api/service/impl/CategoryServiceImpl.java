@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -54,5 +55,20 @@ public class CategoryServiceImpl implements CategoryService {
         }
 
         categoryRepository.deleteById(id);
+    }
+
+    @Override
+    public void update(CategoryDTO categoryDTO) {
+
+        if(!Optional.ofNullable(categoryRepository.getId(categoryDTO.getId())).isPresent())
+            throw new IllegalIdentifierException("ID is not exist");
+
+        Category category = Category.builder()
+                .id(categoryDTO.getId())
+                .name(categoryDTO.getName())
+                .build();
+
+        categoryRepository.save(category);
+
     }
 }
