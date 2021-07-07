@@ -33,4 +33,15 @@ public class CategoryServiceImpl implements CategoryService {
 
         return  result;
     }
+
+    public void save(CategoryDTO categoryDTO){
+
+        Category category= Category.builder()
+                .id(categoryDTO.getId())
+                .name(categoryDTO.getName())
+                .build();
+
+        categoryRepository.save(category);
+
+    }
 }

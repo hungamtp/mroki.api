@@ -3,7 +3,6 @@ package mondays.net.mroki.api.controller.customer;
 
 import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.dto.CategoryDTO;
-import mondays.net.mroki.api.entity.Category;
 import mondays.net.mroki.api.service.impl.CategoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
