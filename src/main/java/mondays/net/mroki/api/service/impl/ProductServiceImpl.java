@@ -67,6 +67,13 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findByNameLike(name , pageable);
     }
 
+    public void updateProduct(Product product){
+        if(!Optional.ofNullable(productRepository.getProductId(product.getId())).isPresent())
+            throw new IllegalIdentifierException("Id not found");
+
+        productRepository.save(product);
+    }
+
      List<ProductDTO> convertEntityToProductDto(List<Object[]> products){
 
         List<ProductDTO> result = new ArrayList<>();

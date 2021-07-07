@@ -13,6 +13,7 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @JsonIgnoreProperties({"comments" , "order" ,"createdDate" , "isDelete" , "modifiedDate" , "shoppingCarts" , "cart" , "isDelete" })
 public class Product {
@@ -22,6 +23,7 @@ public class Product {
     private Long id;
 
     private String name;
+    private String description;
     private float price;
     private float retail;
     private int quantity;
@@ -52,26 +54,5 @@ public class Product {
     @OneToOne
     private PRNew prNew;
 
-    public Product(Long id, String name, float price, float retail,
-                   int quantity, int saleOff, boolean isDelete,
-                   LocalDate createdDate, LocalDate modifiedDate,
-                   ProductImage productImage, Category category,
-                   List<Orders> order, List<Comment> comments, List<Cart> cart, PRNew prNew) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.retail = retail;
-        this.quantity = quantity;
-        this.saleOff = saleOff;
-        this.isDelete = isDelete;
-        this.createdDate = createdDate;
-        this.modifiedDate = modifiedDate;
-        this.productImage = productImage;
-        this.category = category;
-        this.order = order;
-        this.comments = comments;
-        this.cart = cart;
-        this.prNew = prNew;
-    }
 
 }

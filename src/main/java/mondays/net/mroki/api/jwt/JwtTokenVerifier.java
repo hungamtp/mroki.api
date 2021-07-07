@@ -49,7 +49,7 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
 
         try {
 
-            Jws<Claims> claimsJws  = Jwts.parserBuilder()
+            Jws<Claims> claimsJws = Jwts.parserBuilder()
                     .setSigningKey(secretKey)
                     .build()
                     .parseClaimsJws(token);
