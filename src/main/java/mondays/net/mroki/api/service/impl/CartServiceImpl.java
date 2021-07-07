@@ -34,7 +34,7 @@ public class CartServiceImpl implements CartService {
     public String addProductToCart(Long cartId , Long productId){
 
         //just add product to cart if not exists
-        if(!Optional.ofNullable(cartRepository.productId(productId , cartId)).isPresent()){
+        if(!Optional.ofNullable(cartRepository.getProductIdInCart(productId , cartId)).isPresent()){
             cartRepository.addProductToCart(cartId   , productId);
             return "Add successfully";
         }

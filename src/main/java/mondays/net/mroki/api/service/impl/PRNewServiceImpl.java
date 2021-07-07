@@ -39,7 +39,7 @@ public class PRNewServiceImpl implements PRNewService {
     public void addPrNew(Long idolId, Long productId) {
 
         PRNew prNew = PRNew.builder().customer(new Customer(idolId))
-                .product(new Product(productId))
+                .product(Product.builder().id(productId).build())
                 .publicDate(LocalDate.now())
                 .build();
 

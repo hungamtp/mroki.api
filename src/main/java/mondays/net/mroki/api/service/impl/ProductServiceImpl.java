@@ -1,6 +1,7 @@
 package mondays.net.mroki.api.service.impl;
 
 import lombok.AllArgsConstructor;
+import mondays.net.mroki.api.dto.ProductDTO;
 import mondays.net.mroki.api.entity.Category;
 import mondays.net.mroki.api.entity.Product;
 import mondays.net.mroki.api.repository.ProductRepository;
@@ -8,10 +9,15 @@ import mondays.net.mroki.api.service.ProductService;
 import org.hibernate.boot.model.naming.IllegalIdentifierException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,9 +29,11 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private final ProductRepository productRepository;
 
-    public Page<Product> getAllProduct(int page){
-        Pageable pageable = PageRequest.of(page ,PAGE_SIZE);
-        return  productRepository.findProductByPage(pageable);
+    public Page<ProductDTO> getAllProduct(int page){
+        int offset = page* PAGE_SIZE;
+        List<ProductDTO> productDTOS =convertEntityToProductDto(productRepository.findProductByPage(PAGE_SIZE , offset));
+        Page<ProductDTO> result =new PageImpl<ProductDTO> (productDTOS , PageRequest.of(0 , PAGE_SIZE) ,PAGE_SIZE );
+        return result;
     }
 
 
@@ -58,6 +66,27 @@ public class ProductServiceImpl implements ProductService {
     public Page<Product> getProductByName(String name , int page){
         Pageable pageable = PageRequest.of(page , PAGE_SIZE);
         return productRepository.findByNameLike(name , pageable);
+    }
+
+    protected List<ProductDTO> convertEntityToProductDto(List<Object[]> products){
+
+        List<ProductDTO> result = new ArrayList<>();
+
+        products.stream().forEach((product)->{
+            Long id = ((BigInteger) product[0]).longValue();
+            String name = (String) product[1];
+            String thumbnail = (String) product[2];
+            float price = (float) product[3];
+            // handler case no rate in product
+            float rate = 0;
+            if(Optional.ofNullable(product[4]).isPresent()){
+                rate = ((BigInteger) product[0]).floatValue();
+            }
+            String category_id = (String) product[5];
+            result.add(new ProductDTO(id , name , rate , thumbnail , price));
+        });
+
+        return result;
     }
 
 

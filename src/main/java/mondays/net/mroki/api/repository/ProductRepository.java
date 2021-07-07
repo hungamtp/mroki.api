@@ -7,17 +7,20 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product , Long> {
 
+
     // too much column needed
-    @Query(value ="SELECT p from Product p WHERE is_delete = false")
-    Page<Product> findProductByPage(Pageable page);
+    @Query(value ="SELECT p.id , p.name  , p.thumbnail ,p.price ,avg(c.rate) as rate, p.category_id FROM product"+
+                   " p LEFT JOIN comment c on p.id = c.product_id " +
+                   "GROUP BY p.id limit ?1 offset ?1" , nativeQuery = true)
+    List<Object[]> findProductByPage(int limit , int offset);
 
     @Modifying
     @Transactional

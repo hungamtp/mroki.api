@@ -2,6 +2,7 @@ package mondays.net.mroki.api.controller.customer;
 
 
 import lombok.AllArgsConstructor;
+import mondays.net.mroki.api.dto.ProductDTO;
 import mondays.net.mroki.api.entity.Product;
 import mondays.net.mroki.api.service.impl.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class ProductController {
     private final ProductServiceImpl productService;
 
     @GetMapping
-    public Page<Product> homePage(@RequestParam(required = false) Optional<Integer> page){
+    public Page<ProductDTO> homePage(@RequestParam(required = false) Optional<Integer> page){
 
         return productService.getAllProduct(page.orElse(0));
     }

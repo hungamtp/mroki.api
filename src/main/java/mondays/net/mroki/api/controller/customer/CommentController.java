@@ -25,8 +25,8 @@ public class CommentController {
                         @RequestParam Long productId ,
                         @RequestParam Long customerId){
 
-        comment.setProduct(new Product(productId));
-        comment.setCustomer(new Customer(customerId));
+        comment.setProduct(Product.builder().id(productId).build());
+        comment.setCustomer(Customer.builder().id(customerId).build());
 
         commentService.comment(comment);
 

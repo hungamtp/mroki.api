@@ -2,7 +2,7 @@ package mondays.net.mroki.api.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
-import mondays.net.mroki.api.dto.UsernamePassword;
+import mondays.net.mroki.api.dto.LoginRequest;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -37,8 +37,8 @@ public class JwtUsernamePasswordAuthenticationFilter extends UsernamePasswordAut
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try{
             // get username and password from request
-            UsernamePassword user = new ObjectMapper()
-                    .readValue(request.getInputStream() , UsernamePassword.class);
+            LoginRequest user = new ObjectMapper()
+                    .readValue(request.getInputStream() , LoginRequest.class);
             Authentication authentication = new UsernamePasswordAuthenticationToken(
                 user.getUsername() ,
                 user.getPassword()

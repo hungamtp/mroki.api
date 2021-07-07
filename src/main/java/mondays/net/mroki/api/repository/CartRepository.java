@@ -18,7 +18,7 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
     Cart findCartByCustomer(Customer customer);
 
     @Query(value = "SELECT product_id FROM cart_product WHERE product_id = ?1 AND cart_id = ?2" , nativeQuery = true)
-    Long productId (Long productId , Long cartId);
+    Long getProductIdInCart (Long productId , Long cartId);
 
     @Modifying
     @Transactional

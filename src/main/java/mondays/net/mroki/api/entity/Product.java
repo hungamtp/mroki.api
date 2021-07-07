@@ -3,9 +3,7 @@ package mondays.net.mroki.api.entity;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -15,7 +13,7 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
+@Builder
 @JsonIgnoreProperties({"comments" , "order" ,"createdDate" , "isDelete" , "modifiedDate" , "shoppingCarts" , "cart" , "isDelete" })
 public class Product {
 
@@ -54,8 +52,26 @@ public class Product {
     @OneToOne
     private PRNew prNew;
 
-    public Product(Long id){
+    public Product(Long id, String name, float price, float retail,
+                   int quantity, int saleOff, boolean isDelete,
+                   LocalDate createdDate, LocalDate modifiedDate,
+                   ProductImage productImage, Category category,
+                   List<Orders> order, List<Comment> comments, List<Cart> cart, PRNew prNew) {
         this.id = id;
+        this.name = name;
+        this.price = price;
+        this.retail = retail;
+        this.quantity = quantity;
+        this.saleOff = saleOff;
+        this.isDelete = isDelete;
+        this.createdDate = createdDate;
+        this.modifiedDate = modifiedDate;
+        this.productImage = productImage;
+        this.category = category;
+        this.order = order;
+        this.comments = comments;
+        this.cart = cart;
+        this.prNew = prNew;
     }
 
 }

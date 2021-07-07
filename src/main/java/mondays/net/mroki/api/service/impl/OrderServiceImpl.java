@@ -31,6 +31,7 @@ public class OrderServiceImpl implements OrderService {
         newOrder.setInArchiveBox(true);
         newOrder.setShipping(false);
         newOrder.setCreatedDate(LocalDate.now());
+        // missing check the quantity;
 
         orderRepository.save(newOrder);
     }
