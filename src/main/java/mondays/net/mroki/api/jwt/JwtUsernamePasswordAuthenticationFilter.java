@@ -25,8 +25,8 @@ public class JwtUsernamePasswordAuthenticationFilter extends UsernamePasswordAut
     private final SecretKey secretKey;
 
     public JwtUsernamePasswordAuthenticationFilter(AuthenticationManager authenticationManager,
-                                                      JwtConfig jwtConfig,
-                                                      SecretKey secretKey) {
+                                                   JwtConfig jwtConfig,
+                                                   SecretKey secretKey) {
         this.authenticationManager = authenticationManager;
         this.jwtConfig = jwtConfig;
         this.secretKey = secretKey;
@@ -35,20 +35,20 @@ public class JwtUsernamePasswordAuthenticationFilter extends UsernamePasswordAut
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        try{
+        try {
             // get username and password from request
             LoginRequest user = new ObjectMapper()
-                    .readValue(request.getInputStream() , LoginRequest.class);
+                    .readValue(request.getInputStream(), LoginRequest.class);
             Authentication authentication = new UsernamePasswordAuthenticationToken(
-                user.getUsername() ,
-                user.getPassword()
+                    user.getUsername(),
+                    user.getPassword()
             );
 
             // check whether username and password are valid or not;
-           Authentication authenticate = authenticationManager.authenticate(authentication);
-           return authenticate;
-        }catch (AuthenticationException | IOException exception){
-            throw  new RuntimeException(exception.getMessage());
+            Authentication authenticate = authenticationManager.authenticate(authentication);
+            return authenticate;
+        } catch (AuthenticationException | IOException exception) {
+            throw new RuntimeException(exception.getMessage());
         }
     }
 
@@ -73,6 +73,6 @@ public class JwtUsernamePasswordAuthenticationFilter extends UsernamePasswordAut
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
 
-        response.addHeader("Error" , "Wrong user name or password");
+        response.addHeader("Error", "Wrong user name or password");
     }
 }

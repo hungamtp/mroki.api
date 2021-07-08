@@ -22,7 +22,7 @@ public class ProductController {
     private final ProductServiceImpl productService;
 
     @GetMapping
-    public List<ProductDTO> homePage(@RequestParam(required = false) Optional<Integer> page){
+    public List<ProductDTO> homePage(@RequestParam(required = false) Optional<Integer> page) {
 
         return productService.getAllProductByPage(page.orElse(0));
     }
@@ -33,17 +33,15 @@ public class ProductController {
     }
 
     @GetMapping("/category/{categoryId}")
-    public Page<Product> getProductByCategory(@PathVariable String categoryId , @RequestParam(required = false) Optional<Integer> page){
+    public Page<Product> getProductByCategory(@PathVariable String categoryId, @RequestParam(required = false) Optional<Integer> page) {
 
-        return productService.getProductByCategory(categoryId ,page.orElse(0));
+        return productService.getProductByCategory(categoryId, page.orElse(0));
     }
 
     @GetMapping("/name")
-    public Page<Product> findByName(@RequestParam String name , @RequestParam(required = false) Optional<Integer> page){
-       return productService.getProductByName(name , page.orElse(0));
+    public Page<Product> findByName(@RequestParam String name, @RequestParam(required = false) Optional<Integer> page) {
+        return productService.getProductByName(name, page.orElse(0));
     }
-
-
 
 
 }

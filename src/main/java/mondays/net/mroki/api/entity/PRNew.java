@@ -21,7 +21,7 @@ public class PRNew {
 
     @Id
     @GeneratedValue
-    private  Long id;
+    private Long id;
 
     @CreatedDate
     private LocalDate publicDate;

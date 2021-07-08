@@ -27,12 +27,12 @@ public class UserController {
 
 
     @GetMapping("/role")
-    public List<RoleDTO> getAllRole(){
+    public List<RoleDTO> getAllRole() {
         return roleService.getAllRole();
     }
 
     @GetMapping
-    public List<CustomerDTO> getAllCustomer(@RequestParam(required = false) Optional<Integer> page){
+    public List<CustomerDTO> getAllCustomer(@RequestParam(required = false) Optional<Integer> page) {
 
         return customerService.getAlLCustomer(page.orElse(0));
 

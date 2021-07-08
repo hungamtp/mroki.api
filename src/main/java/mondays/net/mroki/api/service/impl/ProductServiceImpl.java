@@ -23,14 +23,14 @@ import java.util.Optional;
 @AllArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
-    private static final int PAGE_SIZE =9;
+    private static final int PAGE_SIZE = 9;
 
     @Autowired
     private final ProductRepository productRepository;
 
-    public List<ProductDTO> getAllProductByPage(int page){
-        int offset = page* PAGE_SIZE;
-        List<ProductDTO> result =convertEntityToProductDto(productRepository.findProductByPage(PAGE_SIZE , offset));
+    public List<ProductDTO> getAllProductByPage(int page) {
+        int offset = page * PAGE_SIZE;
+        List<ProductDTO> result = convertEntityToProductDto(productRepository.findProductByPage(PAGE_SIZE, offset));
 
         return result;
     }
@@ -39,78 +39,88 @@ public class ProductServiceImpl implements ProductService {
     public ProductDTO getProductById(Long id) throws Exception {
         Optional<Product> productOptional = productRepository.findById(id);
 
-        if(!productOptional.isPresent())
-            throw  new IllegalIdentifierException("GET_PRODUCT:product not found");
+        if (!productOptional.isPresent())
+            throw new IllegalIdentifierException("GET_PRODUCT:product not found");
 
         return convertDataToProductDTO(productRepository.findProductById(id));
     }
 
-    public void save(Product product){
+    public void save(Product product) {
         productRepository.save(product);
     }
 
-    public void deleteProductById(Long id){
+    public void deleteProductById(Long id) {
+
         Optional<Long> productOptional = Optional.ofNullable(productRepository.getProductId(id));
 
-        if(productOptional.isPresent())  productRepository.deleteProductById(id);
-        else throw  new IllegalIdentifierException("DELETE:product's id not found");
+        if (productOptional.isPresent()) productRepository.deleteProductById(id);
+        else throw new IllegalIdentifierException("DELETE:product's id not found");
+
     }
 
-    public Page<Product> getProductByCategory(String categoryId , int page){
-        Pageable pageable = PageRequest.of(page , PAGE_SIZE);
-        Category category = new Category(categoryId );
-        return productRepository.findProductByCategory(category , pageable);
+    public Page<Product> getProductByCategory(String categoryId, int page) {
+
+        Pageable pageable = PageRequest.of(page, PAGE_SIZE);
+        Category category = new Category(categoryId);
+
+        return productRepository.findProductByCategory(category, pageable);
+
     }
 
-    public Page<Product> getProductByName(String name , int page){
-        Pageable pageable = PageRequest.of(page , PAGE_SIZE);
-        return productRepository.findByNameLike(name , pageable);
+    public Page<Product> getProductByName(String name, int page) {
+
+        Pageable pageable = PageRequest.of(page, PAGE_SIZE);
+
+        return productRepository.findByNameLike(name, pageable);
     }
 
-    public void updateProduct(Product product){
-        if(!Optional.ofNullable(productRepository.getProductId(product.getId())).isPresent())
+    public void updateProduct(Product product) {
+
+        if (!Optional.ofNullable(productRepository.getProductId(product.getId())).isPresent())
             throw new IllegalIdentifierException("Id not found");
 
         productRepository.save(product);
+
     }
 
-     List<ProductDTO> convertEntityToProductDto(List<Object[]> products){
+    List<ProductDTO> convertEntityToProductDto(List<Object[]> products) {
 
         List<ProductDTO> result = new ArrayList<>();
 
-        products.stream().forEach((product)->{
+        products.stream().forEach((product) -> {
             Long id = ((BigInteger) product[0]).longValue();
             String name = (String) product[1];
             String thumbnail = (String) product[2];
             float price = (float) product[3];
             // handler case no rate in product
             float rate = 0;
-            if(Optional.ofNullable(product[4]).isPresent()){
+            if (Optional.ofNullable(product[4]).isPresent()) {
                 rate = ((BigInteger) product[0]).floatValue();
             }
             String category_id = (String) product[5];
-            result.add(new ProductDTO(id , name , rate , thumbnail , price));
+            result.add(new ProductDTO(id, name, rate, thumbnail, price));
         });
 
         return result;
+
     }
-    
-    ProductDTO convertDataToProductDTO(Object[] data){
+
+    ProductDTO convertDataToProductDTO(Object[] data) {
+
         Long id = ((BigInteger) data[0]).longValue();
         String name = (String) data[1];
         String thumbnail = (String) data[2];
         float price = (float) data[3];
         // handler case no rate in data
         float rate = 0;
-        if(Optional.ofNullable(data[4]).isPresent()){
+        if (Optional.ofNullable(data[4]).isPresent()) {
             rate = ((BigInteger) data[0]).floatValue();
         }
         String category_id = (String) data[5];
-        return new ProductDTO(id , name , rate , thumbnail , price );
+
+        return new ProductDTO(id, name, rate, thumbnail, price);
+
     }
-
-
-
 
 
 }

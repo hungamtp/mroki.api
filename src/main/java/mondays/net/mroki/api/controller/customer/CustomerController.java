@@ -2,14 +2,16 @@ package mondays.net.mroki.api.controller.customer;
 
 
 import lombok.AllArgsConstructor;
-import mondays.net.mroki.api.dto.LoginRequest;
 import mondays.net.mroki.api.dto.SignupRequest;
 import mondays.net.mroki.api.entity.Customer;
 import mondays.net.mroki.api.entity.Role;
 import mondays.net.mroki.api.service.impl.CustomerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
@@ -19,16 +21,16 @@ import javax.validation.Valid;
 public class CustomerController {
 
 
-    private final PasswordEncoder passwordEncoder ;
+    private final PasswordEncoder passwordEncoder;
     @Autowired
     private final CustomerServiceImpl customerService;
 
     @PostMapping("/signup")
-    public void signUp(@Valid @RequestBody SignupRequest user){
+    public void signUp(@Valid @RequestBody SignupRequest user) {
 
-        Customer  customer = Customer.builder()
+        Customer customer = Customer.builder()
                 .username(user.getUsername())
-                .password("{bcrypt}"+passwordEncoder.encode(user.getPassword()))
+                .password("{bcrypt}" + passwordEncoder.encode(user.getPassword()))
                 .email(user.getEmail())
                 .role(Role.builder().id("U").build())
                 .isVerifiedEmail(false)

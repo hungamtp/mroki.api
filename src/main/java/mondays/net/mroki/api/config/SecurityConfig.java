@@ -6,7 +6,6 @@ import mondays.net.mroki.api.jwt.JwtConfig;
 import mondays.net.mroki.api.jwt.JwtTokenVerifier;
 import mondays.net.mroki.api.jwt.JwtUsernamePasswordAuthenticationFilter;
 import mondays.net.mroki.api.service.impl.CustomerDetailService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -34,7 +33,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtConfig jwtConfig;
 
 
-
     @Bean
     public PasswordEncoder encoder() {
         return new BCryptPasswordEncoder();
@@ -46,11 +44,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .addFilter(new JwtUsernamePasswordAuthenticationFilter(authenticationManager(), jwtConfig, secretKey ))
+                .addFilter(new JwtUsernamePasswordAuthenticationFilter(authenticationManager(), jwtConfig, secretKey))
                 .addFilterAfter(new JwtTokenVerifier(secretKey, jwtConfig), JwtUsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers("/signup").permitAll()
-                .antMatchers("/user/**").hasAnyRole("USER" , "ADMIN" ,"IDOL")
+                .antMatchers("/user/**").hasAnyRole("USER", "ADMIN", "IDOL")
                 .antMatchers("/admin/user").hasRole("ADMIN")
                 .anyRequest()
                 .authenticated();

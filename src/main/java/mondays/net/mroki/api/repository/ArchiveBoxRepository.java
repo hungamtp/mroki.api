@@ -6,11 +6,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ArchiveBoxRepository extends JpaRepository<ArchiveBox , Long> {
+public interface ArchiveBoxRepository extends JpaRepository<ArchiveBox, Long> {
 
-    @Query(value = "SELECT id FROM archive_box WHERE is_available = true LIMIT 1" , nativeQuery = true)
-    Long getBoxIdIsAvailable ();
-    
+    @Query(value = "SELECT id FROM archive_box WHERE is_available = true LIMIT 1", nativeQuery = true)
+    Long getBoxIdIsAvailable();
 
 
 }

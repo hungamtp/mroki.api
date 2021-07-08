@@ -23,14 +23,14 @@ public class RoleServiceImpl implements RoleService {
 
     }
 
-    List<RoleDTO> convertDataToDTO(List<Object[]> roles){
+    List<RoleDTO> convertDataToDTO(List<Object[]> roles) {
 
         List<RoleDTO> result = new ArrayList<>();
 
-        roles.stream().forEach((role) ->{
-            String id =(String) role[0];
-            String roleName =(String) role[1];
-            result.add(new RoleDTO(id , roleName));
+        roles.stream().forEach((role) -> {
+            String id = (String) role[0];
+            String roleName = (String) role[1];
+            result.add(new RoleDTO(id, roleName));
         });
 
         return result;

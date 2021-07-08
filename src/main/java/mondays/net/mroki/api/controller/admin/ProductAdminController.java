@@ -19,14 +19,14 @@ public class ProductAdminController {
     private final ProductServiceImpl productService;
 
     @PostMapping
-    public void addProduct(@RequestBody Product product){
+    public void addProduct(@RequestBody Product product) {
         productService.save(product);
     }
 
     @PutMapping
-    public void updateProduct(@RequestBody Product product){
+    public void updateProduct(@RequestBody Product product) {
 
-        if(!Optional.ofNullable(product.getId()).isPresent())
+        if (!Optional.ofNullable(product.getId()).isPresent())
             throw new IllegalIdentifierException("Null id");
 
         productService.updateProduct(product);

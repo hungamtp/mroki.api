@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface OrderService {
     public void order(CartDTO cart);
-    public List<Orders> orders (Long customerId);
+
+    public List<Orders> orders(Long customerId);
 }

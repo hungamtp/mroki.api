@@ -1,12 +1,14 @@
 package mondays.net.mroki.api.entity;
 
-import javax.persistence.*;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -15,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@JsonIgnoreProperties({"comments" , "order" ,"createdDate" , "isDelete" , "modifiedDate" , "shoppingCarts" , "cart" , "isDelete" })
+@JsonIgnoreProperties({"comments", "order", "createdDate", "isDelete", "modifiedDate", "shoppingCarts", "cart", "isDelete"})
 public class Product {
 
     @Id

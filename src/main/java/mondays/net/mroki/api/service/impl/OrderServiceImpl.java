@@ -22,7 +22,7 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private final ArchiveBoxRepository archiveBoxRepository;
 
-    public void order(CartDTO cart){
+    public void order(CartDTO cart) {
 //        Orders newOrder = new Orders(cart);
 //        newOrder.setArchiveBox(new ArchiveBox(archiveBoxRepository.getBoxIdIsAvailable()));
 //        newOrder.setReceived(false);
@@ -34,7 +34,7 @@ public class OrderServiceImpl implements OrderService {
 //        orderRepository.save(newOrder);
     }
 
-    public List<Orders> orders (Long customerId){
+    public List<Orders> orders(Long customerId) {
         return orderRepository.findOrdersByCustomer(new Customer(customerId));
     }
 }

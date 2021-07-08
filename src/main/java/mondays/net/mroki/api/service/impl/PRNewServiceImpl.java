@@ -20,7 +20,8 @@ public class PRNewServiceImpl implements PRNewService {
 
     @Autowired
     private final PRNewRepository prNewRepository;
-    public PRNewServiceImpl(PRNewRepository prNewRepository){
+
+    public PRNewServiceImpl(PRNewRepository prNewRepository) {
         this.prNewRepository = prNewRepository;
     }
 

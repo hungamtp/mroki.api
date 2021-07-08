@@ -1,13 +1,12 @@
 package mondays.net.mroki.api.entity;
 
-import javax.persistence.*;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -15,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@JsonIgnoreProperties({ "password", "email", "phone", "isVerifiedEmail", "role" , "comment"  , "orders" , "shoppingCart"})
+@JsonIgnoreProperties({"password", "email", "phone", "isVerifiedEmail", "role", "comment", "orders", "shoppingCart"})
 public class Customer {
 
     @Id
@@ -47,7 +46,7 @@ public class Customer {
     @OneToOne
     private PRNew prNew;
 
-    public Customer(Long id){
+    public Customer(Long id) {
         this.id = id;
     }
 

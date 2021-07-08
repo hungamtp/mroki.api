@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface RoleRepository extends JpaRepository<Role , String> {
+public interface RoleRepository extends JpaRepository<Role, String> {
 
-    @Query(value = "SELECT id  , role_name FROM role" , nativeQuery = true)
+    @Query(value = "SELECT id  , role_name FROM role", nativeQuery = true)
     List<Object[]> getAllRole();
 }

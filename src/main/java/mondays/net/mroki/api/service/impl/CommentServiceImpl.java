@@ -24,26 +24,24 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     private final CommentRepository commentRepository;
 
-    public void comment(Comment comment){
+    public void comment(Comment comment) {
 
-        if(!Optional.of(comment.getCustomer().getId()).isPresent()) {
+        if (!Optional.of(comment.getCustomer().getId()).isPresent()) {
             throw new IllegalIdentifierException("comment must have userId");
-        }
-        else if(!Optional.of(comment.getProduct().getId()).isPresent()){
+        } else if (!Optional.of(comment.getProduct().getId()).isPresent()) {
             throw new IllegalIdentifierException("comment must have productId");
-        }
-        else if(!Optional.of(comment.getRate()).isPresent()){
+        } else if (!Optional.of(comment.getRate()).isPresent()) {
             throw new IllegalIdentifierException("comment must have rate");
         }
 
         commentRepository.save(comment);
     }
 
-    public Page<Comment> getComment(int page , Long productId){
+    public Page<Comment> getComment(int page, Long productId) {
 
-        Pageable pageable = PageRequest.of(page , COMMENT_PAGE_SIZE);
+        Pageable pageable = PageRequest.of(page, COMMENT_PAGE_SIZE);
 
-        return commentRepository.findCommentByProduct(pageable , productId);
+        return commentRepository.findCommentByProduct(pageable, productId);
 
     }
 

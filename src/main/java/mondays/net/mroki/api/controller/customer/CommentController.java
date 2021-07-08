@@ -21,9 +21,9 @@ public class CommentController {
     private final CommentServiceImpl commentService;
 
     @PostMapping
-    public void comment(@RequestBody Comment comment ,
-                        @RequestParam Long productId ,
-                        @RequestParam Long customerId){
+    public void comment(@RequestBody Comment comment,
+                        @RequestParam Long productId,
+                        @RequestParam Long customerId) {
 
         comment.setProduct(Product.builder().id(productId).build());
         comment.setCustomer(Customer.builder().id(customerId).build());
@@ -33,10 +33,10 @@ public class CommentController {
     }
 
     @GetMapping("/{productId}")
-    public Page<Comment> getCommentByProductId(@PathVariable Long productId  ,
-                                               @RequestParam(required = false) Optional<Integer> page ){
+    public Page<Comment> getCommentByProductId(@PathVariable Long productId,
+                                               @RequestParam(required = false) Optional<Integer> page) {
 
-        return commentService.getComment(page.orElse(0) , productId);
+        return commentService.getComment(page.orElse(0), productId);
 
     }
 

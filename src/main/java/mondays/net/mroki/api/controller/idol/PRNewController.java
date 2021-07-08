@@ -1,12 +1,12 @@
 package mondays.net.mroki.api.controller.idol;
 
 import lombok.AllArgsConstructor;
-import mondays.net.mroki.api.entity.PRNew;
 import mondays.net.mroki.api.service.impl.PRNewServiceImpl;
-import org.hibernate.boot.model.naming.IllegalIdentifierException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
 
@@ -19,16 +19,16 @@ public class PRNewController {
     private final PRNewServiceImpl prNewService;
 
     @PostMapping
-    public void addPrNew(@RequestParam Long idolId , @RequestParam Long productId ) throws Exception {
+    public void addPrNew(@RequestParam Long idolId, @RequestParam Long productId) throws Exception {
 
-        if(!Optional.ofNullable(productId).isPresent()){
+        if (!Optional.ofNullable(productId).isPresent()) {
             throw new Exception("productId is missing");
         }
-        if(!Optional.ofNullable(idolId).isPresent()){
+        if (!Optional.ofNullable(idolId).isPresent()) {
             throw new Exception("idolId is missing");
         }
 
-        prNewService.addPrNew(idolId ,productId);
+        prNewService.addPrNew(idolId, productId);
 
     }
 

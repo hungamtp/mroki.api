@@ -19,12 +19,12 @@ public class OrdersController {
     private final OrderServiceImpl orderService;
 
     @PostMapping
-    public void order(@RequestBody CartDTO cart){
+    public void order(@RequestBody CartDTO cart) {
         orderService.order(cart);
     }
 
     @GetMapping("/{customerId}")
-    public List<Orders> ordersList(@PathVariable Long customerId){
+    public List<Orders> ordersList(@PathVariable Long customerId) {
         return orderService.orders(customerId);
     }
 

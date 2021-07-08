@@ -19,10 +19,10 @@ import java.util.List;
 public class CategoryController {
 
     @Autowired
-    private  final CategoryServiceImpl categoryService;
+    private final CategoryServiceImpl categoryService;
 
     @GetMapping
-    public List<CategoryDTO> getAllCategory(){
+    public List<CategoryDTO> getAllCategory() {
         return categoryService.getAllCategory();
     }
 }

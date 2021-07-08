@@ -20,11 +20,11 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private final CategoryRepository categoryRepository;
 
-    public List<CategoryDTO> getAllCategory(){
+    public List<CategoryDTO> getAllCategory() {
         return convertEntityToCategoryDTO(categoryRepository.findAllCategory());
     }
 
-    private List<CategoryDTO> convertEntityToCategoryDTO(List<Object[]> categories){
+    private List<CategoryDTO> convertEntityToCategoryDTO(List<Object[]> categories) {
         List<CategoryDTO> result = new ArrayList<>();
 
         categories.stream().forEach((category) -> {
@@ -33,12 +33,12 @@ public class CategoryServiceImpl implements CategoryService {
             result.add(CategoryDTO.builder().id(id).name(name).build());
         });
 
-        return  result;
+        return result;
     }
 
-    public void save(CategoryDTO categoryDTO){
+    public void save(CategoryDTO categoryDTO) {
 
-        Category category= Category.builder()
+        Category category = Category.builder()
                 .id(categoryDTO.getId())
                 .name(categoryDTO.getName())
                 .build();
@@ -50,8 +50,8 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void delete(String id) {
 
-        if(categoryRepository.findAllCategory().isEmpty()){
-            throw  new IllegalIdentifierException("Id is not exist");
+        if (categoryRepository.findAllCategory().isEmpty()) {
+            throw new IllegalIdentifierException("Id is not exist");
         }
 
         categoryRepository.deleteById(id);
@@ -60,7 +60,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void update(CategoryDTO categoryDTO) {
 
-        if(!Optional.ofNullable(categoryRepository.getId(categoryDTO.getId())).isPresent())
+        if (!Optional.ofNullable(categoryRepository.getId(categoryDTO.getId())).isPresent())
             throw new IllegalIdentifierException("ID is not exist");
 
         Category category = Category.builder()
