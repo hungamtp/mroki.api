@@ -9,7 +9,6 @@ import mondays.net.mroki.api.service.ProductService;
 import org.hibernate.boot.model.naming.IllegalIdentifierException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -29,20 +28,19 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
 
     public List<ProductDTO> getAllProductByPage(int page) {
-        int offset = page * PAGE_SIZE;
-        List<ProductDTO> result = convertEntityToProductDto(productRepository.findProductByPage(PAGE_SIZE, offset));
 
-        return result;
+        int offset = page * PAGE_SIZE;
+
+        return convertEntityToProductDto(productRepository.findProductByPage(PAGE_SIZE, offset));
     }
 
 
     public ProductDTO getProductById(Long id) throws Exception {
-        Optional<Product> productOptional = productRepository.findById(id);
 
-        if (!productOptional.isPresent())
+        if (productRepository.checkExistById(id))
             throw new IllegalIdentifierException("GET_PRODUCT:product not found");
 
-        return convertDataToProductDTO(productRepository.findProductById(id));
+        return convertEntityToProductDto(productRepository.findProductById(id)).get(0);
     }
 
     public void save(Product product) {
@@ -51,9 +49,7 @@ public class ProductServiceImpl implements ProductService {
 
     public void deleteProductById(Long id) {
 
-        Optional<Long> productOptional = Optional.ofNullable(productRepository.getProductId(id));
-
-        if (productOptional.isPresent()) productRepository.deleteProductById(id);
+        if (productRepository.checkExistById(id)) productRepository.deleteProductById(id);
         else throw new IllegalIdentifierException("DELETE:product's id not found");
 
     }
@@ -76,7 +72,7 @@ public class ProductServiceImpl implements ProductService {
 
     public void updateProduct(Product product) {
 
-        if (!Optional.ofNullable(productRepository.getProductId(product.getId())).isPresent())
+        if (productRepository.checkExistById(product.getId()))
             throw new IllegalIdentifierException("Id not found");
 
         productRepository.save(product);
@@ -88,6 +84,7 @@ public class ProductServiceImpl implements ProductService {
         List<ProductDTO> result = new ArrayList<>();
 
         products.stream().forEach((product) -> {
+
             Long id = ((BigInteger) product[0]).longValue();
             String name = (String) product[1];
             String thumbnail = (String) product[2];
@@ -98,29 +95,30 @@ public class ProductServiceImpl implements ProductService {
                 rate = ((BigInteger) product[0]).floatValue();
             }
             String category_id = (String) product[5];
+
             result.add(new ProductDTO(id, name, rate, thumbnail, price));
+
         });
 
         return result;
 
     }
 
-    ProductDTO convertDataToProductDTO(Object[] data) {
-
-        Long id = ((BigInteger) data[0]).longValue();
-        String name = (String) data[1];
-        String thumbnail = (String) data[2];
-        float price = (float) data[3];
-        // handler case no rate in data
-        float rate = 0;
-        if (Optional.ofNullable(data[4]).isPresent()) {
-            rate = ((BigInteger) data[0]).floatValue();
-        }
-        String category_id = (String) data[5];
-
-        return new ProductDTO(id, name, rate, thumbnail, price);
-
-    }
+//    ProductDTO convertDataToProductDTO(Object[] data) {
+//
+//            Long id = ((BigInteger) data[0]).longValue();
+//            String name = (String) data[1];
+//            String thumbnail = (String) data[2];
+//            float price = (float) data[3];
+//            float rate = 0;
+//            if (Optional.ofNullable(data[4]).isPresent()) {  // handle case : product has no rate
+//                rate = ((BigInteger) data[0]).floatValue();
+//            }
+//            String category_id = (String) data[5];
+//
+//        return new ProductDTO(id, name, rate, thumbnail, price);
+//
+//    }
 
 
 }

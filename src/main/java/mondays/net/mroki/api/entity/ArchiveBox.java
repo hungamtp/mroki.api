@@ -2,6 +2,7 @@ package mondays.net.mroki.api.entity;
 
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +14,7 @@ import javax.persistence.OneToOne;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class ArchiveBox {
 
     @Id
@@ -22,10 +24,5 @@ public class ArchiveBox {
 
     @OneToOne(mappedBy = "archiveBox")
     private Orders orders;
-
-    public ArchiveBox(Long id) {
-        this.id = id;
-    }
-
 
 }

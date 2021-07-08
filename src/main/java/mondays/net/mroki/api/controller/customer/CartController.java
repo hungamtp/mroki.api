@@ -21,8 +21,11 @@ public class CartController {
 
         CartDTO cart=(CartDTO) request.getSession().getAttribute(customerId.toString());
 
-        if(cart== null)
+        if(cart== null){
             cart = new CartDTO();
+            cart.setCustomer_id(customerId);
+            request.getSession().setAttribute(customerId.toString() , cart);
+        }
 
         return cart.getProduct();
 
@@ -33,10 +36,18 @@ public class CartController {
 
         CartDTO cart=(CartDTO) request.getSession().getAttribute(customerId.toString());
 
-        if(cart == null) cart = new CartDTO();
+        if(cart== null){
+            cart = new CartDTO();
+            cart.setCustomer_id(customerId);
+        }
 
-
+        // handle case: the product is already in cart  , just increase the quantity
+        if(cart.getProduct().containsKey(product))
+            cart.getProduct().put(product , cart.getProduct().get(product)+1);
+        else
             cart.getProduct().put(product , 1);
+
+        request.getSession().setAttribute(customerId.toString() , cart);
 
     }
 
