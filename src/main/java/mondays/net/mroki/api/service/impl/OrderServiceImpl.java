@@ -1,8 +1,7 @@
 package mondays.net.mroki.api.service.impl;
 
 import lombok.AllArgsConstructor;
-import mondays.net.mroki.api.entity.ArchiveBox;
-import mondays.net.mroki.api.entity.Cart;
+import mondays.net.mroki.api.dto.CartDTO;
 import mondays.net.mroki.api.entity.Customer;
 import mondays.net.mroki.api.entity.Orders;
 import mondays.net.mroki.api.repository.ArchiveBoxRepository;
@@ -11,7 +10,6 @@ import mondays.net.mroki.api.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -24,16 +22,16 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private final ArchiveBoxRepository archiveBoxRepository;
 
-    public void order(Cart cart){
-        Orders newOrder = new Orders(cart);
-        newOrder.setArchiveBox(new ArchiveBox(archiveBoxRepository.getBoxIdIsAvailable()));
-        newOrder.setReceived(false);
-        newOrder.setInArchiveBox(true);
-        newOrder.setShipping(false);
-        newOrder.setCreatedDate(LocalDate.now());
-        // missing check the quantity;
-
-        orderRepository.save(newOrder);
+    public void order(CartDTO cart){
+//        Orders newOrder = new Orders(cart);
+//        newOrder.setArchiveBox(new ArchiveBox(archiveBoxRepository.getBoxIdIsAvailable()));
+//        newOrder.setReceived(false);
+//        newOrder.setInArchiveBox(true);
+//        newOrder.setShipping(false);
+//        newOrder.setCreatedDate(LocalDate.now());
+//        // missing check the quantity;
+//
+//        orderRepository.save(newOrder);
     }
 
     public List<Orders> orders (Long customerId){

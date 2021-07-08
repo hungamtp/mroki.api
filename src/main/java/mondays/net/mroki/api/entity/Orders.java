@@ -44,11 +44,4 @@ public class Orders {
     @JsonIgnoreProperties({"isAvailable" , "orders" })
     private ArchiveBox archiveBox;
 
-    public Orders(Cart cart){
-        this.customer = cart.getCustomer();
-        this.product = cart.getProduct();
-    }
-
-
-
 }

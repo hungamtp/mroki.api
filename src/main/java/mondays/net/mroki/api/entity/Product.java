@@ -48,9 +48,6 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<Comment> comments;
 
-    @ManyToMany(mappedBy = "product")
-    private List<Cart> cart;
-
     @OneToOne
     private PRNew prNew;
 

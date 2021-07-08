@@ -2,7 +2,7 @@ package mondays.net.mroki.api.controller.customer;
 
 
 import lombok.AllArgsConstructor;
-import mondays.net.mroki.api.entity.Cart;
+import mondays.net.mroki.api.dto.CartDTO;
 import mondays.net.mroki.api.entity.Orders;
 import mondays.net.mroki.api.service.impl.OrderServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ public class OrdersController {
     private final OrderServiceImpl orderService;
 
     @PostMapping
-    public void order(@RequestBody Cart cart){
+    public void order(@RequestBody CartDTO cart){
         orderService.order(cart);
     }
 

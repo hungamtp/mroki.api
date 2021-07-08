@@ -36,13 +36,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-    public Product getProductById(Long id) throws Exception {
+    public ProductDTO getProductById(Long id) throws Exception {
         Optional<Product> productOptional = productRepository.findById(id);
 
         if(!productOptional.isPresent())
             throw  new IllegalIdentifierException("GET_PRODUCT:product not found");
 
-        return productOptional.get();
+        return convertDataToProductDTO(productRepository.findProductById(id));
     }
 
     public void save(Product product){
@@ -93,6 +93,20 @@ public class ProductServiceImpl implements ProductService {
         });
 
         return result;
+    }
+    
+    ProductDTO convertDataToProductDTO(Object[] data){
+        Long id = ((BigInteger) data[0]).longValue();
+        String name = (String) data[1];
+        String thumbnail = (String) data[2];
+        float price = (float) data[3];
+        // handler case no rate in data
+        float rate = 0;
+        if(Optional.ofNullable(data[4]).isPresent()){
+            rate = ((BigInteger) data[0]).floatValue();
+        }
+        String category_id = (String) data[5];
+        return new ProductDTO(id , name , rate , thumbnail , price );
     }
 
 
