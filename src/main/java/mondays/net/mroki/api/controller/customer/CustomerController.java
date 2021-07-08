@@ -31,6 +31,7 @@ public class CustomerController {
                 .password("{bcrypt}"+passwordEncoder.encode(user.getPassword()))
                 .email(user.getEmail())
                 .role(Role.builder().id("U").build())
+                .isVerifiedEmail(false)
                 .build();
 
         customerService.save(customer);
