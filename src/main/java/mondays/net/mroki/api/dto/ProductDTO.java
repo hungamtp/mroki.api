@@ -21,6 +21,4 @@ public class ProductDTO implements Serializable {
     private String thumbnail;
     @NotBlank(message = "price is null")
     private float price;
-    @NotBlank(message = "description is empty")
-    private String description;
 }

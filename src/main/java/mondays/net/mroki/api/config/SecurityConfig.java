@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/signup").permitAll()
                 .antMatchers("/user/**").hasAnyRole("USER", "ADMIN", "IDOL")
-                .antMatchers("/admin/user").hasRole("ADMIN")
+                .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest()
                 .authenticated();
     }
@@ -59,7 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(daoAuthenticationProvider());
 
-        // adding some fake account
+        //fake account
         auth.inMemoryAuthentication().withUser("admin").roles("ADMIN").password(encoder().encode("password"));
         auth.inMemoryAuthentication().withUser("tung").roles("USER").password(encoder().encode("password"));
 

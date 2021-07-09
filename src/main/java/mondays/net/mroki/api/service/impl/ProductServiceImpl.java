@@ -35,7 +35,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-    public ProductDTO getProductById(Long id) throws Exception {
+    public ProductDTO getProductById(Long id) {
 
         if (productRepository.checkExistById(id))
             throw new IllegalIdentifierException("GET_PRODUCT:product not found");
