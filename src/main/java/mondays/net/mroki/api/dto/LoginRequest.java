@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
-// this class to cast data from request (username , password)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
