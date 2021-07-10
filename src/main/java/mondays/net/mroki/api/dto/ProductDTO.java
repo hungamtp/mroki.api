@@ -1,5 +1,6 @@
 package mondays.net.mroki.api.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,4 +22,14 @@ public class ProductDTO implements Serializable {
     private String thumbnail;
     @NotBlank(message = "price is null")
     private float price;
+    @NotBlank
+    private int quantity;
+
+    public ProductDTO(Long id, String name, float rate, String thumbnail, float price) {
+        this.id = id;
+        this.name = name;
+        this.rate = rate;
+        this.thumbnail = thumbnail;
+        this.price = price;
+    }
 }

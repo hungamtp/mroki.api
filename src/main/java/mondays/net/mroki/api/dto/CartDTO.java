@@ -17,5 +17,5 @@ public class CartDTO implements Serializable {
     private Long customer_id;
 
     @NotBlank
-    private HashMap<ProductDTO, Integer> product = new HashMap<>();
+    private HashMap<Long, ProductDTO> cart = new HashMap<>();
 }

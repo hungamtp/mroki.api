@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.jwt.JwtConfig;
 import mondays.net.mroki.api.jwt.JwtTokenVerifier;
 import mondays.net.mroki.api.jwt.JwtUsernamePasswordAuthenticationFilter;
-import mondays.net.mroki.api.service.impl.CustomerDetailService;
+import mondays.net.mroki.api.service.impl.UserDetailService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -28,7 +28,7 @@ import javax.crypto.SecretKey;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
-    private final CustomerDetailService userDetailService;
+    private final UserDetailService userDetailService;
     private final SecretKey secretKey;
     private final JwtConfig jwtConfig;
 
@@ -61,7 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         //fake account
         auth.inMemoryAuthentication().withUser("admin").roles("ADMIN").password(encoder().encode("password"));
-        auth.inMemoryAuthentication().withUser("tung").roles("USER").password(encoder().encode("password"));
+        auth.inMemoryAuthentication().withUser("hung").roles("USER").password(encoder().encode("password"));
 
     }
 

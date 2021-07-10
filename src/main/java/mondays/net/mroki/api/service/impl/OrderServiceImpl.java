@@ -1,7 +1,6 @@
 package mondays.net.mroki.api.service.impl;
 
 import lombok.AllArgsConstructor;
-import mondays.net.mroki.api.dto.CartDTO;
 import mondays.net.mroki.api.dto.ProductDTO;
 import mondays.net.mroki.api.entity.ArchiveBox;
 import mondays.net.mroki.api.entity.Customer;
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -32,34 +30,41 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private final ProductRepository productRepository;
 
-    public List<String> order(CartDTO cart) {
+    public List<String> order(List<ProductDTO> cart, Long customerId) {
 
         List<String> listOfProductIsNotEnough = new ArrayList<>();
 
         Orders orders = Orders.builder()
-                        .customer(Customer.builder().id(cart.getCustomer_id()).build())
-                        .build();
+                .createdDate(LocalDate.now())
+                .customer(Customer.builder().id(customerId).build())
+                .product(new ArrayList<>())
+                .build();
 
         // check quantity of product ,
         // if product have enough quantity then add to order
         // otherwise add to list error
-        HashMap<ProductDTO , Integer> products =  cart.getProduct();
+        cart.forEach((product) -> {
 
-        products.keySet().forEach((product)->{
+            if (!productRepository.checkQuantity(product.getQuantity(), product.getId()))
+                listOfProductIsNotEnough.add(product.getId().toString());
 
-                if(!productRepository.checkQuantity(products.get(product) , product.getId()))
-                    listOfProductIsNotEnough.add(product.getId().toString());
-
-                else
-                    orders.getProduct().add(Product.builder().id(product.getId()).build());
+            else
+                orders.getProduct().add(Product.builder().id(product.getId()).build());
 
         });
 
         // if any product do not have enough then no order
-        if(listOfProductIsNotEnough.size() !=0) return listOfProductIsNotEnough;
+        if (listOfProductIsNotEnough.size() != 0) return listOfProductIsNotEnough;
         else {
             // get available box then set to order
-            orders.setArchiveBox(ArchiveBox.builder().id(archiveBoxRepository.getBoxIdIsAvailable()).build());
+            Long boxId = archiveBoxRepository.getBoxIdIsAvailable();
+
+            orders.setArchiveBox(ArchiveBox.builder().id(boxId).build());
+
+            // reduce quantity
+
+            // set archive box is not available
+            archiveBoxRepository.updateIsNotAvailable(boxId);
             orderRepository.save(orders);
 
             return null;

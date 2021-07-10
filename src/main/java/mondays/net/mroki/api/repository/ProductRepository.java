@@ -51,4 +51,10 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "WHERE p.id = ?2", nativeQuery = true)
     boolean checkQuantity(int quantity, Long productId);
 
+    @Query(value = "UPDATE product SET quantity = "+
+            "((SELECT p.quantity FROM product p WHERE p.id = ?1) - ?2) "+
+            "WHERE id =?1"
+            , nativeQuery = true)
+    void reduceQuantity(Long id, int quantity);
+
 }

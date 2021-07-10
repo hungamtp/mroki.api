@@ -2,13 +2,12 @@ package mondays.net.mroki.api.controller.customer;
 
 
 import lombok.AllArgsConstructor;
-import mondays.net.mroki.api.dto.CartDTO;
+import mondays.net.mroki.api.dto.ProductDTO;
 import mondays.net.mroki.api.entity.Orders;
 import mondays.net.mroki.api.service.impl.OrderServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -20,8 +19,10 @@ public class OrdersController {
     private final OrderServiceImpl orderService;
 
     @PostMapping
-    public void order(@Valid @RequestBody CartDTO cart) {
-        orderService.order(cart);
+    public void order(@RequestBody List<ProductDTO> cart , @RequestParam Long customerId) {
+
+        // delete session
+        orderService.order(cart , customerId);
     }
 
     @GetMapping("/{customerId}")

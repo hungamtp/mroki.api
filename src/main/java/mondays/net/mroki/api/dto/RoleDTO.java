@@ -4,6 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.junit.jupiter.params.shadow.com.univocity.parsers.annotations.EnumOptions;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 
 @Data
@@ -11,6 +15,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class RoleDTO {
+
+    @NotBlank(message = "id is empty")
+    @Size(min = 1 ,max = 1)
     private String id;
+
+    @NotBlank(message = "name is empty")
     private String roleName;
 }

@@ -13,6 +13,8 @@ public interface ProductService {
 
     void save(Product product);
 
+    void updateProduct(Product product);
+
     Page<Product> getProductByCategory(String categoryId, int page);
 
     Page<Product> getProductByName(String name, int page);

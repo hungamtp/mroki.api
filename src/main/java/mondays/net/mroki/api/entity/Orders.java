@@ -11,6 +11,7 @@ import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -38,11 +39,9 @@ public class Orders {
     private Customer customer;
 
     @ManyToMany
-    @JsonIgnoreProperties({"category", "delete"})
     private List<Product> product;
 
     @OneToOne
-    @JsonIgnoreProperties({"isAvailable", "orders"})
     private ArchiveBox archiveBox;
 
 }
