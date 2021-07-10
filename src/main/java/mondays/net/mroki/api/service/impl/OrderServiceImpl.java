@@ -2,16 +2,21 @@ package mondays.net.mroki.api.service.impl;
 
 import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.dto.CartDTO;
+import mondays.net.mroki.api.dto.ProductDTO;
 import mondays.net.mroki.api.entity.ArchiveBox;
 import mondays.net.mroki.api.entity.Customer;
 import mondays.net.mroki.api.entity.Orders;
+import mondays.net.mroki.api.entity.Product;
 import mondays.net.mroki.api.repository.ArchiveBoxRepository;
 import mondays.net.mroki.api.repository.OrderRepository;
+import mondays.net.mroki.api.repository.ProductRepository;
 import mondays.net.mroki.api.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -24,19 +29,42 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private final ArchiveBoxRepository archiveBoxRepository;
 
-    public void order(CartDTO cart) {
+    @Autowired
+    private final ProductRepository productRepository;
 
-        // check quantity of product
-        // add product to order
-        // set archive box
-//        Orders newOrder = new Orders(cart);
-//        newOrder.setArchiveBox(ArchiveBox.builder().id((archiveBoxRepository.getBoxIdIsAvailable())).build());
-//        newOrder.setReceived(false);
-//        newOrder.setInArchiveBox(true);
-//        newOrder.setShipping(false);
-//        newOrder.setCreatedDate(LocalDate.now());
+    public List<String> order(CartDTO cart) {
 
-      //  orderRepository.save(newOrder);
+        List<String> listOfProductIsNotEnough = new ArrayList<>();
+
+        Orders orders = Orders.builder()
+                        .customer(Customer.builder().id(cart.getCustomer_id()).build())
+                        .build();
+
+        // check quantity of product ,
+        // if product have enough quantity then add to order
+        // otherwise add to list error
+        HashMap<ProductDTO , Integer> products =  cart.getProduct();
+
+        products.keySet().forEach((product)->{
+
+                if(!productRepository.checkQuantity(products.get(product) , product.getId()))
+                    listOfProductIsNotEnough.add(product.getId().toString());
+
+                else
+                    orders.getProduct().add(Product.builder().id(product.getId()).build());
+
+        });
+
+        // if any product do not have enough then no order
+        if(listOfProductIsNotEnough.size() !=0) return listOfProductIsNotEnough;
+        else {
+            // get available box then set to order
+            orders.setArchiveBox(ArchiveBox.builder().id(archiveBoxRepository.getBoxIdIsAvailable()).build());
+            orderRepository.save(orders);
+
+            return null;
+        }
+
     }
 
     public List<Orders> orders(Long customerId) {

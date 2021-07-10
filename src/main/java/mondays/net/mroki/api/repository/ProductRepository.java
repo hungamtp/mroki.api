@@ -39,10 +39,16 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "GROUP BY p.id limit 1", nativeQuery = true)
     List<Object[]> findProductById(Long id);
 
-    @Query(value = "SELECT CASE" +
-            "WHEN count(id) > 0 THEN true ELSE false" +
-            "END checkExist" +
-            "FROM product where id =?1 limit 1" , nativeQuery = true)
+    @Query(value = "SELECT CASE " +
+            "WHEN count(id) > 0 THEN true ELSE false " +
+            "END checkExist " +
+            "FROM product where id =?1 limit 1", nativeQuery = true)
     boolean checkExistById(Long productId);
+
+    @Query(value = "SELECT CASE WHEN p.quantity > ?1 " +
+            "THEN true ELSE false END " +
+            "FROM product p " +
+            "WHERE p.id = ?2", nativeQuery = true)
+    boolean checkQuantity(int quantity, Long productId);
 
 }

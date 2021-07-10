@@ -8,6 +8,7 @@ import mondays.net.mroki.api.service.impl.OrderServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -19,7 +20,7 @@ public class OrdersController {
     private final OrderServiceImpl orderService;
 
     @PostMapping
-    public void order(@RequestBody CartDTO cart) {
+    public void order(@Valid @RequestBody CartDTO cart) {
         orderService.order(cart);
     }
 
