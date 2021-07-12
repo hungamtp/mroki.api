@@ -48,30 +48,23 @@ public class ProductAdminController {
         if (!Optional.ofNullable(id).isPresent())
             throw new IllegalIdentifierException("Null id");
 
-        ProductImage productImage = ProductImage.builder().
-                thumbnail(productDTO.getThumbnail()).
-                image1(productDTO.getImage1()).
-                image2(productDTO.getImage2()).
-                build();
-
-        Product product = Product.builder().
-                id(id).
-                name(productDTO.getName()).
-                price(productDTO.getPrice()).
-                retail(productDTO.getRetail()).
-                description(productDTO.getDescription()).
-                quantity(productDTO.getQuantity()).
-                saleOff(productDTO.getSaleOff()).
-                category(Category.builder().id(productDTO.getCategoryId()).build()).
-                productImage(productImage).
-                build();
+        productDTO.setId(id);
+       Product product = converter.addDtoToEntity(productDTO);
 
         productService.updateProduct(product);
     }
 
 
     @DeleteMapping("/{id}")
-    public void deleteProduct(@PathVariable Long id) {
-        productService.deleteProductById(id);
+    public ResponseEntity<String> deleteProduct(@PathVariable Long id) {
+
+        if(!Optional.ofNullable(id).isPresent()){
+            return ResponseEntity.badRequest().body("ID_NULL");
+        }
+        else{
+            productService.deleteProductById(id);
+            return ResponseEntity.ok().body("DELETE_SUCCESSFULLY");
+        }
+
     }
 }

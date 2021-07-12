@@ -39,7 +39,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query(value = "SELECT p.id , p.name,p.thumbnail ,p.price ,avg(c.rate) as rate, p.quantity , p.retail,p.sale_off, "+
             "p.category_id , p.created_date ,  p.modified_date ,p.description, p.is_delete ,p.image1 , p.image2 "+
             "FROM product p LEFT JOIN comment c ON p.id = c.product_id " +
-            "WHERE p.is_delete = false  " +
+            "WHERE p.is_delete = false  AND p.id = ?1 " +
             "GROUP BY p.id LIMIT 1", nativeQuery = true)
     Product findProductById(Long id);
 

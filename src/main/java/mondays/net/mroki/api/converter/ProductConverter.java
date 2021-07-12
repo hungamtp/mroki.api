@@ -39,6 +39,7 @@ public class ProductConverter {
                 build();
 
         Product product = Product.builder().
+                id(dto.getId()).
                 name(dto.getName()).
                 price(dto.getPrice()).
                 retail(dto.getRetail()).

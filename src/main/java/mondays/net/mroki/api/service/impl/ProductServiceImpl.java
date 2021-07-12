@@ -79,10 +79,10 @@ public class ProductServiceImpl implements ProductService {
 
     public void updateProduct(Product product) {
 
-        if (productRepository.checkExistById(product.getId()))
+        if (!productRepository.checkExistById(product.getId()))
             throw new IllegalIdentifierException("Id not found");
-
-        productRepository.save(product);
+        else
+            productRepository.save(product);
 
     }
 

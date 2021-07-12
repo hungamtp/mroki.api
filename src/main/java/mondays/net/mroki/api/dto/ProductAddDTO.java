@@ -13,10 +13,12 @@ import javax.validation.constraints.*;
 @Builder
 public class ProductAddDTO {
 
+    private Long id;
+
     @NotBlank(message = "name is empty")
     private String name;
 
-    @NotNull
+    @NotNull(message = "price is null")
     @Min(0)
     private Float price;
 
