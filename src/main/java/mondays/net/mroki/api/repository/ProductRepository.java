@@ -24,7 +24,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Modifying
     @Transactional
-    @Query(value = "UPDATE product p SET p.is_delete = false WHERE p.id = ?1 ", nativeQuery = true)
+    @Query(value = "UPDATE product SET is_delete = true WHERE id = ?1", nativeQuery = true)
     void deleteProductById(Long id);
 
     @Query(value = "SELECT p.id , p.name,p.thumbnail ,p.price ,avg(c.rate) as rate, p.quantity , p.retail,p.sale_off, "+

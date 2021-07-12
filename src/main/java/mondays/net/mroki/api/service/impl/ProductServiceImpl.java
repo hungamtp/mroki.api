@@ -56,7 +56,8 @@ public class ProductServiceImpl implements ProductService {
 
     public void deleteProductById(Long id) {
 
-        if (productRepository.checkExistById(id)) productRepository.deleteProductById(id);
+        if (productRepository.checkExistById(id))
+            productRepository.deleteProductById(id);
         else throw new IllegalIdentifierException("DELETE:product's id not found");
 
     }
@@ -85,33 +86,6 @@ public class ProductServiceImpl implements ProductService {
             productRepository.save(product);
 
     }
-
-    List<ProductDTO> convertEntityToProductDto(List<Object[]> products) {
-
-        List<ProductDTO> result = new ArrayList<>();
-
-        products.stream().forEach((product) -> {
-
-            Long id = ((BigInteger) product[0]).longValue();
-            String name = (String) product[1];
-            String thumbnail = (String) product[2];
-            float price = (float) product[3];
-            // handler case no rate in product
-            float rate = 0;
-            if (Optional.ofNullable(product[4]).isPresent()) {
-                rate = ((BigInteger) product[0]).floatValue();
-            }
-            String category_id = (String) product[5];
-
-            result.add(new ProductDTO(id, name, rate, thumbnail, price));
-
-        });
-
-        return result;
-
-    }
-
-
 
 
 }
