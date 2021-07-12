@@ -1,6 +1,7 @@
 package mondays.net.mroki.api.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,10 +26,11 @@ public class Comment {
     @Column(nullable = false)
     private int rate;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne(cascade = CascadeType.REMOVE , fetch = FetchType.LAZY)
     private Product product;
 
     @ManyToOne
+    @JsonIncludeProperties("username")
     private Customer customer;
 
 }

@@ -2,7 +2,10 @@ package mondays.net.mroki.api.service.impl;
 
 
 import lombok.AllArgsConstructor;
+import mondays.net.mroki.api.converter.CommentConverter;
+import mondays.net.mroki.api.dto.CommentDTO;
 import mondays.net.mroki.api.entity.Comment;
+import mondays.net.mroki.api.entity.Product;
 import mondays.net.mroki.api.repository.CommentRepository;
 import mondays.net.mroki.api.service.CommentService;
 import org.hibernate.boot.model.naming.IllegalIdentifierException;
@@ -24,24 +27,23 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     private final CommentRepository commentRepository;
 
-    public void comment(Comment comment) {
+    @Autowired
+    private final CommentConverter converter;
 
-        if (!Optional.of(comment.getCustomer().getId()).isPresent()) {
-            throw new IllegalIdentifierException("comment must have userId");
-        } else if (!Optional.of(comment.getProduct().getId()).isPresent()) {
-            throw new IllegalIdentifierException("comment must have productId");
-        } else if (!Optional.of(comment.getRate()).isPresent()) {
-            throw new IllegalIdentifierException("comment must have rate");
-        }
+    public void comment(Comment comment) {
 
         commentRepository.save(comment);
     }
 
-    public Page<Comment> getComment(int page, Long productId) {
+    public List<CommentDTO> getComment(int page, Long productId) {
 
         Pageable pageable = PageRequest.of(page, COMMENT_PAGE_SIZE);
 
-        return commentRepository.findCommentByProduct(pageable, productId);
+        Product product = Product.builder().id(productId).build();
+
+        List<CommentDTO> result = converter.entityToDto(commentRepository.findByProduct(pageable, product).getContent());
+
+        return result;
 
     }
 

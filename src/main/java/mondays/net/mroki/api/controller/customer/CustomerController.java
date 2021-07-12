@@ -39,9 +39,6 @@ public class CustomerController {
         customerService.save(customer);
     }
 
-//    @PostMapping("resetPassword")
-//    public String forgetPassword(@RequestBody LoginRequest user){
-//        return "password";
-//    }
+
 
 }

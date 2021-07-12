@@ -3,6 +3,7 @@ package mondays.net.mroki.api.controller.customer;
 
 import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.dto.ProductDTO;
+import mondays.net.mroki.api.dto.ProductDetailDTO;
 import mondays.net.mroki.api.entity.Product;
 import mondays.net.mroki.api.service.impl.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProductDTO> getProductById(@PathVariable Long id) {
+    public ResponseEntity<ProductDetailDTO> getProductById(@PathVariable Long id) {
 
         return ResponseEntity.ok().body(productService.getProductById(id));
     }

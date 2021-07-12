@@ -1,10 +1,12 @@
 package mondays.net.mroki.api.service;
 
+import mondays.net.mroki.api.dto.CommentDTO;
 import mondays.net.mroki.api.entity.Comment;
-import org.springframework.data.domain.Page;
+
+import java.util.List;
 
 public interface CommentService {
-    public void comment(Comment comment);
+    void comment(Comment comment);
 
-    public Page<Comment> getComment(int page, Long productId);
+    List<CommentDTO> getComment(int page, Long productId);
 }

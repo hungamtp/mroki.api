@@ -2,6 +2,7 @@ package mondays.net.mroki.api.converter;
 
 import mondays.net.mroki.api.dto.ProductAddDTO;
 import mondays.net.mroki.api.dto.ProductDTO;
+import mondays.net.mroki.api.dto.ProductDetailDTO;
 import mondays.net.mroki.api.entity.Category;
 import mondays.net.mroki.api.entity.Product;
 import mondays.net.mroki.api.entity.ProductImage;
@@ -50,6 +51,23 @@ public class ProductConverter {
                 productImage(productImage).
                 build();
         return product;
+    }
+
+    public ProductDetailDTO entityToDetailDto(Product product){
+
+        return  ProductDetailDTO.builder()
+                    .id(product.getId())
+                    .name(product.getName())
+                    .retail(product.getRetail())
+                    .description(product.getDescription())
+                    .saleOff(product.getSaleOff())
+                    .quantity(product.getQuantity())
+                    .rate(product.getRate())
+                    .categoryId(product.getCategory().getId())
+                    .thumbnail(product.getProductImage().getThumbnail())
+                    .image1(product.getProductImage().getImage1())
+                    .image2(product.getProductImage().getImage2())
+                    .build();
     }
 
 

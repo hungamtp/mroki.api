@@ -2,12 +2,9 @@ package mondays.net.mroki.api.controller.admin;
 
 import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.converter.ProductConverter;
-import mondays.net.mroki.api.dto.ProductDTO;
 import mondays.net.mroki.api.dto.ProductAddDTO;
-import mondays.net.mroki.api.entity.Category;
 import mondays.net.mroki.api.entity.Product;
-import mondays.net.mroki.api.entity.ProductImage;
-import mondays.net.mroki.api.exception.ConvertProductException;
+import mondays.net.mroki.api.exception.ProductConvertException;
 import mondays.net.mroki.api.service.impl.ProductServiceImpl;
 import org.hibernate.boot.model.naming.IllegalIdentifierException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +33,7 @@ public class ProductAdminController {
         try{
             productService.save(converter.addDtoToEntity(productDTO));
             return ResponseEntity.ok().body("ADD_PRODUCT_SUCCESSFULLY");
-        }catch (ConvertProductException ex){
+        }catch (ProductConvertException ex){
            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ADD_PRODUCT_FAIL");
         }
 

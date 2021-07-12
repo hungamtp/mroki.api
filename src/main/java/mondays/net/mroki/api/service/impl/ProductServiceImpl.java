@@ -3,7 +3,7 @@ package mondays.net.mroki.api.service.impl;
 import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.converter.ProductConverter;
 import mondays.net.mroki.api.dto.ProductDTO;
-import mondays.net.mroki.api.entity.Category;
+import mondays.net.mroki.api.dto.ProductDetailDTO;
 import mondays.net.mroki.api.entity.Product;
 import mondays.net.mroki.api.repository.ProductRepository;
 import mondays.net.mroki.api.service.ProductService;
@@ -12,13 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -42,12 +38,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-    public ProductDTO getProductById(Long id) {
+    public ProductDetailDTO getProductById(Long id) {
 
         if (!productRepository.checkExistById(id))
             throw new IllegalIdentifierException("GET_PRODUCT:product not found");
 
-        return converter.entityToDto(productRepository.findProductById(id));
+        return converter.entityToDetailDto(productRepository.findProductById(id));
     }
 
     public void save(Product product) {

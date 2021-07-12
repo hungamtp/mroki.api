@@ -15,25 +15,14 @@ import javax.validation.constraints.Size;
 public class ProductDetailDTO {
 
     private Long id;
-    
-    @NotBlank(message = "name is empty")
     private String name;
-
-    @Size(min =0)
     private float retail;
-
-    @NotBlank(message = "description is empty")
     private String description;
-
-    @Size(min = 0 , max = 100)
     private int saleOff;
-
-    @NotBlank(message = "cate is empty")
+    private int quantity;
+    private float rate;
     private String categoryId;
-
-    @NotBlank(message = "thumbnail is empty")
     private String thumbnail;
-
     private String image1;
     private String image2;
 
