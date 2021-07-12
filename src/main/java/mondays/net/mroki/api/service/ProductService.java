@@ -15,7 +15,7 @@ public interface ProductService {
 
     void updateProduct(Product product);
 
-    Page<Product> getProductByCategory(String categoryId, int page);
+    List<ProductDTO> getProductByCategory(String categoryId, int page);
 
     Page<Product> getProductByName(String name, int page);
 }

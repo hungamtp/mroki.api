@@ -7,6 +7,7 @@ import mondays.net.mroki.api.entity.Product;
 import mondays.net.mroki.api.service.impl.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,20 +23,21 @@ public class ProductController {
     private final ProductServiceImpl productService;
 
     @GetMapping
-    public List<ProductDTO> homePage(@RequestParam(required = false) Optional<Integer> page) {
+    public ResponseEntity<List<ProductDTO>> homePage(@RequestParam(required = false) Optional<Integer> page) {
 
-        return productService.getAllProductByPage(page.orElse(0));
+        return ResponseEntity.ok().body(productService.getAllProductByPage(page.orElse(0)));
     }
 
     @GetMapping("/{id}")
-    public ProductDTO getProductById(@PathVariable Long id) throws Exception {
-        return productService.getProductById(id);
+    public ResponseEntity<ProductDTO> getProductById(@PathVariable Long id) {
+
+        return ResponseEntity.ok().body(productService.getProductById(id));
     }
 
     @GetMapping("/category/{categoryId}")
-    public Page<Product> getProductByCategory(@PathVariable String categoryId, @RequestParam(required = false) Optional<Integer> page) {
+    public ResponseEntity<List<ProductDTO>> getProductByCategory(@PathVariable String categoryId, @RequestParam(required = false) Optional<Integer> page) {
 
-        return productService.getProductByCategory(categoryId, page.orElse(0));
+        return ResponseEntity.ok().body(productService.getProductByCategory(categoryId, page.orElse(0)));
     }
 
     @GetMapping("/name")

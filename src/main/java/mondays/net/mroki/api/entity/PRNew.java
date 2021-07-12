@@ -27,9 +27,6 @@ public class PRNew {
     private LocalDate publicDate;
 
     @OneToOne(mappedBy = "prNew")
-    private Product product;
-
-    @OneToOne(mappedBy = "prNew")
     private Customer customer;
 
 }

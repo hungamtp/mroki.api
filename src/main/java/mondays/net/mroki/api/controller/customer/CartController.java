@@ -42,10 +42,10 @@ public class CartController {
         }
 
         // handle case: the product is already in cart  , just increase the quantity
-        if(cart.getCart().containsKey(product.getId()))
-            product.setQuantity(product.getQuantity() + 1);
-        else
-            product.setQuantity(1);
+//        if(cart.getCart().containsKey(product.getId()))
+//            product.setQuantity(product.getQuantity() + 1);
+//        else
+//            product.setQuantity(1);
 
         //update cart
         cart.getCart().put(product.getId() , product);

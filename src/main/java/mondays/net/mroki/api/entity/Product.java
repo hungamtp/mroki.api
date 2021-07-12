@@ -42,7 +42,7 @@ public class Product {
     @Embedded
     private ProductImage productImage;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Category category;
 
     @ManyToMany(fetch =FetchType.LAZY)
@@ -50,9 +50,5 @@ public class Product {
 
     @OneToMany(mappedBy = "product" , fetch = FetchType.LAZY)
     private List<Comment> comments;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    private PRNew prNew;
-
 
 }

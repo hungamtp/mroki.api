@@ -1,6 +1,7 @@
 package mondays.net.mroki.api.service.impl;
 
 import lombok.AllArgsConstructor;
+import mondays.net.mroki.api.converter.ProductConverter;
 import mondays.net.mroki.api.dto.ProductDTO;
 import mondays.net.mroki.api.entity.Category;
 import mondays.net.mroki.api.entity.Product;
@@ -18,6 +19,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -28,11 +30,15 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private final ProductRepository productRepository;
 
+    @Autowired
+    private final ProductConverter converter;
+
+
     public List<ProductDTO> getAllProductByPage(int page) {
 
-        int offset = page * PAGE_SIZE;
+        Pageable pageable = PageRequest.of(page , PAGE_SIZE);
 
-        return convertEntityToProductDto(productRepository.findProductByPage(PAGE_SIZE, offset));
+        return converter.entityToDto(productRepository.findAllProduct(pageable));
     }
 
 
@@ -41,7 +47,7 @@ public class ProductServiceImpl implements ProductService {
         if (!productRepository.checkExistById(id))
             throw new IllegalIdentifierException("GET_PRODUCT:product not found");
 
-        return new ProductDTO();
+        return converter.entityToDto(productRepository.findProductById(id));
     }
 
     public void save(Product product) {
@@ -55,12 +61,12 @@ public class ProductServiceImpl implements ProductService {
 
     }
 
-    public Page<Product> getProductByCategory(String categoryId, int page) {
+    public List<ProductDTO> getProductByCategory(String categoryId, int page) {
 
         Pageable pageable = PageRequest.of(page, PAGE_SIZE);
-        Category category = new Category(categoryId);
 
-        return productRepository.findProductByCategory(category, pageable);
+        List<ProductDTO> result = productRepository.findByCategory(categoryId , pageable).stream().map(product -> converter.entityToDto(product)).collect(Collectors.toList());
+        return  result;
 
     }
 

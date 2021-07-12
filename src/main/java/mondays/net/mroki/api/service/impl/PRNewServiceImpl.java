@@ -39,12 +39,12 @@ public class PRNewServiceImpl implements PRNewService {
     @Override
     public void addPrNew(Long idolId, Long productId) {
 
-        PRNew prNew = PRNew.builder().customer(new Customer(idolId))
-                .product(Product.builder().id(productId).build())
-                .publicDate(LocalDate.now())
-                .build();
-
-        prNewRepository.save(prNew);
+//        PRNew prNew = PRNew.builder().customer(new Customer(idolId))
+//                .product(Product.builder().id(productId).build())
+//                .publicDate(LocalDate.now())
+//                .build();
+//
+//        prNewRepository.save(prNew);
 
     }
 
