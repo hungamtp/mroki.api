@@ -1,4 +1,4 @@
-package mondays.net.mroki.api.jwt;
+package mondays.net.mroki.api.security.jwt;
 
 import com.google.common.base.Strings;
 import io.jsonwebtoken.Claims;

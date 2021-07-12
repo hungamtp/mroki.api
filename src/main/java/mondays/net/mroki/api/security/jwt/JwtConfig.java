@@ -1,4 +1,4 @@
-package mondays.net.mroki.api.jwt;
+package mondays.net.mroki.api.security.jwt;
 
 import com.google.common.net.HttpHeaders;
 import org.springframework.boot.context.properties.ConfigurationProperties;

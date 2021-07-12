@@ -1,4 +1,4 @@
-package mondays.net.mroki.api.jwt;
+package mondays.net.mroki.api.security.jwt;
 
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;

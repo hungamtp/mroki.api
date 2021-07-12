@@ -1,6 +1,5 @@
 package mondays.net.mroki.api.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,7 +16,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@JsonIgnoreProperties({"comments", "order", "createdDate", "isDelete", "modifiedDate", "shoppingCarts", "cart", "isDelete"})
 public class Product {
 
     @Id
@@ -32,6 +30,9 @@ public class Product {
     private int saleOff;
     private boolean isDelete;
 
+    @Transient
+    private float rate;
+
     @CreatedDate
     private LocalDate createdDate;
 
@@ -44,13 +45,13 @@ public class Product {
     @ManyToOne
     private Category category;
 
-    @ManyToMany
+    @ManyToMany(fetch =FetchType.LAZY)
     private List<Orders> order;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product" , fetch = FetchType.LAZY)
     private List<Comment> comments;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private PRNew prNew;
 
 

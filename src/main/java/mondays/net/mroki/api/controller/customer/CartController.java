@@ -1,20 +1,17 @@
 package mondays.net.mroki.api.controller.customer;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
-import jdk.jfr.ContentType;
 import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.dto.CartDTO;
 import mondays.net.mroki.api.dto.ProductDTO;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.lang.annotation.Documented;
+
 
 @RestController
 @RequestMapping("user/cart")
 @AllArgsConstructor
+@CrossOrigin
 public class CartController {
 
 

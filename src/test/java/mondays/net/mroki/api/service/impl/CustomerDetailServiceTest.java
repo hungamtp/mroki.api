@@ -1,12 +1,12 @@
 package mondays.net.mroki.api.service.impl;
 
-import mondays.net.mroki.api.dto.UserDetail;
+import mondays.net.mroki.api.security.authentication.UserDetail;
 import mondays.net.mroki.api.entity.Customer;
 import mondays.net.mroki.api.repository.CustomerRepository;
+import mondays.net.mroki.api.security.authentication.UserDetailService;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 

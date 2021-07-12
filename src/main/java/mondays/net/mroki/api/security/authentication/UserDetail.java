@@ -1,4 +1,4 @@
-package mondays.net.mroki.api.dto;
+package mondays.net.mroki.api.security.authentication;
 
 import mondays.net.mroki.api.entity.Customer;
 import org.springframework.security.core.GrantedAuthority;

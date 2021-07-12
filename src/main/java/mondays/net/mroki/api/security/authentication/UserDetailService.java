@@ -1,6 +1,5 @@
-package mondays.net.mroki.api.service.impl;
+package mondays.net.mroki.api.security.authentication;
 
-import mondays.net.mroki.api.dto.UserDetail;
 import mondays.net.mroki.api.entity.Customer;
 import mondays.net.mroki.api.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;

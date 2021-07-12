@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
@@ -40,7 +41,7 @@ public class ProductServiceImpl implements ProductService {
         if (!productRepository.checkExistById(id))
             throw new IllegalIdentifierException("GET_PRODUCT:product not found");
 
-        return convertEntityToProductDto(productRepository.findProductById(id)).get(0);
+        return new ProductDTO();
     }
 
     public void save(Product product) {
@@ -104,21 +105,7 @@ public class ProductServiceImpl implements ProductService {
 
     }
 
-//    ProductDTO convertDataToProductDTO(Object[] data) {
-//
-//            Long id = ((BigInteger) data[0]).longValue();
-//            String name = (String) data[1];
-//            String thumbnail = (String) data[2];
-//            float price = (float) data[3];
-//            float rate = 0;
-//            if (Optional.ofNullable(data[4]).isPresent()) {  // handle case : product has no rate
-//                rate = ((BigInteger) data[0]).floatValue();
-//            }
-//            String category_id = (String) data[5];
-//
-//        return new ProductDTO(id, name, rate, thumbnail, price);
-//
-//    }
+
 
 
 }

@@ -1,4 +1,4 @@
-package mondays.net.mroki.api.jwt;
+package mondays.net.mroki.api.security.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
