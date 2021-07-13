@@ -8,13 +8,16 @@ import mondays.net.mroki.api.entity.Product;
 import mondays.net.mroki.api.entity.ProductImage;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
 public class ProductConverter {
 
-    public ProductDTO entityToDto(Product product){
+    public ProductDTO entityToDto(Product product) {
         ProductDTO dto = ProductDTO.builder()
                 .id(product.getId())
                 .name(product.getName())
@@ -26,14 +29,14 @@ public class ProductConverter {
         return dto;
     }
 
-    public List<ProductDTO> entityToDto(List<Product> products){
+    public List<ProductDTO> entityToDto(List<Product> products) {
 
         return products.stream()
                 .map(product -> entityToDto(product))
                 .collect(Collectors.toList());
     }
-    
-    public Product addDtoToEntity(ProductAddDTO dto){
+
+    public Product addDtoToEntity(ProductAddDTO dto) {
 
         ProductImage productImage = ProductImage.builder().
                 thumbnail(dto.getThumbnail()).
@@ -55,21 +58,41 @@ public class ProductConverter {
         return product;
     }
 
-    public ProductDetailDTO entityToDetailDto(Product product){
+    public ProductDetailDTO entityToDetailDto(Product product) {
 
-        return  ProductDetailDTO.builder()
-                    .id(product.getId())
-                    .name(product.getName())
-                    .retail(product.getRetail())
-                    .description(product.getDescription())
-                    .saleOff(product.getSaleOff())
-                    .quantity(product.getQuantity())
-                    .rate(product.getRate())
-                    .categoryId(product.getCategory().getId())
-                    .thumbnail(product.getProductImage().getThumbnail())
-                    .image1(product.getProductImage().getImage1())
-                    .image2(product.getProductImage().getImage2())
-                    .build();
+        return ProductDetailDTO.builder()
+                .id(product.getId())
+                .name(product.getName())
+                .retail(product.getRetail())
+                .description(product.getDescription())
+                .saleOff(product.getSaleOff())
+                .quantity(product.getQuantity())
+                .rate(product.getRate())
+                .categoryId(product.getCategory().getId())
+                .thumbnail(product.getProductImage().getThumbnail())
+                .image1(product.getProductImage().getImage1())
+                .image2(product.getProductImage().getImage2())
+                .build();
+    }
+
+    public List<ProductDTO> dataToDto(List<Object[]> data) {
+
+        List<ProductDTO> result = new ArrayList<>();
+
+        data.stream().forEach((product) -> {
+
+            Long id = ((BigInteger) product[0]).longValue();
+            String name = (String) product[1];
+            String thumbnail = (String) product[2];
+            float price = (float) product[3];
+            int quantity = (int) product[4];
+            float rate = ((BigDecimal) product[5]).floatValue();
+
+            result.add(new ProductDTO(id, name, rate, thumbnail, price, quantity));
+        });
+
+        return result;
+
     }
 
 

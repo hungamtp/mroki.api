@@ -21,14 +21,9 @@ public class OrdersController {
     @PostMapping
     public void order(@RequestBody List<ProductDTO> cart , @RequestParam Long customerId) {
 
-        // delete session
         orderService.order(cart , customerId);
     }
 
-    @GetMapping("/{customerId}")
-    public List<Orders> ordersList(@PathVariable Long customerId) {
-        return orderService.orders(customerId);
-    }
 
 
 }
