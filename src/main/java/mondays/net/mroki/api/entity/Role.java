@@ -5,10 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -22,9 +19,9 @@ public class Role {
     @Column(length = 1)
     private String id;
 
-    private String role_name;
+    private String roleName;
 
-    @OneToMany(mappedBy = "role")
+    @OneToMany(mappedBy = "role" , fetch = FetchType.LAZY)
     private List<Customer> customers;
 
 }
