@@ -18,7 +18,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("account/")
 @AllArgsConstructor
-public class CustomerController {
+public class AuthController {
 
 
     private final PasswordEncoder passwordEncoder;

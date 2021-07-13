@@ -1,21 +1,21 @@
 package mondays.net.mroki.api.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
-import java.io.Serializable;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CartDTO implements Serializable {
+@Builder
+public class CartDTO {
 
-    @NotBlank(message = "cart missing customer_id")
-    private Long customer_id;
+    private Long id;
+    private Long customerId;
 
-    @NotBlank
-    private HashMap<Long, ProductDTO> cart = new HashMap<>();
+    private List<ProductDTO> products = new ArrayList<>();
 }

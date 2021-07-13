@@ -3,6 +3,9 @@ package mondays.net.mroki.api.controller.customer;
 import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.dto.CartDTO;
 import mondays.net.mroki.api.dto.ProductDTO;
+import mondays.net.mroki.api.entity.Cart;
+import mondays.net.mroki.api.service.impl.CartServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,43 +17,26 @@ import javax.servlet.http.HttpServletRequest;
 @CrossOrigin
 public class CartController {
 
+    @Autowired
+    private final CartServiceImpl service;
 
     @GetMapping("/{customerId}")
-    public CartDTO getCart(@PathVariable Long customerId , HttpServletRequest request){
+    public CartDTO getCart(@PathVariable Long customerId ){
 
-        CartDTO cart=(CartDTO) request.getSession().getAttribute(customerId.toString());
-
-        if(cart== null){
-            cart = new CartDTO();
-            request.getSession().setAttribute(customerId.toString() , cart);
-        }
-
-        cart.setCustomer_id(customerId);
-
-        return cart;
+        return service.getCart(customerId);
 
     }
 
     @PostMapping("/{customerId}")
-    public void addProductToCart(@PathVariable Long customerId, @RequestBody ProductDTO product  , HttpServletRequest request){
+    public void addProductToCart(@PathVariable Long cartId, @RequestBody ProductDTO product  ){
 
-        CartDTO cart=(CartDTO) request.getSession().getAttribute(customerId.toString());
-
-        if(cart== null){
-            cart = new CartDTO();
-            cart.setCustomer_id(customerId);
+        try{
+            service.addProductToCart(cartId , product.getId() , 1);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
         }
 
-        // handle case: the product is already in cart  , just increase the quantity
-//        if(cart.getCart().containsKey(product.getId()))
-//            product.setQuantity(product.getQuantity() + 1);
-//        else
-//            product.setQuantity(1);
-
-        //update cart
-        cart.getCart().put(product.getId() , product);
-
-        request.getSession().setAttribute(customerId.toString() , cart);
     }
+
 
 }

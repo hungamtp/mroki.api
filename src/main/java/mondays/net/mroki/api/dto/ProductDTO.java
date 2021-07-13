@@ -18,11 +18,4 @@ public class ProductDTO{
     private float price;
     private int quantity;
 
-    public ProductDTO(Long id, String name, float rate, String thumbnail, float price) {
-        this.id = id;
-        this.name = name;
-        this.rate = rate;
-        this.thumbnail = thumbnail;
-        this.price = price;
-    }
 }

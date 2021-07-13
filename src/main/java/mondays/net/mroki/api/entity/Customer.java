@@ -35,17 +35,20 @@ public class Customer {
 
     private boolean isVerifiedEmail;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Role role;
 
     @OneToMany(mappedBy = "customer")
     private List<Orders> orders;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer" , fetch = FetchType.LAZY)
     private List<Comment> comment;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private PRNew prNew;
+
+    @OneToOne(mappedBy = "customer" ,fetch = FetchType.LAZY)
+    private Cart cart;
 
     public Customer(Long id) {
         this.id = id;
