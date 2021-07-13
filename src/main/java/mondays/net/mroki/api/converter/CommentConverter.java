@@ -35,7 +35,9 @@ public class CommentConverter {
     }
 
     public List<CommentDTO> entityToDto(List<Comment> comments) {
-        return comments.stream().map((comment -> entityToDto(comment))).collect(Collectors.toList());
+        return comments.stream()
+                .map((comment -> entityToDto(comment)))
+                .collect(Collectors.toList());
     }
 
 

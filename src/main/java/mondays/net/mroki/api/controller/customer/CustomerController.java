@@ -2,7 +2,7 @@ package mondays.net.mroki.api.controller.customer;
 
 
 import lombok.AllArgsConstructor;
-import mondays.net.mroki.api.dto.SignupRequest;
+import mondays.net.mroki.api.dto.SignupDTO;
 import mondays.net.mroki.api.entity.Customer;
 import mondays.net.mroki.api.entity.Role;
 import mondays.net.mroki.api.service.impl.CustomerServiceImpl;
@@ -26,7 +26,7 @@ public class CustomerController {
     private final CustomerServiceImpl customerService;
 
     @PostMapping("/signup")
-    public void signUp(@Valid @RequestBody SignupRequest user) {
+    public void signUp(@Valid @RequestBody SignupDTO user) {
 
         Customer customer = Customer.builder()
                 .username(user.getUsername())

@@ -28,7 +28,9 @@ public class ProductConverter {
 
     public List<ProductDTO> entityToDto(List<Product> products){
 
-        return products.stream().map(product -> entityToDto(product)).collect(Collectors.toList());
+        return products.stream()
+                .map(product -> entityToDto(product))
+                .collect(Collectors.toList());
     }
     
     public Product addDtoToEntity(ProductAddDTO dto){

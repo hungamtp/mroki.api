@@ -1,6 +1,7 @@
 package mondays.net.mroki.api.service.impl;
 
 import lombok.AllArgsConstructor;
+import mondays.net.mroki.api.converter.CategoryConverter;
 import mondays.net.mroki.api.dto.CategoryDTO;
 import mondays.net.mroki.api.entity.Category;
 import mondays.net.mroki.api.repository.CategoryRepository;
@@ -9,9 +10,7 @@ import org.hibernate.boot.model.naming.IllegalIdentifierException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -20,55 +19,51 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private final CategoryRepository categoryRepository;
 
+    @Autowired
+    private final CategoryConverter converter;
+
     public List<CategoryDTO> getAllCategory() {
-        return convertEntityToCategoryDTO(categoryRepository.findAllCategory());
+        return converter.entityToDto(categoryRepository.findAll());
     }
 
-    private List<CategoryDTO> convertEntityToCategoryDTO(List<Object[]> categories) {
-        List<CategoryDTO> result = new ArrayList<>();
-
-        categories.stream().forEach((category) -> {
-            String id = (String) category[0];
-            String name = (String) category[1];
-            result.add(CategoryDTO.builder().id(id).name(name).build());
-        });
-
-        return result;
-    }
 
     public void save(CategoryDTO categoryDTO) {
 
-        Category category = Category.builder()
-                .id(categoryDTO.getId())
-                .name(categoryDTO.getName())
-                .build();
+        if(categoryRepository.checkExist(categoryDTO.getId()))
+            throw new IllegalIdentifierException("ID is exist");
 
-        categoryRepository.save(category);
+        else{
+            Category category = converter.dtoToEntity(categoryDTO);
+            category.setDelete(false);
+            categoryRepository.save(category);
+        }
 
     }
 
     @Override
     public void delete(String id) {
 
-        if (categoryRepository.findAllCategory().isEmpty()) {
+        if (!categoryRepository.checkExist(id))
             throw new IllegalIdentifierException("Id is not exist");
-        }
 
-        categoryRepository.deleteById(id);
+        else
+            categoryRepository.deleteCategoryById(id);
+
     }
 
     @Override
     public void update(CategoryDTO categoryDTO) {
 
-        if (!Optional.ofNullable(categoryRepository.getId(categoryDTO.getId())).isPresent())
+        if (!categoryRepository.checkExist(categoryDTO.getId()))
             throw new IllegalIdentifierException("ID is not exist");
+        else {
 
-        Category category = Category.builder()
-                .id(categoryDTO.getId())
-                .name(categoryDTO.getName())
-                .build();
+            Category category = Category.builder()
+                    .id(categoryDTO.getId())
+                    .name(categoryDTO.getName())
+                    .build();
 
-        categoryRepository.save(category);
-
+            categoryRepository.save(category);
+        }
     }
 }

@@ -32,12 +32,11 @@ public class CategoryAdmin {
     @DeleteMapping("/{id}")
     public void deleteCategory(@PathVariable String id) {
 
-        if (!Optional.ofNullable(id).isPresent()) {
+        if (!Optional.ofNullable(id).isPresent())
             throw new RuntimeException("Id is null");
-        }
 
-        categoryService.delete(id);
-
+        else
+            categoryService.delete(id);
     }
 
     @PutMapping

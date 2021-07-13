@@ -1,19 +1,27 @@
 package mondays.net.mroki.api.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-
+import javax.validation.constraints.Size;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class LoginRequest {
+@AllArgsConstructor
+@Builder
+public class SignupDTO {
+    @NotBlank
+    @Size(min = 10, max = 16)
+    private String username;
 
     @NotBlank
-    private String username;
-    @NotBlank
+    @Size(min = 8, max = 16)
     private String password;
+
+    @Email
+    private String email;
 }
