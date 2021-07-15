@@ -40,15 +40,14 @@ public class CategoryServiceImpl implements CategoryService {
 
     }
 
+    public boolean isExist(String categoryId){
+        return categoryRepository.checkExist(categoryId);
+    }
+
     @Override
     public void delete(String id) {
 
-        if (!categoryRepository.checkExist(id))
-            throw new IllegalIdentifierException("Id is not exist");
-
-        else
             categoryRepository.deleteCategoryById(id);
-
     }
 
     @Override

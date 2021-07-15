@@ -1,31 +1,71 @@
 package mondays.net.mroki.api.service.impl;
 
+import mondays.net.mroki.api.dto.ProductDTO;
 import mondays.net.mroki.api.entity.Product;
+import mondays.net.mroki.api.entity.ProductImage;
 import mondays.net.mroki.api.repository.ProductRepository;
+
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.data.domain.PageRequest;
+
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
+@RunWith(MockitoJUnitRunner.class)
 class ProductServiceImplTest {
+
+    private static final int PAGE_SIZE = 4;
+
+    @InjectMocks
+    private ProductServiceImpl service;
 
     @Mock
     private ProductRepository repo;
 
-    @InjectMocks
-    private ProductServiceImpl service;
+
+
 
     @Test
     void save() {
     }
 
     @Test
-    void checkQuantity() {
+    void getAllProductByPage() {
+        List<Product> products = new ArrayList<>();
+        products.add(Product.builder()
+                .id(1L).name("p1")
+                .quantity(50).rate(4)
+                .productImage(ProductImage.builder().thumbnail("thumbnail").build())
+                .build());
+        products.add(Product.builder()
+                .id(2L).name("p2")
+                .quantity(50).rate(4)
+                .productImage(ProductImage.builder().thumbnail("thumbnail").build())
+                .build());
+        products.add(Product.builder()
+                .id(3L).name("p3")
+                .quantity(50).rate(4)
+                .productImage(ProductImage.builder().thumbnail("thumbnail").build())
+                .build());
+        products.add(Product.builder()
+                .id(4L).name("p4")
+                .quantity(50).rate(4)
+                .productImage(ProductImage.builder().thumbnail("thumbnail").build())
+                .build());
 
+        when(repo.findAllProduct(PageRequest.of(0 , 4))).thenReturn(products);
+
+        List<ProductDTO> productDTOS = service.getAllProductByPage(0);
+        assertEquals(productDTOS.size() , 4);
     }
 }

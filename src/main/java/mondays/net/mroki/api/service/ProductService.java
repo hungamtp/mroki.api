@@ -19,4 +19,6 @@ public interface ProductService {
     List<ProductDTO> getProductByCategory(String categoryId, int page);
 
     Page<Product> getProductByName(String name, int page);
+
+    boolean isExist(Long productId);
 }

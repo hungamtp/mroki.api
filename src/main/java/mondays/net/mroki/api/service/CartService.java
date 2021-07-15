@@ -6,4 +6,6 @@ public interface CartService {
     CartDTO getCart(Long customerId);
 
     void addProductToCart(Long cartId, Long productId , int quantity);
+
+    boolean isExist(Long customerId);
 }

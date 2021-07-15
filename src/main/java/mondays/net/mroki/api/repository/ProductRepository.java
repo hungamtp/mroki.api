@@ -1,6 +1,5 @@
 package mondays.net.mroki.api.repository;
 
-import mondays.net.mroki.api.entity.Category;
 import mondays.net.mroki.api.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -1,16 +1,15 @@
 package mondays.net.mroki.api.controller.customer;
 
 import lombok.AllArgsConstructor;
-import mondays.net.mroki.api.dto.CartDTO;
-import mondays.net.mroki.api.dto.CartIconDTO;
-import mondays.net.mroki.api.dto.ProductDTO;
-import mondays.net.mroki.api.dto.ResponseDTO;
+import mondays.net.mroki.api.dto.*;
 import mondays.net.mroki.api.responseCode.ErrorCode;
 import mondays.net.mroki.api.responseCode.SuccessCode;
 import mondays.net.mroki.api.service.impl.CartServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 
 @RestController
@@ -29,12 +28,14 @@ public class CartController {
 
     }
 
-    @PostMapping("/{customerId}")
-    public ResponseEntity<ResponseDTO> addProductToCart(@PathVariable Long cartId, @RequestBody ProductDTO product) {
+    @PostMapping("/{cartId}")
+    public ResponseEntity<ResponseDTO> addProductToCart(@PathVariable Long cartId,
+                                                        @Valid @RequestBody ProductAddToCartDTO product) {
+
         ResponseDTO response = new ResponseDTO();
 
         try {
-            service.addProductToCart(cartId, product.getId(), 1);
+            service.addProductToCart(cartId, product.getId(), product.getQuantity());
             response.setSuccessCode(SuccessCode.ADD_PRODUCT_TO_CART);
             return ResponseEntity.ok().body(response);
         } catch (Exception e) {

@@ -40,9 +40,6 @@ public class ProductServiceImpl implements ProductService {
 
     public ProductDetailDTO getProductById(Long id) {
 
-        if (!productRepository.checkExistById(id))
-            throw new IllegalIdentifierException("GET_PRODUCT:product not found");
-
         return converter.entityToDetailDto(productRepository.findProductById(id));
     }
 
@@ -52,7 +49,7 @@ public class ProductServiceImpl implements ProductService {
 
     public void deleteProductById(Long id) {
 
-        if (productRepository.checkExistById(id))
+        if (isExist(id))
             productRepository.deleteProductById(id);
         else throw new IllegalIdentifierException("DELETE:product's id not found");
 
@@ -62,7 +59,11 @@ public class ProductServiceImpl implements ProductService {
 
         Pageable pageable = PageRequest.of(page, PAGE_SIZE);
 
-        List<ProductDTO> result = productRepository.findByCategory(categoryId , pageable).stream().map(product -> converter.entityToDto(product)).collect(Collectors.toList());
+        List<ProductDTO> result = productRepository.findByCategory(categoryId , pageable)
+                .stream()
+                .map(product -> converter.entityToDto(product))
+                .collect(Collectors.toList());
+
         return  result;
 
     }
@@ -76,11 +77,15 @@ public class ProductServiceImpl implements ProductService {
 
     public void updateProduct(Product product) {
 
-        if (!productRepository.checkExistById(product.getId()))
+        if (!isExist(product.getId()))
             throw new IllegalIdentifierException("Id not found");
         else
             productRepository.save(product);
 
+    }
+
+    public boolean isExist(Long productId){
+        return productRepository.checkExistById(productId);
     }
 
 

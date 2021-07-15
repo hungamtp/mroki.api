@@ -34,7 +34,7 @@ public class ProductAdminController {
             productService.save(converter.addDtoToEntity(productDTO));
             return ResponseEntity.ok().body("ADD_PRODUCT_SUCCESSFULLY");
         }catch (ProductConvertException ex){
-           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ADD_PRODUCT_FAIL");
+           return ResponseEntity.badRequest().body("ADD_PRODUCT_FAIL");
         }
 
     }

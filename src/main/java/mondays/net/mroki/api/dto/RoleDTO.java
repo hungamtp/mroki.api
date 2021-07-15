@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.junit.jupiter.params.shadow.com.univocity.parsers.annotations.EnumOptions;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;

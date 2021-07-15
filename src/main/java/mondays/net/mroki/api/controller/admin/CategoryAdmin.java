@@ -2,16 +2,15 @@ package mondays.net.mroki.api.controller.admin;
 
 import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.dto.CategoryDTO;
+import mondays.net.mroki.api.dto.ResponseDTO;
+import mondays.net.mroki.api.responseCode.ErrorCode;
+import mondays.net.mroki.api.responseCode.SuccessCode;
 import mondays.net.mroki.api.service.impl.CategoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -23,26 +22,58 @@ public class CategoryAdmin {
     private final CategoryServiceImpl categoryService;
 
     @PostMapping
-    public void addCategory(@Valid @RequestBody CategoryDTO category) {
+    public ResponseEntity<ResponseDTO> addCategory(@Valid @RequestBody CategoryDTO category) {
 
-        categoryService.save(category);
+        ResponseDTO response = new ResponseDTO();
+
+        if (categoryService.isExist(category.getId())) {
+            response.setErrorCode(ErrorCode.ID_IS_EXISTS);
+            return ResponseEntity.badRequest().body(response);
+        } else {
+            response.setSuccessCode(SuccessCode.ADD_CATEGORY);
+            categoryService.save(category);
+            return ResponseEntity.ok().body(response);
+        }
+
 
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteCategory(@PathVariable String id) {
+    @DeleteMapping("/{categoryId}")
+    public ResponseEntity<ResponseDTO> deleteCategory(@PathVariable String categoryId) {
 
-        if (!Optional.ofNullable(id).isPresent())
+        ResponseDTO response = new ResponseDTO();
+
+        if (!Optional.ofNullable(categoryId).isPresent())
             throw new RuntimeException("Id is null");
 
-        else
-            categoryService.delete(id);
+
+        if (!categoryService.isExist(categoryId)) {
+            response.setErrorCode(ErrorCode.ID_CATEGORY_NOT_FOUND);
+            return ResponseEntity.badRequest().body(response);
+        } else {
+            response.setSuccessCode(SuccessCode.DELETE_CATEGORY);
+            categoryService.delete(categoryId);
+            return ResponseEntity.ok().body(response);
+        }
+
     }
 
     @PutMapping
-    public void updateCategory(@Valid @RequestBody CategoryDTO categoryDTO) {
+    public ResponseEntity<ResponseDTO> updateCategory(@Valid @RequestBody CategoryDTO categoryDTO) {
 
-        categoryService.update(categoryDTO);
+        ResponseDTO response = new ResponseDTO();
+
+        if (!categoryService.isExist(categoryDTO.getId())) {
+            response.setErrorCode(ErrorCode.ID_CATEGORY_NOT_FOUND);
+            return ResponseEntity.badRequest().body(response);
+        } else {
+
+            response.setSuccessCode(SuccessCode.UPDATE_CATEGORY);
+            categoryService.update(categoryDTO);
+            return ResponseEntity.ok().body(response);
+
+        }
+
 
     }
 

@@ -37,7 +37,7 @@ public class CartServiceImpl implements CartService {
 
     public CartDTO getCart(Long customerId) {
 
-        if (!repo.isExist(customerId)) {
+        if (!isExist(customerId)) {
             Cart newCart = Cart.builder()
                     .customer(Customer.builder().id(customerId).build())
                     .build();
@@ -52,7 +52,17 @@ public class CartServiceImpl implements CartService {
 
     }
 
-    public CartIconDTO getIconData(Long customerId){
+    public boolean isExist(Long customerId) {
+        return repo.isExist(customerId);
+    }
+
+    public CartIconDTO getIconData(Long customerId) {
+        if (!isExist(customerId)) {
+            Cart newCart = Cart.builder()
+                    .customer(Customer.builder().id(customerId).build())
+                    .build();
+            repo.save(newCart);
+        }
         return converter.dataToDto(repo.getCountProductInCart(customerId).get(0));
     }
 
