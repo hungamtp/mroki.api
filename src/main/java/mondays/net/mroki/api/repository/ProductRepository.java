@@ -1,5 +1,6 @@
 package mondays.net.mroki.api.repository;
 
+import mondays.net.mroki.api.entity.Category;
 import mondays.net.mroki.api.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,12 +28,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query(value = "UPDATE product SET is_delete = true WHERE id = ?1", nativeQuery = true)
     void deleteProductById(Long id);
 
-    @Query(value = "SELECT p.id , p.name,p.thumbnail ,p.price ,avg(c.rate) as rate, p.quantity , p.retail,p.sale_off, "+
-            "p.category_id , p.created_date ,  p.modified_date ,p.description, p.is_delete ,p.image1 , p.image2 "+
-            "FROM product p LEFT JOIN comment c ON p.id = c.product_id " +
-            "WHERE p.is_delete = false AND category_id = ?1 " +
-            "GROUP BY p.id ", nativeQuery = true)
-    List<Product> findByCategory(String categoryId , Pageable pageable);
+
+    Page<Product> findByCategory(Category categoryId , Pageable pageable);
 
     Page<Product> findByNameLike(String name, Pageable pageable);
 

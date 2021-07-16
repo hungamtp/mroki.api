@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.converter.ProductConverter;
 import mondays.net.mroki.api.dto.ProductDTO;
 import mondays.net.mroki.api.dto.ProductDetailDTO;
+import mondays.net.mroki.api.entity.Category;
 import mondays.net.mroki.api.entity.Product;
 import mondays.net.mroki.api.repository.ProductRepository;
 import mondays.net.mroki.api.service.ProductService;
@@ -53,16 +54,13 @@ public class ProductServiceImpl implements ProductService {
 
     }
 
-    public List<ProductDTO> getProductByCategory(String categoryId, int page) {
+    public Page<Product> getProductByCategory(String categoryId, Pageable pageable) {
 
-        Pageable pageable = PageRequest.of(page, PAGE_SIZE);
+        Category category = Category.builder()
+                .id(categoryId)
+                .build();
 
-        List<ProductDTO> result = productRepository.findByCategory(categoryId, pageable)
-                .stream()
-                .map(product -> converter.entityToDto(product))
-                .collect(Collectors.toList());
-
-        return result;
+        return productRepository.findByCategory(category , pageable);
 
     }
 

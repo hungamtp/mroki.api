@@ -3,12 +3,12 @@ package mondays.net.mroki.api.controller.admin;
 import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.converter.ProductConverter;
 import mondays.net.mroki.api.dto.ProductAddDTO;
-import mondays.net.mroki.api.entity.Product;
+import mondays.net.mroki.api.dto.ResponseDTO;
 import mondays.net.mroki.api.exception.ProductConvertException;
+import mondays.net.mroki.api.responseCode.ErrorCode;
+import mondays.net.mroki.api.responseCode.SuccessCode;
 import mondays.net.mroki.api.service.impl.ProductServiceImpl;
-import org.hibernate.boot.model.naming.IllegalIdentifierException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,40 +28,58 @@ public class ProductAdminController {
     private final ProductConverter converter;
 
     @PostMapping
-    public ResponseEntity<String> addProduct(@Valid @RequestBody ProductAddDTO productDTO) {
+    public ResponseEntity<ResponseDTO> addProduct(@Valid @RequestBody ProductAddDTO productDTO) {
 
-        try{
+        ResponseDTO response = new ResponseDTO();
+
+        try {
+
             productService.save(converter.addDtoToEntity(productDTO));
-            return ResponseEntity.ok().body("ADD_PRODUCT_SUCCESSFULLY");
-        }catch (ProductConvertException ex){
-           return ResponseEntity.badRequest().body("ADD_PRODUCT_FAIL");
+            response.setSuccessCode(SuccessCode.SAVE_PRODUCT);
+
+            return ResponseEntity.ok().body(response);
+        } catch (ProductConvertException ex) {
+
+            response.setErrorCode(ErrorCode.SAVE_PRODUCT);
+            return ResponseEntity.badRequest().body(response);
         }
 
     }
 
     @PutMapping("/{id}")
-    public void updateProduct(@PathVariable Long id , @Valid @RequestBody ProductAddDTO productDTO) {
+    public ResponseEntity<ResponseDTO> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductAddDTO productDTO) {
 
-        if (!Optional.ofNullable(id).isPresent())
-            throw new IllegalIdentifierException("Null id");
+        ResponseDTO response = new ResponseDTO();
+
+        if (!Optional.ofNullable(id).isPresent()) {
+            response.setErrorCode(ErrorCode.PRODUCT_NOT_FOUND);
+            return ResponseEntity.badRequest().body(response);
+        }
 
         productDTO.setId(id);
-       Product product = converter.addDtoToEntity(productDTO);
+        productService.updateProduct(converter.addDtoToEntity(productDTO));
+        response.setSuccessCode(SuccessCode.UPDATE_PRODUCT);
 
-        productService.updateProduct(product);
+        return ResponseEntity.ok().body(response);
     }
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteProduct(@PathVariable Long id) {
+    public ResponseEntity<ResponseDTO> deleteProduct(@PathVariable Long id) {
 
-        if(!Optional.ofNullable(id).isPresent()){
-            return ResponseEntity.badRequest().body("ID_NULL");
-        }
-        else{
+        ResponseDTO response = new ResponseDTO();
+
+        if (productService.isExist(id)) {
+
+            response.setErrorCode(ErrorCode.PRODUCT_NOT_FOUND);
+            return ResponseEntity.badRequest().body(response);
+        } else {
+
             productService.deleteProductById(id);
-            return ResponseEntity.ok().body("DELETE_SUCCESSFULLY");
+            response.setSuccessCode(SuccessCode.DELETE_PRODUCT);
+            return ResponseEntity.ok().body(response);
         }
+
 
     }
 }

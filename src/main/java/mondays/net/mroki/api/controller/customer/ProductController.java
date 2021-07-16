@@ -18,7 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.EnumSet;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -27,6 +26,7 @@ import java.util.Optional;
 @CrossOrigin
 public class ProductController {
 
+    private final int PAGE_SIZE =9;
     @Autowired
     private final ProductServiceImpl productService;
 
@@ -41,10 +41,10 @@ public class ProductController {
             Pageable pageable;
 
             if(Optional.ofNullable(sortDTO).isPresent()){
-                pageable = PageRequest.of(Optional.ofNullable(page).orElse(0) , 9 , Sort.by(sortDTO.getSortedBy()));
+                pageable = PageRequest.of(Optional.ofNullable(page).orElse(0) , PAGE_SIZE , Sort.by(sortDTO.getSortType()));
             }
             else{
-                pageable = PageRequest.of(Optional.ofNullable(page).orElse(0) , 9 , Sort.by("id") );
+                pageable = PageRequest.of(Optional.ofNullable(page).orElse(0) , PAGE_SIZE , Sort.by("id") );
             }
 
             response.setData(converter.pageEntityToDto(productService.findAllProduct(pageable)));
@@ -85,20 +85,21 @@ public class ProductController {
     }
 
     @GetMapping("/category/{categoryId}")
-    public ResponseEntity<ResponseDTO> getProductByCategory(@PathVariable String categoryId, @RequestParam(required = false) Optional<Integer> page) {
+    public ResponseEntity<ResponseDTO> getProductByCategory(@PathVariable String categoryId,
+                                                            @RequestParam(required = false) Optional<Integer> page) {
 
         ResponseDTO response = new ResponseDTO();
         try{
+            Pageable pageable = PageRequest.of(page.orElse(0) , PAGE_SIZE);
+            Page<Product> products = productService.getProductByCategory(categoryId , pageable);
+            Page<ProductDTO> productDTOS = converter.pageEntityToDto(entities );
 
-            List<ProductDTO> result= productService.getProductByCategory(categoryId, page.orElse(0));
+            response.setData(productDTOS);
             response.setSuccessCode(SuccessCode.GET_PRODUCT_BY_CATEGORY);
-            response.setData(result);
-
             return ResponseEntity.ok().body(response);
-        }catch (Exception ex){
+        }catch (ProductConvertException ex){
 
             response.setErrorCode(ErrorCode.GET_PRODUCT_BY_CATEGORY);
-
             return ResponseEntity.badRequest().body(response);
         }
 
