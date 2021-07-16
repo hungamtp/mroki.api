@@ -1,7 +1,10 @@
 package mondays.net.mroki.api.controller.customer;
 
 import lombok.AllArgsConstructor;
-import mondays.net.mroki.api.dto.*;
+import mondays.net.mroki.api.dto.CartDTO;
+import mondays.net.mroki.api.dto.CartIconDTO;
+import mondays.net.mroki.api.dto.ProductAddToCartDTO;
+import mondays.net.mroki.api.dto.ResponseDTO;
 import mondays.net.mroki.api.responseCode.ErrorCode;
 import mondays.net.mroki.api.responseCode.SuccessCode;
 import mondays.net.mroki.api.service.impl.CartServiceImpl;
@@ -35,10 +38,16 @@ public class CartController {
         ResponseDTO response = new ResponseDTO();
 
         try {
-            service.addProductToCart(cartId, product.getId(), product.getQuantity());
+
+            if (service.isProductInCart(cartId, product.getId()))
+                service.updateQuantity(product.getQuantity(), product.getId(), cartId);
+            else
+                service.addProductToCart(cartId, product.getId(), product.getQuantity());
+
             response.setSuccessCode(SuccessCode.ADD_PRODUCT_TO_CART);
             return ResponseEntity.ok().body(response);
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             response.setErrorCode(ErrorCode.ADD_PRODUCT_TO_CART);
             return ResponseEntity.badRequest().body(response);
         }

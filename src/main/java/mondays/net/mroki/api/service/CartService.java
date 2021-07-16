@@ -8,4 +8,8 @@ public interface CartService {
     void addProductToCart(Long cartId, Long productId , int quantity);
 
     boolean isExist(Long customerId);
+
+    boolean isProductInCart(Long cartId , Long productId);
+
+    void updateQuantity(int quantity, Long productId, Long cartId);
 }

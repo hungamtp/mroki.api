@@ -11,7 +11,6 @@ import java.util.List;
 
 public interface CartRepository extends JpaRepository<Cart, Long> {
 
-    Cart findByCustomer(Customer customer);
 
     @Query(value = "SELECT CASE WHEN count(id) > 0 THEN true ELSE false END checkExist " +
             "FROM cart where customer_id =?1 limit 1", nativeQuery = true)
@@ -26,7 +25,10 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
 
     @Modifying
     @Transactional
-    @Query(value = "UPDATE product_cart SET quantity = ?1 where products_id = ?2 and cart_id = ?3", nativeQuery = true)
+    @Query(value = "UPDATE product_cart c SET quantity = "+
+            //get old quantity then add with new quantity
+            "(?1+(SELECT quantity FROM product_cart pc WHERE pc.products_id =?2 AND pc.cart_id =?3 LIMIT 1 )) "+
+            "WHERE c.cart_id  = ?3 AND c.products_id =?2", nativeQuery = true)
     void updateQuantity(int quantity, Long productId, Long cartId);
 
 
@@ -45,4 +47,6 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
             "GROUP BY pc.cart_id " +
             "HAVING pc.cart_id =(SELECT id FROM cart c WHERE c.customer_id = ?1 LIMIT 1)" , nativeQuery = true)
     List<Object[]> getCountProductInCart(Long customerId);
+
+
 }
