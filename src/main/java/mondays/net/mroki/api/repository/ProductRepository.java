@@ -3,6 +3,7 @@ package mondays.net.mroki.api.repository;
 import mondays.net.mroki.api.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -19,7 +20,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "FROM product p LEFT JOIN comment c ON p.id = c.product_id " +
             "WHERE p.is_delete = false " +
             "GROUP BY p.id ", nativeQuery = true)
-    List<Product> findAllProduct(Pageable pageable);
+    Page<Product> findAllProduct(Pageable pageable);
 
     @Modifying
     @Transactional
@@ -52,7 +53,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "WHEN count(id) > 0 THEN true ELSE false " +
             "END checkExist " +
             "FROM product where id =?1 limit 1", nativeQuery = true)
-    boolean checkExistById(Long productId);
+    boolean isExist(Long productId);
 
     @Modifying
     @Transactional

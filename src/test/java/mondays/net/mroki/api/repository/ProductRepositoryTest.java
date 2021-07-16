@@ -1,86 +1,55 @@
 package mondays.net.mroki.api.repository;
 
 import mondays.net.mroki.api.entity.Product;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class ProductRepositoryTest {
 
     @Autowired
-    private  ProductRepository repo;
+    private ProductRepository repo;
 
     @Test
-    public void findAllProduct(){
+    public void findAllProduct() {
+        Page<Product> list = repo.findAllProduct(PageRequest.of(0, 9 , Sort.by("id") ) );
 
-
-        assertEquals(repo.findProductById(31L).getName() , "p1");
+        assertEquals(list.get().collect(Collectors.toList()).get(0).getId(), 2L);
     }
 
     @Test
-     public void checkFindProductByIsDelete(){
+    public void deleteProductById() {
 
-        Pageable pageable = PageRequest.of(0 , 3);
+        assertEquals(repo.isExist(5L), true);
 
-        repo.save(Product.builder().name("hung").build());
-        when(repo.findProductById(1L)).thenReturn(Product.builder().name("test").build());
+    }
 
-        assertEquals(repo.findProductById(1L).getName() , "test");
+
+    @Test
+    public void findProductByID() {
+        assertEquals(repo.findProductById(5L).getName(), "Nike 2");
+        assertNull(repo.findProductById(-1L));
+        assertNotEquals(repo.findProductById(5L).getName(), "Nike 3");
     }
 
     @Test
-    public void getProductById(){
-        repo.save(Product.builder().id(1L).name("hung").isDelete(false).build());
-        repo.deleteProductById(1L);
-
-        assertThat(repo.findProductById(1L)).isNull();
+    public void checkQuantity() {
+        assertEquals(repo.checkQuantity(5 , 5L) , true);
     }
 
     @Test
-     public void checkQuantity(){
-
-        repo.save(Product.builder().id(1L).quantity(50).build());
-
-        assertThat(repo.checkQuantity(40 , 1L)).isEqualTo(false);
-
+    public void isExist(){
+        assertEquals(repo.isExist(5L) , true);
     }
-
-    @Test
-     public void checkExistById(){
-        repo.save(Product.builder().id(1L).name("demo").build());
-
-        assertThat(repo.findById(1L).isPresent()).isTrue();
-    }
-
-    @Test
-     public void reduceQuantity(){
-        repo.save(Product.builder().id(5L).quantity(50).build());
-
-        repo.reduceQuantity(5L , 20);
-
-        assertThat(repo.findById(1L).get().getQuantity()).isEqualTo(30);
-    }
-
-
-
 
 
 

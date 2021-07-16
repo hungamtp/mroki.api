@@ -30,13 +30,11 @@ public class ProductServiceImpl implements ProductService {
     private final ProductConverter converter;
 
 
-    public List<ProductDTO> getAllProductByPage(int page) {
+    public Page<Product> findAllProduct(Pageable pageable) {
 
-        Pageable pageable = PageRequest.of(page , PAGE_SIZE);
+        return productRepository.findAllProduct(pageable);
 
-        return converter.entityToDto(productRepository.findAllProduct(pageable));
     }
-
 
     public ProductDetailDTO getProductById(Long id) {
 
@@ -59,12 +57,12 @@ public class ProductServiceImpl implements ProductService {
 
         Pageable pageable = PageRequest.of(page, PAGE_SIZE);
 
-        List<ProductDTO> result = productRepository.findByCategory(categoryId , pageable)
+        List<ProductDTO> result = productRepository.findByCategory(categoryId, pageable)
                 .stream()
                 .map(product -> converter.entityToDto(product))
                 .collect(Collectors.toList());
 
-        return  result;
+        return result;
 
     }
 
@@ -84,8 +82,8 @@ public class ProductServiceImpl implements ProductService {
 
     }
 
-    public boolean isExist(Long productId){
-        return productRepository.checkExistById(productId);
+    public boolean isExist(Long productId) {
+        return productRepository.isExist(productId);
     }
 
 

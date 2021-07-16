@@ -1,8 +1,11 @@
 package mondays.net.mroki.api.controller.admin;
 
 import lombok.AllArgsConstructor;
+import mondays.net.mroki.api.converter.CategoryConverter;
 import mondays.net.mroki.api.dto.CategoryDTO;
 import mondays.net.mroki.api.dto.ResponseDTO;
+import mondays.net.mroki.api.entity.Category;
+import mondays.net.mroki.api.exception.CategoryConverterException;
 import mondays.net.mroki.api.responseCode.ErrorCode;
 import mondays.net.mroki.api.responseCode.SuccessCode;
 import mondays.net.mroki.api.service.impl.CategoryServiceImpl;
@@ -21,21 +24,32 @@ public class CategoryAdmin {
     @Autowired
     private final CategoryServiceImpl categoryService;
 
+    @Autowired
+    private final CategoryConverter converter;
+
     @PostMapping
-    public ResponseEntity<ResponseDTO> addCategory(@Valid @RequestBody CategoryDTO category) {
+    public ResponseEntity<ResponseDTO> addCategory(@Valid @RequestBody CategoryDTO categoryDTO) {
 
         ResponseDTO response = new ResponseDTO();
 
-        if (categoryService.isExist(category.getId())) {
+        if (categoryService.isExist(categoryDTO.getId())) {
             response.setErrorCode(ErrorCode.ID_IS_EXISTS);
             return ResponseEntity.badRequest().body(response);
-        } else {
-            response.setSuccessCode(SuccessCode.ADD_CATEGORY);
-            categoryService.save(category);
-            return ResponseEntity.ok().body(response);
         }
 
+        Category category;
 
+        try {
+
+            category = converter.dtoToEntity(categoryDTO);
+            categoryService.save(category);
+            response.setSuccessCode(SuccessCode.ADD_CATEGORY);
+
+        } catch (CategoryConverterException exception) {
+            throw new CategoryConverterException("CONVERT CATEGORY ERROR");
+        }
+
+        return ResponseEntity.ok().body(response);
     }
 
     @DeleteMapping("/{categoryId}")
@@ -66,13 +80,12 @@ public class CategoryAdmin {
         if (!categoryService.isExist(categoryDTO.getId())) {
             response.setErrorCode(ErrorCode.ID_CATEGORY_NOT_FOUND);
             return ResponseEntity.badRequest().body(response);
-        } else {
-
-            response.setSuccessCode(SuccessCode.UPDATE_CATEGORY);
-            categoryService.update(categoryDTO);
-            return ResponseEntity.ok().body(response);
-
         }
+
+        response.setSuccessCode(SuccessCode.UPDATE_CATEGORY);
+        categoryService.update(converter.dtoToEntity(categoryDTO));
+
+        return ResponseEntity.ok().body(response);
 
 
     }

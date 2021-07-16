@@ -63,9 +63,9 @@ class ProductServiceImplTest {
                 .productImage(ProductImage.builder().thumbnail("thumbnail").build())
                 .build());
 
-        when(repo.findAllProduct(PageRequest.of(0 , 4))).thenReturn(products);
+        when((List<Product>)repo.findAllProduct(PageRequest.of(0 , 4) ).get()).thenReturn( products);
 
-        List<ProductDTO> productDTOS = service.getAllProductByPage(0);
-        assertEquals(productDTOS.size() , 4);
+
+        assertEquals(service.findAllProduct(PageRequest.of(0 , 4)).getSize(), 4);
     }
 }

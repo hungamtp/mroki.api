@@ -6,6 +6,9 @@ import mondays.net.mroki.api.dto.ProductDetailDTO;
 import mondays.net.mroki.api.entity.Category;
 import mondays.net.mroki.api.entity.Product;
 import mondays.net.mroki.api.entity.ProductImage;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -93,6 +96,18 @@ public class ProductConverter {
 
         return result;
 
+    }
+
+    public Page<ProductDTO> pageEntityToDto(Page<Product> products){
+
+
+        Pageable pageable = products.getPageable();
+        List<ProductDTO> productDTOS=products.stream()
+                .map((product -> entityToDto(product)))
+                .collect(Collectors.toList());
+
+        Page<ProductDTO> result = new PageImpl<>(productDTOS , pageable , 9);
+        return result;
     }
 
 

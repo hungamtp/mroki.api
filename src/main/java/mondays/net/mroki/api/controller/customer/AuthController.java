@@ -4,6 +4,7 @@ package mondays.net.mroki.api.controller.customer;
 import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.dto.ResponseDTO;
 import mondays.net.mroki.api.dto.SignupDTO;
+import mondays.net.mroki.api.dto.SortType;
 import mondays.net.mroki.api.entity.Customer;
 import mondays.net.mroki.api.entity.Role;
 import mondays.net.mroki.api.responseCode.ErrorCode;
@@ -12,12 +13,11 @@ import mondays.net.mroki.api.service.impl.CustomerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.EnumSet;
+import java.util.List;
 
 @RestController
 @RequestMapping("account/")
@@ -50,6 +50,16 @@ public class AuthController {
         return ResponseEntity.ok().body(response);
 
     }
+
+//    @PostMapping("/logout")
+//    public ResponseEntity<ResponseDTO> logOut(@RequestHeader("Authorization") String token ){
+//        ResponseDTO responseDTO = new ResponseDTO();
+//        responseDTO.setData(token);
+//
+//        return ResponseEntity.ok().body(responseDTO);
+//    }
+
+
 
 
 }
