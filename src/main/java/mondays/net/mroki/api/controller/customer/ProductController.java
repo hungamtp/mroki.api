@@ -41,7 +41,7 @@ public class ProductController {
             Pageable pageable;
 
             if(Optional.ofNullable(sortDTO).isPresent()){
-                pageable = PageRequest.of(Optional.ofNullable(page).orElse(0) , PAGE_SIZE , Sort.by(sortDTO.getSortType()));
+                pageable = PageRequest.of(Optional.ofNullable(page).orElse(0) , PAGE_SIZE , Sort.by(sortDTO.getSortType().toLowerCase()));
             }
             else{
                 pageable = PageRequest.of(Optional.ofNullable(page).orElse(0) , PAGE_SIZE , Sort.by("id") );
@@ -92,7 +92,7 @@ public class ProductController {
         try{
             Pageable pageable = PageRequest.of(page.orElse(0) , PAGE_SIZE);
             Page<Product> products = productService.getProductByCategory(categoryId , pageable);
-            Page<ProductDTO> productDTOS = converter.pageEntityToDto(entities );
+            Page<ProductDTO> productDTOS = converter.pageEntityToDto(products);
 
             response.setData(productDTOS);
             response.setSuccessCode(SuccessCode.GET_PRODUCT_BY_CATEGORY);

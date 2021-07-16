@@ -22,28 +22,21 @@ import java.util.Optional;
 @AllArgsConstructor
 public class CommentServiceImpl implements CommentService {
 
-    private final int COMMENT_PAGE_SIZE = 5;
-
     @Autowired
     private final CommentRepository commentRepository;
-
-    @Autowired
-    private final CommentConverter converter;
 
     public void comment(Comment comment) {
 
         commentRepository.save(comment);
     }
 
-    public List<CommentDTO> getComment(int page, Long productId) {
+    public Page<Comment> getComment(Pageable pageable, Long productId) {
 
-        Pageable pageable = PageRequest.of(page, COMMENT_PAGE_SIZE);
+        Product product = Product.builder()
+                .id(productId)
+                .build();
 
-        Product product = Product.builder().id(productId).build();
-
-        List<CommentDTO> result = converter.entityToDto(commentRepository.findByProduct(pageable, product).getContent());
-
-        return result;
+        return commentRepository.findByProduct(pageable , product);
 
     }
 

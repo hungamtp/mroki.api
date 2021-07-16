@@ -5,6 +5,9 @@ import mondays.net.mroki.api.dto.CommentDTO;
 import mondays.net.mroki.api.entity.Comment;
 import mondays.net.mroki.api.entity.Customer;
 import mondays.net.mroki.api.entity.Product;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -34,10 +37,15 @@ public class CommentConverter {
 
     }
 
-    public List<CommentDTO> entityToDto(List<Comment> comments) {
-        return comments.stream()
+    public Page<CommentDTO> entityToDto(Page<Comment> comments) {
+        Pageable pageable = comments.getPageable();
+
+        List<CommentDTO> commentDTOS = comments.stream()
                 .map((comment -> entityToDto(comment)))
                 .collect(Collectors.toList());
+
+        Page<CommentDTO> page = new PageImpl<>(commentDTOS , pageable , 9);
+        return page;
     }
 
 
