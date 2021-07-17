@@ -60,5 +60,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             , nativeQuery = true)
     void reduceQuantity(Long id, int quantity);
 
-
+    @Query(value = "SELECT count(id) FROM product p  " , nativeQuery = true)
+    int getTotalElement();
 }

@@ -98,7 +98,7 @@ public class ProductConverter {
 
     }
 
-    public Page<ProductDTO> pageEntityToDto(Page<Product> products){
+    public Page<ProductDTO> pageEntityToPage(Page<Product> products){
 
 
         Pageable pageable = products.getPageable();
@@ -106,8 +106,19 @@ public class ProductConverter {
                 .map((product -> entityToDto(product)))
                 .collect(Collectors.toList());
 
-        Page<ProductDTO> result = new PageImpl<>(productDTOS , pageable , 9);
+        Page<ProductDTO> result = new PageImpl<>(productDTOS , pageable , 5);
         return result;
+    }
+    public List<ProductDTO> pageEntityToList(Page<Product> products){
+
+
+        Pageable pageable = products.getPageable();
+        List<ProductDTO> productDTOS=products.stream()
+                .map((product -> entityToDto(product)))
+                .collect(Collectors.toList());
+
+
+        return productDTOS;
     }
 
 

@@ -37,15 +37,13 @@ public class CommentConverter {
 
     }
 
-    public Page<CommentDTO> entityToDto(Page<Comment> comments) {
-        Pageable pageable = comments.getPageable();
+    public List<CommentDTO> entityToDto(Page<Comment> comments) {
 
-        List<CommentDTO> commentDTOS = comments.stream()
+        return  comments.stream()
                 .map((comment -> entityToDto(comment)))
                 .collect(Collectors.toList());
 
-        Page<CommentDTO> page = new PageImpl<>(commentDTOS , pageable , 9);
-        return page;
+
     }
 
 

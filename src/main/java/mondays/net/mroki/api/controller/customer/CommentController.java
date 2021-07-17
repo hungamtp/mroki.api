@@ -58,10 +58,9 @@ public class CommentController {
 
         try{
             Pageable pageable = PageRequest.of(0 ,PAGE_SIZE );
-            Page<CommentDTO> comments =
-                    converter.entityToDto(commentService.getComment(pageable,productId));
+            response.setData(converter.entityToDto(commentService.getComment(pageable,productId)));
             response.setSuccessCode(SuccessCode.GET_ALL_COMMENT);
-            response.setData(comments);
+
             return ResponseEntity.ok().body(response);
         }catch (CommentConvertException ex){
             response.setErrorCode(ErrorCode.GET_ALL_COMMENT);

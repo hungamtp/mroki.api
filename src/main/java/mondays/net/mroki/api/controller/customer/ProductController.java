@@ -17,6 +17,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.EnumSet;
 import java.util.Optional;
 
@@ -26,7 +27,7 @@ import java.util.Optional;
 @CrossOrigin
 public class ProductController {
 
-    private final int PAGE_SIZE =9;
+    private final int PAGE_SIZE = 9;
     @Autowired
     private final ProductServiceImpl productService;
 
@@ -34,23 +35,22 @@ public class ProductController {
     private final ProductConverter converter;
 
     @GetMapping
-    public ResponseEntity<ResponseDTO> homePage(@RequestParam(required = false) Integer page , @RequestBody(required = false) SortDTO sortDTO) {
+    public ResponseEntity<ResponseDTO> homePage(@RequestParam(required = false) Integer page, @RequestBody(required = false) SortDTO sortDTO) {
 
         ResponseDTO response = new ResponseDTO();
-        try{
+        try {
             Pageable pageable;
 
-            if(Optional.ofNullable(sortDTO).isPresent()){
-                pageable = PageRequest.of(Optional.ofNullable(page).orElse(0) , PAGE_SIZE , Sort.by(sortDTO.getSortType().toLowerCase()));
-            }
-            else{
-                pageable = PageRequest.of(Optional.ofNullable(page).orElse(0) , PAGE_SIZE , Sort.by("id") );
+            if (Optional.ofNullable(sortDTO).isPresent()) {
+                pageable = PageRequest.of(Optional.ofNullable(page).orElse(0), PAGE_SIZE, Sort.by(sortDTO.getSortType().toLowerCase()));
+            } else {
+                pageable = PageRequest.of(Optional.ofNullable(page).orElse(0), PAGE_SIZE, Sort.by("id"));
             }
 
-            response.setData(converter.pageEntityToDto(productService.findAllProduct(pageable)));
+            response.setData(converter.pageEntityToList(productService.findAllProduct(pageable)));
             response.setSuccessCode(SuccessCode.GET_PRODUCT);
             return ResponseEntity.ok().body(response);
-        }catch (ProductConvertException ex){
+        } catch (ProductConvertException ex) {
             response.setErrorCode(ErrorCode.GET_PRODUCT);
             return ResponseEntity.badRequest().body(response);
         }
@@ -62,22 +62,21 @@ public class ProductController {
 
         ResponseDTO response = new ResponseDTO();
 
-        try{
-            if(productService.isExist(id)){
+        try {
+            if (productService.isExist(id)) {
 
-                ProductDetailDTO productDTO =productService.getProductById(id);
+                ProductDetailDTO productDTO = productService.getProductById(id);
                 response.setSuccessCode(SuccessCode.GET_PRODUCT_DETAIL);
                 response.setData(productDTO);
 
                 return ResponseEntity.ok().body(response);
-            }
-            else{
+            } else {
 
                 response.setErrorCode(ErrorCode.PRODUCT_NOT_FOUND);
                 return ResponseEntity.badRequest().body(response);
             }
 
-        }catch (Exception ex){
+        } catch (Exception ex) {
             response.setErrorCode(ErrorCode.GET_PRODUCT_DETAIL);
             return ResponseEntity.badRequest().body(response);
         }
@@ -89,15 +88,15 @@ public class ProductController {
                                                             @RequestParam(required = false) Optional<Integer> page) {
 
         ResponseDTO response = new ResponseDTO();
-        try{
-            Pageable pageable = PageRequest.of(page.orElse(0) , PAGE_SIZE);
-            Page<Product> products = productService.getProductByCategory(categoryId , pageable);
-            Page<ProductDTO> productDTOS = converter.pageEntityToDto(products);
+        try {
+            Pageable pageable = PageRequest.of(page.orElse(0), PAGE_SIZE);
+            Page<Product> products = productService.getProductByCategory(categoryId, pageable);
+            List<ProductDTO> productDTOS = converter.pageEntityToList(products);
 
             response.setData(productDTOS);
             response.setSuccessCode(SuccessCode.GET_PRODUCT_BY_CATEGORY);
             return ResponseEntity.ok().body(response);
-        }catch (ProductConvertException ex){
+        } catch (ProductConvertException ex) {
 
             response.setErrorCode(ErrorCode.GET_PRODUCT_BY_CATEGORY);
             return ResponseEntity.badRequest().body(response);
@@ -112,9 +111,19 @@ public class ProductController {
     }
 
     @GetMapping("/sortType")
-    public EnumSet<SortType> getSortType(){
+    public EnumSet<SortType> getSortType() {
         EnumSet<SortType> sortType = EnumSet.allOf(SortType.class);
         return sortType;
+    }
+
+    @GetMapping("/totalPage")
+    public int getTotalPage() {
+
+        if (productService.countTotalElement() % PAGE_SIZE == 0) {
+            return productService.countTotalElement() / PAGE_SIZE;
+        } else {
+            return productService.countTotalElement() / PAGE_SIZE + 1;
+        }
     }
 
 

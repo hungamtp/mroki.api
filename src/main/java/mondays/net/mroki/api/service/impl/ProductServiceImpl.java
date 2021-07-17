@@ -84,5 +84,9 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.isExist(productId);
     }
 
+    public int countTotalElement(){
+        return productRepository.getTotalElement();
+    }
+
 
 }

@@ -22,4 +22,6 @@ public interface ProductService {
     Page<Product> getProductByName(String name, int page);
 
     boolean isExist(Long productId);
+
+    int countTotalElement();
 }
