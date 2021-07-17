@@ -44,22 +44,22 @@ class ProductServiceImplTest {
         List<Product> products = new ArrayList<>();
         products.add(Product.builder()
                 .id(1L).name("p1")
-                .quantity(50).rate(4)
+                .rate(4)
                 .productImage(ProductImage.builder().thumbnail("thumbnail").build())
                 .build());
         products.add(Product.builder()
                 .id(2L).name("p2")
-                .quantity(50).rate(4)
+                .rate(4)
                 .productImage(ProductImage.builder().thumbnail("thumbnail").build())
                 .build());
         products.add(Product.builder()
                 .id(3L).name("p3")
-                .quantity(50).rate(4)
+                .rate(4)
                 .productImage(ProductImage.builder().thumbnail("thumbnail").build())
                 .build());
         products.add(Product.builder()
                 .id(4L).name("p4")
-                .quantity(50).rate(4)
+                .rate(4)
                 .productImage(ProductImage.builder().thumbnail("thumbnail").build())
                 .build());
 

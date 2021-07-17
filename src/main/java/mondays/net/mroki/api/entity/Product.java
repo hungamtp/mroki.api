@@ -27,7 +27,6 @@ public class Product {
     private String description;
     private float price;
     private float retail;
-    private int quantity;
     private int saleOff;
     private boolean isDelete;
 

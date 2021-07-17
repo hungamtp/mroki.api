@@ -26,19 +26,19 @@ public class CartServiceImpl implements CartService {
     private final ProductConverter productConverter;
 
 
-    public void addProductToCart(Long cartId, Long productId, int quantity) {
+    public void addProductToCart(Long cartId, Long productId, int quantity , int size) {
 
-            repo.addToCart(cartId, productId, quantity);
+            repo.addToCart(cartId, productId, quantity , size);
 
     }
 
-    public boolean isProductInCart(Long cartId , Long productId){
-        return repo.isProductInCart(productId , cartId);
+    public boolean isProductInCart(Long cartId , Long productId , int size){
+        return repo.isProductInCart(productId , cartId , size);
     }
 
     @Override
-    public void updateQuantity(int quantity, Long productId, Long cartId) {
-        repo.updateQuantity(quantity , productId , cartId);
+    public void updateQuantity(int quantity, Long productId, Long cartId , int size) {
+        repo.updateQuantity(quantity , productId , cartId , size);
     }
 
     public CartDTO getCart(Long customerId) {

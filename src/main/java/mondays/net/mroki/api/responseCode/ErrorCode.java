@@ -12,5 +12,6 @@ public enum ErrorCode {
     GET_PRODUCT_BY_CATEGORY,
     PRODUCT_NOT_FOUND,
     SAVE_PRODUCT,
-    GET_ALL_COMMENT
+    GET_ALL_COMMENT,
+    GET_SIZE
 }

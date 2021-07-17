@@ -14,7 +14,7 @@ class CartRepositoryTest {
 
     @Test
     public void testIsExist(){
-        boolean check = repo.isProductInCart(20L , 30L);
+        boolean check = repo.isProductInCart(20L , 30L , 41);
 
         assertEquals(true , check);
     }

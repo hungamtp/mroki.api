@@ -39,10 +39,10 @@ public class CartController {
 
         try {
 
-            if (service.isProductInCart(cartId, product.getId()))
-                service.updateQuantity(product.getQuantity(), product.getId(), cartId);
+            if (service.isProductInCart(cartId, product.getId() ,product.getSize()))
+                service.updateQuantity(product.getQuantity(), product.getId(), cartId , product.getSize());
             else
-                service.addProductToCart(cartId, product.getId(), product.getQuantity());
+                service.addProductToCart(cartId, product.getId(), product.getQuantity() , product.getSize());
 
             response.setSuccessCode(SuccessCode.ADD_PRODUCT_TO_CART);
             return ResponseEntity.ok().body(response);

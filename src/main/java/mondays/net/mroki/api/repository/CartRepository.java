@@ -17,19 +17,20 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
     boolean isExist(Long customerId);
 
     @Query(value = "SELECT CASE WHEN count(products_id) > 0 THEN true ELSE false END checkExist " +
-            "FROM product_cart where products_id = ?1 AND cart_id = ?2 LIMIT 1", nativeQuery = true)
-    boolean isProductInCart(Long productId, Long cartId);
+            "FROM product_cart where products_id = ?1 AND cart_id = ?2 AND size = ?3 LIMIT 1", nativeQuery = true)
+    boolean isProductInCart(Long productId, Long cartId , int size);
 
-    @Query(value = "insert into product_cart values(?1 , ?2 , ?3)", nativeQuery = true)
-    void addToCart(Long cartId, Long productId, int quantity);
+    @Query(value = "INSERT INTO product_cart(cart_id , products_id , quantity , size) "+
+            "VALUES(?1 , ?2 , ?3 , ?4)", nativeQuery = true)
+    void addToCart(Long cartId, Long productId, int quantity , int size);
 
     @Modifying
     @Transactional
     @Query(value = "UPDATE product_cart c SET quantity = "+
             //get old quantity then add with new quantity
             "(?1+(SELECT quantity FROM product_cart pc WHERE pc.products_id =?2 AND pc.cart_id =?3 LIMIT 1 )) "+
-            "WHERE c.cart_id  = ?3 AND c.products_id =?2", nativeQuery = true)
-    void updateQuantity(int quantity, Long productId, Long cartId);
+            "WHERE c.cart_id  = ?3 AND c.products_id =?2 AND size = ?4", nativeQuery = true)
+    void updateQuantity(int quantity, Long productId, Long cartId , int size);
 
 
     @Query(value = "SELECT p.id , p.name , p.thumbnail , p.price , pc.quantity as quantity , " +
@@ -47,6 +48,8 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
             "GROUP BY pc.cart_id " +
             "HAVING pc.cart_id =(SELECT id FROM cart c WHERE c.customer_id = ?1 LIMIT 1)" , nativeQuery = true)
     List<Object[]> getCountProductInCart(Long customerId);
+
+
 
 
 }

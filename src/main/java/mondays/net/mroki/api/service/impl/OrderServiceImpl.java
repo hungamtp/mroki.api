@@ -45,10 +45,10 @@ public class OrderServiceImpl implements OrderService {
         // otherwise add to list error
         cart.forEach((product) -> {
 
-            if (!productRepository.checkQuantity(product.getQuantity(), product.getId()))
+//            if (!productRepository.checkQuantity(product.getId()) , product.getQuantity())
                 listOfProductIsNotEnough.add(product.getId().toString());
 
-            else
+//            else
                 orders.getProduct().add(Product.builder().id(product.getId()).build());
 
         });

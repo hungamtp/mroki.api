@@ -43,7 +43,7 @@ class ProductRepositoryTest {
 
     @Test
     public void checkQuantity() {
-        assertEquals(repo.checkQuantity(5 , 5L) , true);
+        assertEquals(repo.checkQuantity(5L , 5 , 41) , true);
     }
 
     @Test

@@ -19,7 +19,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("admin/category")
 @AllArgsConstructor
-public class CategoryAdmin {
+public class CategoryAdminController {
 
     @Autowired
     private final CategoryServiceImpl categoryService;

@@ -56,11 +56,17 @@ public class ProductAdminController {
             return ResponseEntity.badRequest().body(response);
         }
 
+        if (!productService.isExist(id)) {
+            response.setErrorCode(ErrorCode.PRODUCT_NOT_FOUND);
+            return ResponseEntity.badRequest().body(response);
+        }
+
         productDTO.setId(id);
         productService.updateProduct(converter.addDtoToEntity(productDTO));
         response.setSuccessCode(SuccessCode.UPDATE_PRODUCT);
-
         return ResponseEntity.ok().body(response);
+
+
     }
 
 

@@ -53,7 +53,6 @@ public class ProductConverter {
                 price(dto.getPrice()).
                 retail(dto.getRetail()).
                 description(dto.getDescription()).
-                quantity(dto.getQuantity()).
                 saleOff(dto.getSaleOff()).
                 category(Category.builder().id(dto.getCategoryId()).build()).
                 productImage(productImage).
@@ -69,7 +68,6 @@ public class ProductConverter {
                 .retail(product.getRetail())
                 .description(product.getDescription())
                 .saleOff(product.getSaleOff())
-                .quantity(product.getQuantity())
                 .rate(product.getRate())
                 .categoryId(product.getCategory().getId())
                 .thumbnail(product.getProductImage().getThumbnail())

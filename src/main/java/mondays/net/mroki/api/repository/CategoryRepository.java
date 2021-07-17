@@ -14,7 +14,7 @@ public interface CategoryRepository extends JpaRepository<Category, String> {
 
 
     @Query(value = "SELECT CASE WHEN count(id) > 0 THEN true ELSE false END checkExist "+
-                    "FROM category where id = ?1 limit 1" , nativeQuery = true)
+                    "FROM category where id = ?1  limit 1" , nativeQuery = true)
     boolean checkExist(String id);
 
     @Modifying

@@ -15,5 +15,6 @@ public enum SuccessCode {
     SAVE_PRODUCT,
     UPDATE_PRODUCT,
     DELETE_PRODUCT,
-    GET_ALL_COMMENT
+    GET_ALL_COMMENT,
+    GET_SIZE
 }

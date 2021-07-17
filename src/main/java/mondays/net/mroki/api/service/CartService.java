@@ -5,11 +5,11 @@ import mondays.net.mroki.api.dto.CartDTO;
 public interface CartService {
     CartDTO getCart(Long customerId);
 
-    void addProductToCart(Long cartId, Long productId , int quantity);
+    void addProductToCart(Long cartId, Long productId , int quantity , int size);
 
     boolean isExist(Long customerId);
 
-    boolean isProductInCart(Long cartId , Long productId);
+    boolean isProductInCart(Long cartId , Long productId , int size);
 
-    void updateQuantity(int quantity, Long productId, Long cartId);
+    void updateQuantity(int quantity, Long productId, Long cartId  , int size);
 }

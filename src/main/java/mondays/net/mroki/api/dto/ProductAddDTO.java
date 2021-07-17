@@ -29,9 +29,6 @@ public class ProductAddDTO {
     @NotBlank(message = "description is empty")
     private String description;
 
-    @NotNull(message = "quantity is empty")
-    private Integer quantity;
-
     @Min(0)
     @Max(100)
     private Integer saleOff;
@@ -44,9 +41,5 @@ public class ProductAddDTO {
 
     private String image1;
     private String image2;
-
-
-
-
 
 }
