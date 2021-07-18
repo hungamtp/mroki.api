@@ -1,9 +1,9 @@
 package mondays.net.mroki.api.controller.customer;
 
 import lombok.AllArgsConstructor;
-import mondays.net.mroki.api.dto.CartDTO;
-import mondays.net.mroki.api.dto.CartIconDTO;
-import mondays.net.mroki.api.dto.ProductAddToCartDTO;
+import mondays.net.mroki.api.dto.cart.CartDTO;
+import mondays.net.mroki.api.dto.cart.CartIconDTO;
+import mondays.net.mroki.api.dto.product.ProductAddToCartDTO;
 import mondays.net.mroki.api.dto.ResponseDTO;
 import mondays.net.mroki.api.responseCode.ErrorCode;
 import mondays.net.mroki.api.responseCode.SuccessCode;
@@ -47,7 +47,6 @@ public class CartController {
             response.setSuccessCode(SuccessCode.ADD_PRODUCT_TO_CART);
             return ResponseEntity.ok().body(response);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             response.setErrorCode(ErrorCode.ADD_PRODUCT_TO_CART);
             return ResponseEntity.badRequest().body(response);
         }

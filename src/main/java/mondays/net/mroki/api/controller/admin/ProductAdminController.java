@@ -2,7 +2,7 @@ package mondays.net.mroki.api.controller.admin;
 
 import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.converter.ProductConverter;
-import mondays.net.mroki.api.dto.ProductAddDTO;
+import mondays.net.mroki.api.dto.product.ProductAddDTO;
 import mondays.net.mroki.api.dto.ResponseDTO;
 import mondays.net.mroki.api.exception.ProductConvertException;
 import mondays.net.mroki.api.responseCode.ErrorCode;

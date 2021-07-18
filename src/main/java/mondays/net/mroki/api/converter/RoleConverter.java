@@ -1,6 +1,6 @@
 package mondays.net.mroki.api.converter;
 
-import mondays.net.mroki.api.dto.RoleDTO;
+import mondays.net.mroki.api.dto.customer.RoleDTO;
 import mondays.net.mroki.api.entity.Role;
 import org.springframework.stereotype.Component;
 

@@ -2,22 +2,20 @@ package mondays.net.mroki.api.controller.customer;
 
 import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.converter.CommentConverter;
-import mondays.net.mroki.api.dto.CommentAddDTO;
-import mondays.net.mroki.api.dto.CommentDTO;
+import mondays.net.mroki.api.dto.comment.CommentAddDTO;
 import mondays.net.mroki.api.dto.ResponseDTO;
+import mondays.net.mroki.api.dto.comment.CommentTotalDTO;
 import mondays.net.mroki.api.exception.CommentConvertException;
 import mondays.net.mroki.api.responseCode.ErrorCode;
 import mondays.net.mroki.api.responseCode.SuccessCode;
 import mondays.net.mroki.api.service.impl.CommentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -67,6 +65,12 @@ public class CommentController {
             return ResponseEntity.badRequest().body(response);
         }
 
+    }
+
+    @GetMapping("/total/{productId}")
+    public CommentTotalDTO getTotalComment(@PathVariable Long productId){
+
+        return commentService.getTotalComment(productId);
     }
 
 }

@@ -33,7 +33,7 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
     void updateQuantity(int quantity, Long productId, Long cartId , int size);
 
 
-    @Query(value = "SELECT p.id , p.name , p.thumbnail , p.price , pc.quantity as quantity , " +
+    @Query(value = "SELECT p.id , p.name , p.thumbnail , p.price , pc.quantity as quantity ,pc.size ,  " +
             "(SELECT avg(c.rate) as rate FROM product p2 LEFT JOIN comment  c ON c.product_id = p2.id) " +
             "FROM product_cart pc " +
             "LEFT JOIN product p ON pc.products_id = p.id " +

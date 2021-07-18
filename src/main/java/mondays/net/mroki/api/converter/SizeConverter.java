@@ -1,6 +1,7 @@
 package mondays.net.mroki.api.converter;
 
-import mondays.net.mroki.api.dto.SizeUpdateDTO;
+import mondays.net.mroki.api.dto.size.SizeDTO;
+import mondays.net.mroki.api.dto.size.SizeUpdateDTO;
 import mondays.net.mroki.api.entity.Size;
 import org.springframework.stereotype.Component;
 
@@ -23,6 +24,16 @@ public class SizeConverter {
         return sizes.stream()
                 .map((size ) -> entityToDto(size))
                 .collect(Collectors.toList());
+    }
+
+    public List<SizeDTO> entityToDTO(List<Size> sizes){
+        return sizes.stream()
+                .map((size -> entityToDTO(size)))
+                .collect(Collectors.toList());
+    }
+
+    public SizeDTO entityToDTO(Size size){
+        return new SizeDTO(size.getSize(), size.getQuantity()==0);
     }
 
 }

@@ -1,6 +1,5 @@
 package mondays.net.mroki.api.service.impl;
 
-import mondays.net.mroki.api.dto.ProductDTO;
 import mondays.net.mroki.api.entity.Product;
 import mondays.net.mroki.api.entity.ProductImage;
 import mondays.net.mroki.api.repository.ProductRepository;

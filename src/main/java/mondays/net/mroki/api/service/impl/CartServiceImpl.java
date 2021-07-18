@@ -3,8 +3,8 @@ package mondays.net.mroki.api.service.impl;
 import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.converter.CartConverter;
 import mondays.net.mroki.api.converter.ProductConverter;
-import mondays.net.mroki.api.dto.CartDTO;
-import mondays.net.mroki.api.dto.CartIconDTO;
+import mondays.net.mroki.api.dto.cart.CartDTO;
+import mondays.net.mroki.api.dto.cart.CartIconDTO;
 import mondays.net.mroki.api.entity.Cart;
 import mondays.net.mroki.api.entity.Customer;
 import mondays.net.mroki.api.repository.CartRepository;
@@ -53,7 +53,7 @@ public class CartServiceImpl implements CartService {
 
         return CartDTO.builder()
                 .customerId(customerId)
-                .products(productConverter.dataToDto(repo.getProductInCart(customerId)))
+                .products(productConverter.dataToCartDto(repo.getProductInCart(customerId)))
                 .build();
 
     }

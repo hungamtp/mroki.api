@@ -1,12 +1,9 @@
 package mondays.net.mroki.api.service;
 
-import mondays.net.mroki.api.dto.ProductDTO;
-import mondays.net.mroki.api.dto.ProductDetailDTO;
+import mondays.net.mroki.api.dto.product.ProductDetailDTO;
 import mondays.net.mroki.api.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
-import java.util.List;
 
 public interface ProductService {
     Page<Product> findAllProduct(Pageable pageable);

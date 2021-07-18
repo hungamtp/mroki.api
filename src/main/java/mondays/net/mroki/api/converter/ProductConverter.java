@@ -1,8 +1,9 @@
 package mondays.net.mroki.api.converter;
 
-import mondays.net.mroki.api.dto.ProductAddDTO;
-import mondays.net.mroki.api.dto.ProductDTO;
-import mondays.net.mroki.api.dto.ProductDetailDTO;
+import mondays.net.mroki.api.dto.product.ProductAddDTO;
+import mondays.net.mroki.api.dto.product.ProductCartDTO;
+import mondays.net.mroki.api.dto.product.ProductDTO;
+import mondays.net.mroki.api.dto.product.ProductDetailDTO;
 import mondays.net.mroki.api.entity.Category;
 import mondays.net.mroki.api.entity.Product;
 import mondays.net.mroki.api.entity.ProductImage;
@@ -90,6 +91,27 @@ public class ProductConverter {
             float rate = ((BigDecimal) product[5]).floatValue();
 
             result.add(new ProductDTO(id, name, rate, thumbnail, price, quantity));
+        });
+
+        return result;
+
+    }
+
+    public List<ProductCartDTO> dataToCartDto(List<Object[]> data) {
+
+        List<ProductCartDTO> result = new ArrayList<>();
+
+        data.stream().forEach((product) -> {
+
+            Long id = ((BigInteger) product[0]).longValue();
+            String name = (String) product[1];
+            String thumbnail = (String) product[2];
+            float price = (float) product[3];
+            int quantity = (int) product[4];
+            int size = (int) product[5];
+            float rate = ((BigDecimal) product[6]).floatValue();
+
+            result.add(new ProductCartDTO(id, name, rate, thumbnail, price, quantity , size));
         });
 
         return result;

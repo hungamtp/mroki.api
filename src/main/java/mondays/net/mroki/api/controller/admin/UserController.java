@@ -1,8 +1,8 @@
 package mondays.net.mroki.api.controller.admin;
 
 import lombok.AllArgsConstructor;
-import mondays.net.mroki.api.dto.CustomerDTO;
-import mondays.net.mroki.api.dto.RoleDTO;
+import mondays.net.mroki.api.dto.customer.CustomerDTO;
+import mondays.net.mroki.api.dto.customer.RoleDTO;
 import mondays.net.mroki.api.service.impl.CustomerServiceImpl;
 import mondays.net.mroki.api.service.impl.RoleServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
 package mondays.net.mroki.api.service;
 
-import mondays.net.mroki.api.dto.RoleDTO;
+import mondays.net.mroki.api.dto.customer.RoleDTO;
 
 import java.util.List;
 

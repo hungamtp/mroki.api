@@ -1,13 +1,11 @@
 package mondays.net.mroki.api.converter;
 
-import mondays.net.mroki.api.dto.CommentAddDTO;
-import mondays.net.mroki.api.dto.CommentDTO;
+import mondays.net.mroki.api.dto.comment.CommentAddDTO;
+import mondays.net.mroki.api.dto.comment.CommentDTO;
 import mondays.net.mroki.api.entity.Comment;
 import mondays.net.mroki.api.entity.Customer;
 import mondays.net.mroki.api.entity.Product;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -45,6 +43,8 @@ public class CommentConverter {
 
 
     }
+
+
 
 
 }

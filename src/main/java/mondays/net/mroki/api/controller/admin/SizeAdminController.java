@@ -3,7 +3,7 @@ package mondays.net.mroki.api.controller.admin;
 import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.converter.SizeConverter;
 import mondays.net.mroki.api.dto.ResponseDTO;
-import mondays.net.mroki.api.dto.SizeUpdateDTO;
+import mondays.net.mroki.api.dto.size.SizeUpdateDTO;
 import mondays.net.mroki.api.exception.SizeConvertException;
 import mondays.net.mroki.api.responseCode.ErrorCode;
 import mondays.net.mroki.api.responseCode.SuccessCode;

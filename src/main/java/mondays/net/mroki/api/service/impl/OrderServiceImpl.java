@@ -1,7 +1,7 @@
 package mondays.net.mroki.api.service.impl;
 
 import lombok.AllArgsConstructor;
-import mondays.net.mroki.api.dto.ProductDTO;
+import mondays.net.mroki.api.dto.product.ProductDTO;
 import mondays.net.mroki.api.entity.ArchiveBox;
 import mondays.net.mroki.api.entity.Customer;
 import mondays.net.mroki.api.entity.Orders;

@@ -1,6 +1,6 @@
 package mondays.net.mroki.api.service;
 
-import mondays.net.mroki.api.dto.CartDTO;
+import mondays.net.mroki.api.dto.cart.CartDTO;
 
 public interface CartService {
     CartDTO getCart(Long customerId);

@@ -1,7 +1,6 @@
 package mondays.net.mroki.api.service;
 
-import mondays.net.mroki.api.dto.CartDTO;
-import mondays.net.mroki.api.dto.ProductDTO;
+import mondays.net.mroki.api.dto.product.ProductDTO;
 import mondays.net.mroki.api.entity.Orders;
 
 import java.util.List;

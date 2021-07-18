@@ -2,9 +2,9 @@ package mondays.net.mroki.api.controller.customer;
 
 
 import io.jsonwebtoken.Jwts;
-import mondays.net.mroki.api.dto.LoginDTO;
+import mondays.net.mroki.api.dto.auth.LoginDTO;
 import mondays.net.mroki.api.dto.ResponseDTO;
-import mondays.net.mroki.api.dto.SignupDTO;
+import mondays.net.mroki.api.dto.auth.SignupDTO;
 import mondays.net.mroki.api.entity.Customer;
 import mondays.net.mroki.api.entity.Role;
 import mondays.net.mroki.api.responseCode.ErrorCode;
