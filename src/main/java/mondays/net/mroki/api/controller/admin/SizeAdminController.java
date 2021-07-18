@@ -3,7 +3,7 @@ package mondays.net.mroki.api.controller.admin;
 import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.converter.SizeConverter;
 import mondays.net.mroki.api.dto.ResponseDTO;
-import mondays.net.mroki.api.dto.SizeDTO;
+import mondays.net.mroki.api.dto.SizeUpdateDTO;
 import mondays.net.mroki.api.exception.SizeConvertException;
 import mondays.net.mroki.api.responseCode.ErrorCode;
 import mondays.net.mroki.api.responseCode.SuccessCode;
@@ -31,7 +31,7 @@ public class SizeAdminController {
         ResponseDTO response = new ResponseDTO();
 
         try {
-            List<SizeDTO> sizeDto = converter.dtoToEntity(service.findByProduct(productId));
+            List<SizeUpdateDTO> sizeDto = converter.dtoToEntity(service.findByProduct(productId));
             response.setSuccessCode(SuccessCode.GET_SIZE);
             response.setData(sizeDto);
             return ResponseEntity.ok().body(response);

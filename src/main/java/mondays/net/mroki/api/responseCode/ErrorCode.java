@@ -13,5 +13,7 @@ public enum ErrorCode {
     PRODUCT_NOT_FOUND,
     SAVE_PRODUCT,
     GET_ALL_COMMENT,
-    GET_SIZE
+    GET_SIZE,
+    LOGIN,
+    WRONG_USERNAME_OR_PASSWORD
 }
