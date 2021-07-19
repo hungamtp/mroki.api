@@ -15,6 +15,9 @@ import java.util.ArrayList;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "cart" ,
+        indexes = @Index(columnList = "customer_id")
+)
 public class Cart {
 
     @Id

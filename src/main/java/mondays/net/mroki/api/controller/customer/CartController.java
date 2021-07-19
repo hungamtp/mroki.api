@@ -7,7 +7,7 @@ import mondays.net.mroki.api.dto.product.ProductAddToCartDTO;
 import mondays.net.mroki.api.dto.ResponseDTO;
 import mondays.net.mroki.api.responseCode.ErrorCode;
 import mondays.net.mroki.api.responseCode.SuccessCode;
-import mondays.net.mroki.api.service.impl.CartServiceImpl;
+import mondays.net.mroki.api.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +22,7 @@ import javax.validation.Valid;
 public class CartController {
 
     @Autowired
-    private final CartServiceImpl service;
+    private final CartService service;
 
     @GetMapping("/{customerId}")
     public ResponseEntity<CartDTO> getCart(@PathVariable Long customerId) {

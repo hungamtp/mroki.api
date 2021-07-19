@@ -7,7 +7,7 @@ import mondays.net.mroki.api.dto.ResponseDTO;
 import mondays.net.mroki.api.exception.ProductConvertException;
 import mondays.net.mroki.api.responseCode.ErrorCode;
 import mondays.net.mroki.api.responseCode.SuccessCode;
-import mondays.net.mroki.api.service.impl.ProductServiceImpl;
+import mondays.net.mroki.api.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +22,7 @@ import java.util.Optional;
 public class ProductAdminController {
 
     @Autowired
-    private final ProductServiceImpl productService;
+    private final ProductService productService;
 
     @Autowired
     private final ProductConverter converter;

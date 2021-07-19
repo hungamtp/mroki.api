@@ -23,4 +23,7 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     @Query(value = "SELECT count(id) as count  FROM comment WHERE product_id = ? AND rate = ?" , nativeQuery = true)
     int getCountRate(Long productId , int rate);
+
+    @Query(value = "SELECT count(id) FROM comment c WHERE c.product_id  = ?1" , nativeQuery = true)
+    int getCountComment(Long productId);
 }

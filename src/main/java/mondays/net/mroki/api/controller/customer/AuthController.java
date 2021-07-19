@@ -2,8 +2,9 @@ package mondays.net.mroki.api.controller.customer;
 
 
 import io.jsonwebtoken.Jwts;
-import mondays.net.mroki.api.dto.auth.LoginDTO;
 import mondays.net.mroki.api.dto.ResponseDTO;
+import mondays.net.mroki.api.dto.auth.LoginDTO;
+import mondays.net.mroki.api.dto.auth.LoginResponseDTO;
 import mondays.net.mroki.api.dto.auth.SignupDTO;
 import mondays.net.mroki.api.entity.Customer;
 import mondays.net.mroki.api.entity.Role;
@@ -36,6 +37,7 @@ public class AuthController {
                           SecretKey secretKey,
                           PasswordEncoder passwordEncoder,
                           CustomerServiceImpl customerService) {
+
         this.authenticationManager = authenticationManager;
         this.jwtConfig = jwtConfig;
         this.secretKey = secretKey;
@@ -85,8 +87,6 @@ public class AuthController {
             Authentication authenticate = authenticationManager.authenticate(authentication);
             if (authenticate.isAuthenticated()) {
 
-                response.setSuccessCode(SuccessCode.LOGIN);
-
                 String token = Jwts.builder()
                         .setSubject(authenticate.getName())
                         .claim("authorities", authenticate.getAuthorities())
@@ -94,23 +94,40 @@ public class AuthController {
                         .setExpiration(java.sql.Date.valueOf(LocalDate.now().plusDays(jwtConfig.getTokenExpirationAfterDays())))
                         .signWith(secretKey)
                         .compact();
-                response.setData("Bearer " + token);
 
+                String defaultAvatar = "https://firebasestorage.googleapis.com/v0/b/timer-34f5a.appspot.com/o/avatar%2Favatar%20default.png?alt=media&token=b12a3df6-93f5-4662-8628-e34c94817c9f";
+                Customer customer = customerService.findByUsername(user.getUsername());
+
+                LoginResponseDTO loginResponse = LoginResponseDTO.builder()
+                        .avatar(customer.getAvatar() == null ? defaultAvatar : customer.getAvatar() )
+                        .username(customer.getUsername())
+                        .jwt("Bearer " + token)
+                        .userId(customer.getId())
+                        .build();
+
+                response.setData(loginResponse);
+                response.setSuccessCode(SuccessCode.LOGIN);
                 return ResponseEntity.ok().body(response);
-
             } else {
 
                 response.setErrorCode(ErrorCode.LOGIN);
-                return ResponseEntity.badRequest().body(response);
+                return ResponseEntity.ok().body(response);
 
             }
 
         } catch (AuthenticationException ex) {
             response.setErrorCode(ErrorCode.WRONG_USERNAME_OR_PASSWORD);
-            return ResponseEntity.badRequest().body(response);
+            return ResponseEntity.ok().body(response);
         }
 
 
+    }
+
+    @GetMapping
+    public ResponseDTO demo() {
+        ResponseDTO response = new ResponseDTO();
+        response.setData(customerService.findByUsername("username"));
+        return response;
     }
 
 

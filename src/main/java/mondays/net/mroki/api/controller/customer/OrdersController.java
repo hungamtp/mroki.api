@@ -6,7 +6,7 @@ import mondays.net.mroki.api.dto.product.ProductDTO;
 import mondays.net.mroki.api.dto.ResponseDTO;
 import mondays.net.mroki.api.responseCode.ErrorCode;
 import mondays.net.mroki.api.responseCode.SuccessCode;
-import mondays.net.mroki.api.service.impl.OrderServiceImpl;
+import mondays.net.mroki.api.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +19,7 @@ import java.util.List;
 public class OrdersController {
 
     @Autowired
-    private final OrderServiceImpl orderService;
+    private final OrderService orderService;
 
     @PostMapping
     public ResponseEntity<ResponseDTO> order(@RequestBody List<ProductDTO> cart, @RequestParam Long customerId) {

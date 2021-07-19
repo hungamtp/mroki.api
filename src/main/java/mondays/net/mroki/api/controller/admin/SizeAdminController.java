@@ -7,7 +7,7 @@ import mondays.net.mroki.api.dto.size.SizeUpdateDTO;
 import mondays.net.mroki.api.exception.SizeConvertException;
 import mondays.net.mroki.api.responseCode.ErrorCode;
 import mondays.net.mroki.api.responseCode.SuccessCode;
-import mondays.net.mroki.api.service.impl.SizeServiceImpl;
+import mondays.net.mroki.api.service.SizeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +21,7 @@ import java.util.List;
 public class SizeAdminController {
 
     @Autowired
-    private final SizeServiceImpl service;
+    private final SizeService service;
 
     @Autowired
     private final SizeConverter converter;

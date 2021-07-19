@@ -38,7 +38,7 @@ public class Customer {
     @ManyToOne(fetch = FetchType.LAZY)
     private Role role;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer" , fetch = FetchType.LAZY)
     private List<Orders> orders;
 
     @OneToMany(mappedBy = "customer" , fetch = FetchType.LAZY)

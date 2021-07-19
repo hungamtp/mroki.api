@@ -54,5 +54,9 @@ public class CustomerServiceImpl implements CustomerService {
         return result;
     }
 
+    public Customer findByUsername(String username){
+        return customerRepository.findByUsername(username);
+    }
+
 
 }

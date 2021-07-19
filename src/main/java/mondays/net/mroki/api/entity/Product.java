@@ -1,6 +1,6 @@
 package mondays.net.mroki.api.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,6 +17,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(name = "product" ,
+        indexes = @Index(columnList = "id")
+)
 public class Product {
 
     @Id

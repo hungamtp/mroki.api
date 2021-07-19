@@ -8,7 +8,7 @@ import mondays.net.mroki.api.entity.Category;
 import mondays.net.mroki.api.exception.CategoryConverterException;
 import mondays.net.mroki.api.responseCode.ErrorCode;
 import mondays.net.mroki.api.responseCode.SuccessCode;
-import mondays.net.mroki.api.service.impl.CategoryServiceImpl;
+import mondays.net.mroki.api.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,13 +19,16 @@ import java.util.Optional;
 @RestController
 @RequestMapping("admin/category")
 @AllArgsConstructor
+@CrossOrigin
 public class CategoryAdminController {
 
     @Autowired
-    private final CategoryServiceImpl categoryService;
+    private CategoryService categoryService;
 
     @Autowired
-    private final CategoryConverter converter;
+    private CategoryConverter converter;
+
+
 
     @PostMapping
     public ResponseEntity<ResponseDTO> addCategory(@Valid @RequestBody CategoryDTO categoryDTO) {

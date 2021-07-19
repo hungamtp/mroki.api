@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.dto.comment.CommentTotalDTO;
 import mondays.net.mroki.api.entity.Comment;
 import mondays.net.mroki.api.entity.Product;
+import mondays.net.mroki.api.exception.CommentConvertException;
 import mondays.net.mroki.api.repository.CommentRepository;
 import mondays.net.mroki.api.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,15 +49,40 @@ public class CommentServiceImpl implements CommentService {
             listRate.add(commentRepository.getCountRate(productId, i));
         }
 
-        return CommentTotalDTO.builder()
-                .rate(((BigDecimal) totalAndAvgRate.get(0)[1]).floatValue())
-                .count(((BigInteger) totalAndAvgRate.get(0)[0]).intValue())
-                .countRate1(listRate.get(0))
-                .countRate2(listRate.get(1))
-                .countRate3(listRate.get(2))
-                .countRate4(listRate.get(3))
-                .countRate5(listRate.get(4))
-                .build();
+        try {
+            if (totalAndAvgRate.size() == 0) {
+                CommentTotalDTO commentTotalDTO = CommentTotalDTO.builder()
+                        .rate(0)
+                        .count(0)
+                        .countRate1(listRate.get(0))
+                        .countRate2(listRate.get(1))
+                        .countRate3(listRate.get(2))
+                        .countRate4(listRate.get(3))
+                        .countRate5(listRate.get(4))
+                        .build();
+                return commentTotalDTO;
+            }
+            CommentTotalDTO commentTotalDTO = CommentTotalDTO.builder()
+                    .rate(((BigDecimal) totalAndAvgRate.get(0)[1]).floatValue())
+                    .count(((BigInteger) totalAndAvgRate.get(0)[0]).intValue())
+                    .countRate1(listRate.get(0))
+                    .countRate2(listRate.get(1))
+                    .countRate3(listRate.get(2))
+                    .countRate4(listRate.get(3))
+                    .countRate5(listRate.get(4))
+                    .build();
+            return commentTotalDTO;
+        } catch (CommentConvertException ex) {
+
+            System.out.println(ex.getMessage());
+            return null;
+
+        }
+
+    }
+
+    public int getCountComment(Long productId) {
+        return commentRepository.getCountComment(productId);
     }
 
 }

@@ -126,7 +126,7 @@ public class ProductConverter {
                 .map((product -> entityToDto(product)))
                 .collect(Collectors.toList());
 
-        Page<ProductDTO> result = new PageImpl<>(productDTOS , pageable , 5);
+        Page<ProductDTO> result = new PageImpl<>(productDTOS , pageable , productDTOS.size());
         return result;
     }
     public List<ProductDTO> pageEntityToList(Page<Product> products){

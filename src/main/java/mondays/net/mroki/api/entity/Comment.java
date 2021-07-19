@@ -1,7 +1,6 @@
 package mondays.net.mroki.api.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +13,9 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@JsonIgnoreProperties({"product"})
+@Table(name = "comment" ,
+        indexes = @Index(columnList = "product_id")
+)
 public class Comment {
 
     @Id
@@ -29,8 +30,7 @@ public class Comment {
     @ManyToOne(cascade = CascadeType.REMOVE , fetch = FetchType.LAZY)
     private Product product;
 
-    @ManyToOne
-    @JsonIncludeProperties("username")
+    @ManyToOne(fetch = FetchType.LAZY)
     private Customer customer;
 
 }

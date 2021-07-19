@@ -4,6 +4,8 @@ import mondays.net.mroki.api.dto.product.ProductDetailDTO;
 import mondays.net.mroki.api.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
 
 public interface ProductService {
     Page<Product> findAllProduct(Pageable pageable);
@@ -21,4 +23,6 @@ public interface ProductService {
     boolean isExist(Long productId);
 
     int countTotalElement();
+
+    void deleteProductById(Long id);
 }

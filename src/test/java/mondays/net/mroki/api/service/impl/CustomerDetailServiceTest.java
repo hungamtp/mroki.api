@@ -27,7 +27,7 @@ class CustomerDetailServiceTest {
 
         UserDetail userDetail = new UserDetail(customer);
 
-        when(repo.findCustomerByUsername("username")).thenReturn(customer);
+        when(repo.findByUsername("username")).thenReturn(customer);
 
         UserDetail customer1 = (UserDetail) service.loadUserByUsername("username");
 
