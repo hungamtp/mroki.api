@@ -27,11 +27,11 @@ public class OrdersController {
         ResponseDTO response = new ResponseDTO();
         try {
             orderService.order(cart, customerId);
-            response.setSuccessCode(SuccessCode.ORDER);
+            response.setSuccessCode(SuccessCode.ORDER.toString());
 
             return ResponseEntity.ok().body(response);
         } catch (Exception ex) {
-            response.setErrorCode(ErrorCode.ORDER);
+            response.setErrorCode(ErrorCode.ORDER.toString());
 
             return ResponseEntity.badRequest().body(response);
         }

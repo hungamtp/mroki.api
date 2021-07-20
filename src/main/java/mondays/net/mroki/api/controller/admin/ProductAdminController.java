@@ -35,13 +35,13 @@ public class ProductAdminController {
         try {
 
             productService.save(converter.addDtoToEntity(productDTO));
-            response.setSuccessCode(SuccessCode.SAVE_PRODUCT);
+            response.setSuccessCode(SuccessCode.SAVE_PRODUCT.toString());
 
             return ResponseEntity.ok().body(response);
         } catch (ProductConvertException ex) {
 
-            response.setErrorCode(ErrorCode.SAVE_PRODUCT);
-            return ResponseEntity.badRequest().body(response);
+            response.setErrorCode(ErrorCode.SAVE_PRODUCT.toString());
+            return ResponseEntity.ok().body(response);
         }
 
     }
@@ -52,18 +52,18 @@ public class ProductAdminController {
         ResponseDTO response = new ResponseDTO();
 
         if (!Optional.ofNullable(id).isPresent()) {
-            response.setErrorCode(ErrorCode.PRODUCT_NOT_FOUND);
+            response.setErrorCode(ErrorCode.PRODUCT_NOT_FOUND.toString());
             return ResponseEntity.badRequest().body(response);
         }
 
         if (!productService.isExist(id)) {
-            response.setErrorCode(ErrorCode.PRODUCT_NOT_FOUND);
+            response.setErrorCode(ErrorCode.PRODUCT_NOT_FOUND.toString());
             return ResponseEntity.badRequest().body(response);
         }
 
         productDTO.setId(id);
         productService.updateProduct(converter.addDtoToEntity(productDTO));
-        response.setSuccessCode(SuccessCode.UPDATE_PRODUCT);
+        response.setSuccessCode(SuccessCode.UPDATE_PRODUCT.toString());
         return ResponseEntity.ok().body(response);
 
 
@@ -77,12 +77,12 @@ public class ProductAdminController {
 
         if (productService.isExist(id)) {
 
-            response.setErrorCode(ErrorCode.PRODUCT_NOT_FOUND);
+            response.setErrorCode(ErrorCode.PRODUCT_NOT_FOUND.toString());
             return ResponseEntity.badRequest().body(response);
         } else {
 
             productService.deleteProductById(id);
-            response.setSuccessCode(SuccessCode.DELETE_PRODUCT);
+            response.setSuccessCode(SuccessCode.DELETE_PRODUCT.toString());
             return ResponseEntity.ok().body(response);
         }
 

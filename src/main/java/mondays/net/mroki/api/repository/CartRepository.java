@@ -1,7 +1,6 @@
 package mondays.net.mroki.api.repository;
 
 import mondays.net.mroki.api.entity.Cart;
-import mondays.net.mroki.api.entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -29,8 +28,9 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
     @Query(value = "UPDATE product_cart c SET quantity = "+
             //get old quantity then add with new quantity
             "(?1+(SELECT quantity FROM product_cart pc WHERE pc.products_id =?2 AND pc.cart_id =?3 LIMIT 1 )) "+
-            "WHERE c.cart_id  = ?3 AND c.products_id =?2 AND size = ?4", nativeQuery = true)
-    void updateQuantity(int quantity, Long productId, Long cartId , int size);
+            "WHERE c.cart_id  = (SELECT id FROM cart WHERE customer_id =?3 LIMIT 1) "+
+            "AND c.products_id =?2 AND size = ?4", nativeQuery = true)
+    void updateQuantity(int quantity, Long productId, Long customerId , int size);
 
 
     @Query(value = "SELECT p.id , p.name , p.thumbnail , p.price , pc.quantity as quantity ,pc.size ,  " +
@@ -40,8 +40,9 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
             "WHERE pc.cart_id = (SELECT id FROM cart c WHERE c.customer_id = ?1 LIMIT 1)", nativeQuery = true)
     List<Object[]> getProductInCart(Long customerId);
 
-    @Query(value = "DELETE FROM product_cart WHERE products_id = ?1 AND cart_id = ?2 ", nativeQuery = true)
-    void deleteProductInCart(Long productId, Long cartId);
+    @Query(value = "DELETE FROM product_cart WHERE products_id = ?1 AND cart_id = "+
+            "(SELECT id FROM cart c WHERE c.customer_id = ?2 LIMIT 1) ", nativeQuery = true)
+    void deleteProductInCart(Long productId, Long customerId);
 
 
     @Query(value = "SELECT pc.cart_id , count(products_id) as count FROM product_cart pc " +
@@ -49,7 +50,8 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
             "HAVING pc.cart_id =(SELECT id FROM cart c WHERE c.customer_id = ?1 LIMIT 1)" , nativeQuery = true)
     List<Object[]> getCountProductInCart(Long customerId);
 
-
+    @Query(value = "SELECT id FROM cart WHERE customer_id = ?1 LIMIT 1" , nativeQuery = true)
+    Long getCartId(Long customerId);
 
 
 }

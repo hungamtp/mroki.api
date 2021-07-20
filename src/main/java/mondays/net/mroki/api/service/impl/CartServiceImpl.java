@@ -26,19 +26,20 @@ public class CartServiceImpl implements CartService {
     private final ProductConverter productConverter;
 
 
-    public void addProductToCart(Long cartId, Long productId, int quantity , int size) {
+    public void addToCart(Long customerId, Long productId, int quantity, int size) {
 
-            repo.addToCart(cartId, productId, quantity , size);
+        if (isProductInCart(customerId, productId, size))
+            updateQuantity(quantity, productId, customerId, size);
+        else {
+            Long cartId = repo.getCartId(customerId);
+            repo.addToCart(cartId, productId, quantity, size);
+        }
 
-    }
-
-    public boolean isProductInCart(Long cartId , Long productId , int size){
-        return repo.isProductInCart(productId , cartId , size);
     }
 
     @Override
-    public void updateQuantity(int quantity, Long productId, Long cartId , int size) {
-        repo.updateQuantity(quantity , productId , cartId , size);
+    public void updateQuantity(int quantity, Long productId, Long customerId, int size) {
+        repo.updateQuantity(quantity, productId, customerId, size);
     }
 
     public CartDTO getCart(Long customerId) {
@@ -58,9 +59,6 @@ public class CartServiceImpl implements CartService {
 
     }
 
-    public boolean isExist(Long customerId) {
-        return repo.isExist(customerId);
-    }
 
     public CartIconDTO getIconData(Long customerId) {
         if (!isExist(customerId)) {
@@ -70,6 +68,14 @@ public class CartServiceImpl implements CartService {
             repo.save(newCart);
         }
         return converter.dataToDto(repo.getCountProductInCart(customerId).get(0));
+    }
+
+    public boolean isProductInCart(Long customerId, Long productId, int size) {
+        return repo.isProductInCart(productId, customerId, size);
+    }
+
+    public boolean isExist(Long customerId) {
+        return repo.isExist(customerId);
     }
 
 }

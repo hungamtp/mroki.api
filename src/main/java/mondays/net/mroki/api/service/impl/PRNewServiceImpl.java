@@ -1,19 +1,12 @@
 package mondays.net.mroki.api.service.impl;
 
-import lombok.AllArgsConstructor;
-import mondays.net.mroki.api.entity.Customer;
-import mondays.net.mroki.api.entity.PRNew;
-import mondays.net.mroki.api.entity.Product;
+
 import mondays.net.mroki.api.repository.PRNewRepository;
 import mondays.net.mroki.api.service.PRNewService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.util.Optional;
+
 
 @Service
 public class PRNewServiceImpl implements PRNewService {

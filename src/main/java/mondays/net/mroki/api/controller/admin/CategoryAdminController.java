@@ -36,7 +36,7 @@ public class CategoryAdminController {
         ResponseDTO response = new ResponseDTO();
 
         if (categoryService.isExist(categoryDTO.getId())) {
-            response.setErrorCode(ErrorCode.ID_IS_EXISTS);
+            response.setErrorCode(ErrorCode.ID_IS_EXISTS.toString());
             return ResponseEntity.badRequest().body(response);
         }
 
@@ -46,7 +46,7 @@ public class CategoryAdminController {
 
             category = converter.dtoToEntity(categoryDTO);
             categoryService.save(category);
-            response.setSuccessCode(SuccessCode.ADD_CATEGORY);
+            response.setSuccessCode(SuccessCode.ADD_CATEGORY.toString());
 
         } catch (CategoryConverterException exception) {
             throw new CategoryConverterException("CONVERT CATEGORY ERROR");
@@ -65,10 +65,10 @@ public class CategoryAdminController {
 
 
         if (!categoryService.isExist(categoryId)) {
-            response.setErrorCode(ErrorCode.ID_CATEGORY_NOT_FOUND);
+            response.setErrorCode(ErrorCode.ID_CATEGORY_NOT_FOUND.toString());
             return ResponseEntity.badRequest().body(response);
         } else {
-            response.setSuccessCode(SuccessCode.DELETE_CATEGORY);
+            response.setSuccessCode(SuccessCode.DELETE_CATEGORY.toString());
             categoryService.delete(categoryId);
             return ResponseEntity.ok().body(response);
         }
@@ -81,11 +81,11 @@ public class CategoryAdminController {
         ResponseDTO response = new ResponseDTO();
 
         if (!categoryService.isExist(categoryDTO.getId())) {
-            response.setErrorCode(ErrorCode.ID_CATEGORY_NOT_FOUND);
+            response.setErrorCode(ErrorCode.ID_CATEGORY_NOT_FOUND.toString());
             return ResponseEntity.badRequest().body(response);
         }
 
-        response.setSuccessCode(SuccessCode.UPDATE_CATEGORY);
+        response.setSuccessCode(SuccessCode.UPDATE_CATEGORY.toString());
         categoryService.update(converter.dtoToEntity(categoryDTO));
 
         return ResponseEntity.ok().body(response);

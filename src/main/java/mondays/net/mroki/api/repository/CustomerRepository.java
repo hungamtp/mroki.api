@@ -14,4 +14,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
             " FROM customer WHERE role_id != 'A' LIMIT ?1 OFFSET ?2", nativeQuery = true)
     List<Object[]> findAllCustomer(int limit, int offset);
 
+    @Query(value = "SELECT CASE WHEN count(id) > 0 THEN true ELSE false END checkUserExist "+
+            "FROM customer c WHERE c.username = ?1 LIMIT 1" , nativeQuery = true)
+    boolean isExist(String username);
 }

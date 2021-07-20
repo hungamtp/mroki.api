@@ -31,23 +31,20 @@ public class CartController {
 
     }
 
-    @PostMapping("/{cartId}")
-    public ResponseEntity<ResponseDTO> addProductToCart(@PathVariable Long cartId,
+    @PostMapping("/{customerId}")
+    public ResponseEntity<ResponseDTO> addProductToCart(@PathVariable Long customerId,
                                                         @Valid @RequestBody ProductAddToCartDTO product) {
 
         ResponseDTO response = new ResponseDTO();
 
         try {
 
-            if (service.isProductInCart(cartId, product.getId() ,product.getSize()))
-                service.updateQuantity(product.getQuantity(), product.getId(), cartId , product.getSize());
-            else
-                service.addProductToCart(cartId, product.getId(), product.getQuantity() , product.getSize());
+            service.addToCart(customerId, product.getId(), product.getQuantity() , product.getSize());
 
-            response.setSuccessCode(SuccessCode.ADD_PRODUCT_TO_CART);
+            response.setSuccessCode(SuccessCode.ADD_PRODUCT_TO_CART.toString());
             return ResponseEntity.ok().body(response);
         } catch (Exception e) {
-            response.setErrorCode(ErrorCode.ADD_PRODUCT_TO_CART);
+            response.setErrorCode(ErrorCode.ADD_PRODUCT_TO_CART.toString());
             return ResponseEntity.badRequest().body(response);
         }
 

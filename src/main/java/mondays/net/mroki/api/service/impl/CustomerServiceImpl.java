@@ -3,6 +3,7 @@ package mondays.net.mroki.api.service.impl;
 import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.dto.customer.CustomerDTO;
 import mondays.net.mroki.api.entity.Customer;
+import mondays.net.mroki.api.exception.DuplicatedDataException;
 import mondays.net.mroki.api.repository.CustomerRepository;
 import mondays.net.mroki.api.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,12 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public void save(Customer customer) {
 
-        customerRepository.save(customer);
+        if (isExist(customer.getUsername()))
+            throw new DuplicatedDataException("User name is exist");
+
+        else
+            customerRepository.save(customer);
+
 
     }
 
@@ -54,8 +60,12 @@ public class CustomerServiceImpl implements CustomerService {
         return result;
     }
 
-    public Customer findByUsername(String username){
+    public Customer findByUsername(String username) {
         return customerRepository.findByUsername(username);
+    }
+
+    public boolean isExist(String username) {
+        return customerRepository.isExist(username);
     }
 
 

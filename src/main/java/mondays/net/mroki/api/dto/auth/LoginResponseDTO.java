@@ -13,6 +13,7 @@ public class LoginResponseDTO {
     private String jwt;
     private String username;
     private Long userId;
+    private String role;
     private String avatar;
 
 }

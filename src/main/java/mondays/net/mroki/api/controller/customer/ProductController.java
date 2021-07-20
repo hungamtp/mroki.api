@@ -53,10 +53,10 @@ public class ProductController {
             }
 
             response.setData(converter.pageEntityToPage(productService.findAllProduct(pageable)));
-            response.setSuccessCode(SuccessCode.GET_PRODUCT);
+            response.setSuccessCode(SuccessCode.GET_PRODUCT.toString());
             return ResponseEntity.ok().body(response);
         } catch (ProductConvertException ex) {
-            response.setErrorCode(ErrorCode.GET_PRODUCT);
+            response.setErrorCode(ErrorCode.GET_PRODUCT.toString());
             return ResponseEntity.badRequest().body(response);
         }
 
@@ -71,18 +71,18 @@ public class ProductController {
             if (productService.isExist(id)) {
 
                 ProductDetailDTO productDTO = productService.getProductById(id);
-                response.setSuccessCode(SuccessCode.GET_PRODUCT_DETAIL);
+                response.setSuccessCode(SuccessCode.GET_PRODUCT_DETAIL.toString());
                 response.setData(productDTO);
 
                 return ResponseEntity.ok().body(response);
             } else {
 
-                response.setErrorCode(ErrorCode.PRODUCT_NOT_FOUND);
+                response.setErrorCode(ErrorCode.PRODUCT_NOT_FOUND.toString());
                 return ResponseEntity.badRequest().body(response);
             }
 
         } catch (Exception ex) {
-            response.setErrorCode(ErrorCode.GET_PRODUCT_DETAIL);
+            response.setErrorCode(ErrorCode.GET_PRODUCT_DETAIL.toString());
             return ResponseEntity.badRequest().body(response);
         }
 
@@ -99,11 +99,11 @@ public class ProductController {
             List<ProductDTO> productDTOS = converter.pageEntityToList(products);
 
             response.setData(productDTOS);
-            response.setSuccessCode(SuccessCode.GET_PRODUCT_BY_CATEGORY);
+            response.setSuccessCode(SuccessCode.GET_PRODUCT_BY_CATEGORY.toString());
             return ResponseEntity.ok().body(response);
         } catch (ProductConvertException ex) {
 
-            response.setErrorCode(ErrorCode.GET_PRODUCT_BY_CATEGORY);
+            response.setErrorCode(ErrorCode.GET_PRODUCT_BY_CATEGORY.toString());
             return ResponseEntity.badRequest().body(response);
         }
 

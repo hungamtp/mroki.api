@@ -1,14 +1,29 @@
 package mondays.net.mroki.api.exception;
 
+import mondays.net.mroki.api.dto.ResponseDTO;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-//    @ExceptionHandler(DataNotFoundException.class)
-//    public ResponseEntity dataNotFoundException(DataNotFoundException ex, WebRequest request) {
-//        ResponseDTO errorResponse = new ResponseDTO(ex.getMessage(), null , null);
-//        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
-//    }
+    @ExceptionHandler(DuplicatedDataException.class)
+    public ResponseEntity dataNotFoundException(DuplicatedDataException ex, WebRequest request) {
+        ResponseDTO errorResponse = new ResponseDTO(ex.getMessage(), null , null);
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity wrongUsernameOrPassword(AuthenticationException ex , WebRequest request){
+        ResponseDTO errorResponse = new ResponseDTO(ex.getMessage(), null , null);
+        return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
+    }
+
+
+
 }

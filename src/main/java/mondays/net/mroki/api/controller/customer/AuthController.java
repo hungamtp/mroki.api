@@ -68,9 +68,9 @@ public class AuthController {
                     .build();
 
             customerService.save(customer);
-            response.setSuccessCode(SuccessCode.SIGN_UP_SUCCESS);
+            response.setSuccessCode(SuccessCode.SIGN_UP_SUCCESS.toString());
         } catch (RuntimeException ex) {
-            response.setErrorCode(ErrorCode.SIGN_UP_FAILED);
+            response.setErrorCode(ErrorCode.SIGN_UP_FAILED.toString());
         }
         return ResponseEntity.ok().body(response);
 
@@ -95,39 +95,34 @@ public class AuthController {
                         .signWith(secretKey)
                         .compact();
 
-                String defaultAvatar = "https://firebasestorage.googleapis.com/v0/b/timer-34f5a.appspot.com/o/avatar%2Favatar%20default.png?alt=media&token=b12a3df6-93f5-4662-8628-e34c94817c9f";
+                String defaultAvatar = "https://firebasestorage.googleapis.com/v0/b/timer-34f5a.appspot.com/"+
+                        "o/avatar%2Favatar%20default.png?alt=media&token=b12a3df6-93f5-4662-8628-e34c94817c9f";
                 Customer customer = customerService.findByUsername(user.getUsername());
 
                 LoginResponseDTO loginResponse = LoginResponseDTO.builder()
-                        .avatar(customer.getAvatar() == null ? defaultAvatar : customer.getAvatar() )
+                        .avatar(customer.getAvatar() == null || customer.getAvatar().equals("")
+                                ? defaultAvatar : customer.getAvatar())
                         .username(customer.getUsername())
+                        .role(customer.getRole().getRoleName())
                         .jwt("Bearer " + token)
                         .userId(customer.getId())
                         .build();
 
                 response.setData(loginResponse);
-                response.setSuccessCode(SuccessCode.LOGIN);
+                response.setSuccessCode(SuccessCode.LOGIN.toString());
                 return ResponseEntity.ok().body(response);
             } else {
 
-                response.setErrorCode(ErrorCode.LOGIN);
+                response.setErrorCode(ErrorCode.LOGIN.toString());
                 return ResponseEntity.ok().body(response);
 
             }
 
         } catch (AuthenticationException ex) {
-            response.setErrorCode(ErrorCode.WRONG_USERNAME_OR_PASSWORD);
+            response.setErrorCode(ErrorCode.WRONG_USERNAME_OR_PASSWORD.toString());
             return ResponseEntity.ok().body(response);
         }
 
-
-    }
-
-    @GetMapping
-    public ResponseDTO demo() {
-        ResponseDTO response = new ResponseDTO();
-        response.setData(customerService.findByUsername("username"));
-        return response;
     }
 
 

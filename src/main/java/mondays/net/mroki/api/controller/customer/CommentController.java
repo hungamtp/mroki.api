@@ -39,11 +39,11 @@ public class CommentController {
 
         try {
             commentService.comment(converter.dtoToEntity(commentAddDTO));
-            response.setSuccessCode(SuccessCode.COMMENT_SUCCESS);
+            response.setSuccessCode(SuccessCode.COMMENT_SUCCESS.toString());
 
             return ResponseEntity.ok().body(response);
         } catch (CommentConvertException ex) {
-            response.setErrorCode(ErrorCode.COMMENT_FAILED);
+            response.setErrorCode(ErrorCode.COMMENT_FAILED.toString());
 
             return ResponseEntity.badRequest().body(response);
         }
@@ -57,11 +57,11 @@ public class CommentController {
         try {
             Pageable pageable = PageRequest.of(0, PAGE_SIZE);
             response.setData(converter.entityToDto(commentService.getComment(pageable, productId)));
-            response.setSuccessCode(SuccessCode.GET_ALL_COMMENT);
+            response.setSuccessCode(SuccessCode.GET_ALL_COMMENT.toString());
 
             return ResponseEntity.ok().body(response);
         } catch (CommentConvertException ex) {
-            response.setErrorCode(ErrorCode.GET_ALL_COMMENT);
+            response.setErrorCode(ErrorCode.GET_ALL_COMMENT.toString());
             return ResponseEntity.badRequest().body(response);
         }
 
