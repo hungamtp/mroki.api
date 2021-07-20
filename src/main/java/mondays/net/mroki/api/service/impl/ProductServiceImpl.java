@@ -2,9 +2,12 @@ package mondays.net.mroki.api.service.impl;
 
 import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.converter.ProductConverter;
+import mondays.net.mroki.api.dto.product.ProductDTO;
 import mondays.net.mroki.api.dto.product.ProductDetailDTO;
 import mondays.net.mroki.api.entity.Category;
 import mondays.net.mroki.api.entity.Product;
+import mondays.net.mroki.api.exception.DataNotFoundException;
+import mondays.net.mroki.api.exception.ProductConvertException;
 import mondays.net.mroki.api.repository.ProductRepository;
 import mondays.net.mroki.api.service.ProductService;
 import org.hibernate.boot.model.naming.IllegalIdentifierException;
@@ -27,15 +30,29 @@ public class ProductServiceImpl implements ProductService {
     private final ProductConverter converter;
 
 
-    public Page<Product> findAllProduct(Pageable pageable) {
+    public Page<ProductDTO> findAllProduct(Pageable pageable) {
+        try {
+            Page<ProductDTO> result = converter.dataPageToPageDto(productRepository.findAllProduct(pageable));
+            return result;
+        } catch (ProductConvertException ex) {
+            throw new ProductConvertException("CONVERT_FAIL");
+        }
 
-        return productRepository.findAllProduct(pageable);
 
     }
 
     public ProductDetailDTO getProductById(Long id) {
+        if (isExist(id)) {
+            try {
+                converter.entityToDetailDto(productRepository.findProductById(id));
+            } catch (ProductConvertException ex) {
+                throw new ProductConvertException("CONVERT_FAIL");
+            }
+        } else {
+            throw new DataNotFoundException("PRODUCT_NOT_FOUND");
+        }
+        return null;
 
-        return converter.entityToDetailDto(productRepository.findProductById(id));
     }
 
     public void save(Product product) {
@@ -56,7 +73,7 @@ public class ProductServiceImpl implements ProductService {
                 .id(categoryId)
                 .build();
 
-        return productRepository.findByCategory(category , pageable);
+        return productRepository.findByCategory(category, pageable);
 
     }
 
@@ -80,9 +97,12 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.isExist(productId);
     }
 
-    public int countTotalElement(){
+    public int countTotalElement() {
         return productRepository.getTotalElement();
     }
 
+    public Page<ProductDTO> demo() {
+        return converter.dataPageToPageDto(productRepository.findAllProductData(PageRequest.of(0, 5)));
+    }
 
 }

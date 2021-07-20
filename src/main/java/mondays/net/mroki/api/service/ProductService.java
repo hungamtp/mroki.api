@@ -1,14 +1,14 @@
 package mondays.net.mroki.api.service;
 
+import mondays.net.mroki.api.dto.product.ProductDTO;
 import mondays.net.mroki.api.dto.product.ProductDetailDTO;
 import mondays.net.mroki.api.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 
 
 public interface ProductService {
-    Page<Product> findAllProduct(Pageable pageable);
+    Page<ProductDTO> findAllProduct(Pageable pageable);
 
     ProductDetailDTO getProductById(Long id) throws Exception;
 
@@ -25,4 +25,6 @@ public interface ProductService {
     int countTotalElement();
 
     void deleteProductById(Long id);
+
+    Page<ProductDTO> demo();
 }

@@ -9,6 +9,7 @@ import mondays.net.mroki.api.entity.Product;
 import mondays.net.mroki.api.entity.ProductImage;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
@@ -120,15 +121,16 @@ public class ProductConverter {
 
     public Page<ProductDTO> pageEntityToPage(Page<Product> products){
 
-
-        Pageable pageable = products.getPageable();
+        System.out.println(products.getTotalPages());//3
         List<ProductDTO> productDTOS=products.stream()
                 .map((product -> entityToDto(product)))
                 .collect(Collectors.toList());
 
-        Page<ProductDTO> result = new PageImpl<>(productDTOS , pageable , productDTOS.size());
+        Page<ProductDTO> result = new PageImpl<>(productDTOS , products.getPageable() , products.getSize());
+        System.out.println(result.getTotalPages()); // 2
         return result;
     }
+
     public List<ProductDTO> pageEntityToList(Page<Product> products){
 
 
@@ -139,6 +141,24 @@ public class ProductConverter {
 
 
         return productDTOS;
+    }
+
+    public ProductDTO dataToProductDto(Object[] data){
+        return ProductDTO.builder()
+                .id(((BigInteger) data[0]).longValue())
+                .name((String) data[1])
+                .thumbnail((String) data[2])
+                .price((float) data[3])
+                .rate(data[4]==null ?0:(float) data[4])
+                .build();
+    }
+
+    public Page<ProductDTO> dataPageToPageDto(Page<Object[]> data){
+
+        List<ProductDTO> list = data.stream().map((product) ->dataToProductDto(product))
+                .collect(Collectors.toList());
+
+        return new PageImpl<>(list , data.getPageable() , list.size());
     }
 
 

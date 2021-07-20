@@ -1,15 +1,15 @@
 package mondays.net.mroki.api.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -27,5 +27,16 @@ public class Category {
 
     @OneToMany(mappedBy = "category" , fetch = FetchType.LAZY)
     private List<Product> products;
+
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "parent_id")
+    private Category parent;
+
+    @ManyToMany
+    @JoinTable(name ="subcategories" ,
+            joinColumns = {@JoinColumn(name = "parent_id")},
+            inverseJoinColumns = {@JoinColumn(name = "id")})
+    private Set<Category> subCategories = new HashSet<>();
 
 }

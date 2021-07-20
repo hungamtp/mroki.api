@@ -14,13 +14,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(DuplicatedDataException.class)
     public ResponseEntity dataNotFoundException(DuplicatedDataException ex, WebRequest request) {
-        ResponseDTO errorResponse = new ResponseDTO(ex.getMessage(), null , null);
+        ResponseDTO errorResponse = new ResponseDTO(null, null , ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(AuthenticationException.class)
     public ResponseEntity wrongUsernameOrPassword(AuthenticationException ex , WebRequest request){
-        ResponseDTO errorResponse = new ResponseDTO(ex.getMessage(), null , null);
+        ResponseDTO errorResponse = new ResponseDTO(null, null , ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
     }
 

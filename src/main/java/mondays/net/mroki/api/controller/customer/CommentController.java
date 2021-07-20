@@ -43,6 +43,7 @@ public class CommentController {
 
             return ResponseEntity.ok().body(response);
         } catch (CommentConvertException ex) {
+
             response.setErrorCode(ErrorCode.COMMENT_FAILED.toString());
 
             return ResponseEntity.badRequest().body(response);
@@ -71,13 +72,16 @@ public class CommentController {
     public CommentTotalDTO getTotalComment(@PathVariable Long productId) {
 
         return commentService.getTotalComment(productId);
+
     }
 
     @GetMapping("/count/{productId}")
     public int getCountComment(@PathVariable Long productId) {
+
         int total = commentService.getCountComment(productId);
 
         return total % PAGE_SIZE == 0 ? (total / PAGE_SIZE) : (total / PAGE_SIZE + 1);
+
     }
 
 }

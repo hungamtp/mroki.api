@@ -40,7 +40,7 @@ public class ProductController {
 
     @GetMapping
     public ResponseEntity<ResponseDTO> getAllProduct(@RequestParam(required = false) Integer page,
-                                                @RequestBody(required = false) SortDTO sortDTO) {
+                                                     @RequestBody(required = false) SortDTO sortDTO) {
 
         ResponseDTO response = new ResponseDTO();
         try {
@@ -52,7 +52,7 @@ public class ProductController {
                 pageable = PageRequest.of(Optional.ofNullable(page).orElse(0), PAGE_SIZE, Sort.by("id"));
             }
 
-            response.setData(converter.pageEntityToPage(productService.findAllProduct(pageable)));
+            response.setData(productService.findAllProduct(pageable));
             response.setSuccessCode(SuccessCode.GET_PRODUCT.toString());
             return ResponseEntity.ok().body(response);
         } catch (ProductConvertException ex) {
@@ -68,18 +68,12 @@ public class ProductController {
         ResponseDTO response = new ResponseDTO();
 
         try {
-            if (productService.isExist(id)) {
 
-                ProductDetailDTO productDTO = productService.getProductById(id);
-                response.setSuccessCode(SuccessCode.GET_PRODUCT_DETAIL.toString());
-                response.setData(productDTO);
+            ProductDetailDTO productDTO = productService.getProductById(id);
+            response.setSuccessCode(SuccessCode.GET_PRODUCT_DETAIL.toString());
+            response.setData(productDTO);
 
-                return ResponseEntity.ok().body(response);
-            } else {
-
-                response.setErrorCode(ErrorCode.PRODUCT_NOT_FOUND.toString());
-                return ResponseEntity.badRequest().body(response);
-            }
+            return ResponseEntity.ok().body(response);
 
         } catch (Exception ex) {
             response.setErrorCode(ErrorCode.GET_PRODUCT_DETAIL.toString());
@@ -127,6 +121,11 @@ public class ProductController {
         int totalPage = productService.countTotalElement();
 
         return totalPage % PAGE_SIZE == 0 ? totalPage / PAGE_SIZE : totalPage / PAGE_SIZE + 1;
+    }
+
+    @GetMapping("/demo")
+    public Page<ProductDTO> deom() {
+        return productService.demo();
     }
 
 
