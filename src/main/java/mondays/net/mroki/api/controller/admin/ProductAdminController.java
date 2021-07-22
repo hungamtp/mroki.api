@@ -2,13 +2,16 @@ package mondays.net.mroki.api.controller.admin;
 
 import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.converter.ProductConverter;
-import mondays.net.mroki.api.dto.product.ProductAddDTO;
 import mondays.net.mroki.api.dto.ResponseDTO;
+import mondays.net.mroki.api.dto.product.ProductAddDTO;
 import mondays.net.mroki.api.exception.ProductConvertException;
 import mondays.net.mroki.api.responseCode.ErrorCode;
 import mondays.net.mroki.api.responseCode.SuccessCode;
 import mondays.net.mroki.api.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +29,21 @@ public class ProductAdminController {
 
     @Autowired
     private final ProductConverter converter;
+
+    @GetMapping
+    public ResponseEntity<ResponseDTO> getAllProduct(@RequestParam Integer page,
+                                                     @RequestParam Integer size,
+                                                     @RequestParam String sort) {
+        ResponseDTO response = new ResponseDTO();
+
+        if(!Optional.ofNullable(sort).isPresent() ) sort = "id";
+        Pageable pageable = PageRequest.of(Optional.ofNullable(page).orElse(0), size, Sort.by(sort));
+
+        response.setData(productService.findAllProductAdmin(pageable));
+
+        return ResponseEntity.ok().body(response);
+    }
+
 
     @PostMapping
     public ResponseEntity<ResponseDTO> addProduct(@Valid @RequestBody ProductAddDTO productDTO) {

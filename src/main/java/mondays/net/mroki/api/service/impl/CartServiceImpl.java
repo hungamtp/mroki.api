@@ -5,6 +5,7 @@ import mondays.net.mroki.api.converter.CartConverter;
 import mondays.net.mroki.api.converter.ProductConverter;
 import mondays.net.mroki.api.dto.cart.CartDTO;
 import mondays.net.mroki.api.dto.cart.CartIconDTO;
+import mondays.net.mroki.api.dto.product.ProductAddToCartDTO;
 import mondays.net.mroki.api.entity.Cart;
 import mondays.net.mroki.api.entity.Customer;
 import mondays.net.mroki.api.repository.CartRepository;
@@ -26,13 +27,13 @@ public class CartServiceImpl implements CartService {
     private final ProductConverter productConverter;
 
 
-    public void addToCart(Long customerId, Long productId, int quantity, int size) {
+    public void addToCart(Long customerId, ProductAddToCartDTO product) {
 
-        if (isProductInCart(customerId, productId, size))
-            updateQuantity(quantity, productId, customerId, size);
+        if (repo.isProductInCart(product.getId(), customerId, product.getSize()))
+            repo.updateQuantity(product.getQuantity(), product.getId(), customerId, product.getSize());
         else {
             Long cartId = repo.getCartId(customerId);
-            repo.addToCart(cartId, productId, quantity, size);
+            repo.addToCart(cartId, product.getId(), product.getQuantity(), product.getSize());
         }
 
     }
@@ -60,18 +61,18 @@ public class CartServiceImpl implements CartService {
     }
 
 
-    public CartIconDTO getIconData(Long customerId) {
+    public Integer getIconData(Long customerId) {
         if (!isExist(customerId)) {
             Cart newCart = Cart.builder()
                     .customer(Customer.builder().id(customerId).build())
                     .build();
             repo.save(newCart);
         }
-        return converter.dataToDto(repo.getCountProductInCart(customerId).get(0));
+        return repo.getCountProductInCart(customerId);
     }
 
-    public boolean isProductInCart(Long customerId, Long productId, int size) {
-        return repo.isProductInCart(productId, customerId, size);
+    public boolean isProductInCart(Long cartId, Long productId, int size) {
+        return repo.isProductInCart(productId, cartId, size);
     }
 
     public boolean isExist(Long customerId) {

@@ -1,5 +1,7 @@
 package mondays.net.mroki.api.service;
 
+
+import mondays.net.mroki.api.dto.product.ProductAdminDTO;
 import mondays.net.mroki.api.dto.product.ProductDTO;
 import mondays.net.mroki.api.dto.product.ProductDetailDTO;
 import mondays.net.mroki.api.entity.Product;
@@ -12,19 +14,23 @@ public interface ProductService {
 
     ProductDetailDTO getProductById(Long id) throws Exception;
 
-    void save(Product product);
 
-    void updateProduct(Product product);
+    Page<ProductDTO> getProductByCategory(String categoryId, Pageable pageable);
 
-    Page<Product> getProductByCategory(String categoryId, Pageable pageable);
-
-    Page<Product> getProductByName(String name, int page);
+    Page<ProductDTO> getProductByName(String name, int page);
 
     boolean isExist(Long productId);
 
+    //addmin service
     int countTotalElement();
 
     void deleteProductById(Long id);
 
-    Page<ProductDTO> demo();
+    void save(Product product);
+
+    void updateProduct(Product product);
+
+    Page<ProductAdminDTO> findAllProductAdmin(Pageable pageable);
+
+
 }

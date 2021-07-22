@@ -39,7 +39,7 @@ public class CartController {
 
         try {
 
-            service.addToCart(customerId, product.getId(), product.getQuantity() , product.getSize());
+            service.addToCart(customerId, product);
 
             response.setSuccessCode(SuccessCode.ADD_PRODUCT_TO_CART.toString());
             return ResponseEntity.ok().body(response);
@@ -51,8 +51,11 @@ public class CartController {
     }
 
     @GetMapping
-    public ResponseEntity<CartIconDTO> getCartIconDTO(@RequestParam Long customerId) {
-        return ResponseEntity.ok().body(service.getIconData(customerId));
+    public ResponseEntity<ResponseDTO> getCartIconDTO(@RequestParam Long customerId) {
+        ResponseDTO response = new ResponseDTO();
+        Integer count = service.getIconData(customerId);
+        response.setData(count==null ? 0 : count);
+        return ResponseEntity.ok().body(response);
     }
 
 

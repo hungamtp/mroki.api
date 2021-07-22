@@ -6,9 +6,7 @@ import mondays.net.mroki.api.converter.ProductConverter;
 import mondays.net.mroki.api.dto.ResponseDTO;
 import mondays.net.mroki.api.dto.product.ProductDTO;
 import mondays.net.mroki.api.dto.product.ProductDetailDTO;
-import mondays.net.mroki.api.dto.product.SortDTO;
 import mondays.net.mroki.api.dto.product.SortType;
-import mondays.net.mroki.api.entity.Product;
 import mondays.net.mroki.api.exception.ProductConvertException;
 import mondays.net.mroki.api.responseCode.ErrorCode;
 import mondays.net.mroki.api.responseCode.SuccessCode;
@@ -22,7 +20,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.EnumSet;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -40,17 +37,18 @@ public class ProductController {
 
     @GetMapping
     public ResponseEntity<ResponseDTO> getAllProduct(@RequestParam(required = false) Integer page,
-                                                     @RequestBody(required = false) SortDTO sortDTO) {
+                                                     @RequestParam(required = false) Integer size,
+                                                     @RequestBody(required = false) String sort) {
 
         ResponseDTO response = new ResponseDTO();
         try {
             Pageable pageable;
 
-            if (Optional.ofNullable(sortDTO).isPresent()) {
-                pageable = PageRequest.of(Optional.ofNullable(page).orElse(0), PAGE_SIZE, Sort.by(sortDTO.getSortType().toLowerCase()));
-            } else {
-                pageable = PageRequest.of(Optional.ofNullable(page).orElse(0), PAGE_SIZE, Sort.by("id"));
-            }
+
+            pageable = PageRequest.of(Optional.ofNullable(page).orElse(0),
+                    Optional.ofNullable(size).orElse(9),
+                    Sort.by(Optional.ofNullable(sort).isPresent() ?sort : "id"));
+
 
             response.setData(productService.findAllProduct(pageable));
             response.setSuccessCode(SuccessCode.GET_PRODUCT.toString());
@@ -84,15 +82,15 @@ public class ProductController {
 
     @GetMapping("/category/{categoryId}")
     public ResponseEntity<ResponseDTO> getProductByCategory(@PathVariable String categoryId,
-                                                            @RequestParam(required = false) Optional<Integer> page) {
+                                                            @RequestParam(required = false) Integer page,
+                                                            @RequestParam(required = false) Integer size) {
 
         ResponseDTO response = new ResponseDTO();
         try {
-            Pageable pageable = PageRequest.of(page.orElse(0), PAGE_SIZE);
-            Page<Product> products = productService.getProductByCategory(categoryId, pageable);
-            List<ProductDTO> productDTOS = converter.pageEntityToList(products);
+            Pageable pageable = PageRequest.of(Optional.ofNullable(page).orElse(0), Optional.ofNullable(size).orElse(9));
+            Page<ProductDTO> products = productService.getProductByCategory(categoryId, pageable);
 
-            response.setData(productDTOS);
+            response.setData(products);
             response.setSuccessCode(SuccessCode.GET_PRODUCT_BY_CATEGORY.toString());
             return ResponseEntity.ok().body(response);
         } catch (ProductConvertException ex) {
@@ -103,10 +101,12 @@ public class ProductController {
 
     }
 
-    @GetMapping("/name")
-    public Page<Product> findByName(@RequestParam String name,
-                                    @RequestParam(required = false) Optional<Integer> page) {
-        return productService.getProductByName(name, page.orElse(0));
+    @GetMapping("/name/{name}")
+    public ResponseEntity<ResponseDTO> findByName(@PathVariable String name,
+                                                  @RequestParam(required = false) Optional<Integer> page) {
+        ResponseDTO response = new ResponseDTO();
+        response.setData(productService.getProductByName(name, page.orElse(0)));
+        return ResponseEntity.ok().body(response);
     }
 
     @GetMapping("/sortType")
@@ -121,11 +121,6 @@ public class ProductController {
         int totalPage = productService.countTotalElement();
 
         return totalPage % PAGE_SIZE == 0 ? totalPage / PAGE_SIZE : totalPage / PAGE_SIZE + 1;
-    }
-
-    @GetMapping("/demo")
-    public Page<ProductDTO> deom() {
-        return productService.demo();
     }
 
 

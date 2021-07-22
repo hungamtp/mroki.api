@@ -18,6 +18,8 @@ public class CategoryDTO {
     @Size(max = 1, min = 1)
     private String id;
 
+    private Long parentId;
+
     @NotBlank(message = "name is empty")
     private String name;
 }

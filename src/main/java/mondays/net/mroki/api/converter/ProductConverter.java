@@ -1,15 +1,11 @@
 package mondays.net.mroki.api.converter;
 
-import mondays.net.mroki.api.dto.product.ProductAddDTO;
-import mondays.net.mroki.api.dto.product.ProductCartDTO;
-import mondays.net.mroki.api.dto.product.ProductDTO;
-import mondays.net.mroki.api.dto.product.ProductDetailDTO;
+import mondays.net.mroki.api.dto.product.*;
 import mondays.net.mroki.api.entity.Category;
 import mondays.net.mroki.api.entity.Product;
 import mondays.net.mroki.api.entity.ProductImage;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
@@ -62,21 +58,6 @@ public class ProductConverter {
         return product;
     }
 
-    public ProductDetailDTO entityToDetailDto(Product product) {
-
-        return ProductDetailDTO.builder()
-                .id(product.getId())
-                .name(product.getName())
-                .retail(product.getRetail())
-                .description(product.getDescription())
-                .saleOff(product.getSaleOff())
-                .rate(product.getRate())
-                .categoryId(product.getCategory().getId())
-                .thumbnail(product.getProductImage().getThumbnail())
-                .image1(product.getProductImage().getImage1())
-                .image2(product.getProductImage().getImage2())
-                .build();
-    }
 
     public List<ProductDTO> dataToDto(List<Object[]> data) {
 
@@ -112,53 +93,92 @@ public class ProductConverter {
             int size = (int) product[5];
             float rate = ((BigDecimal) product[6]).floatValue();
 
-            result.add(new ProductCartDTO(id, name, rate, thumbnail, price, quantity , size));
+            result.add(new ProductCartDTO(id, name, rate, thumbnail, price, quantity, size));
         });
 
         return result;
 
     }
 
-    public Page<ProductDTO> pageEntityToPage(Page<Product> products){
+    public Page<ProductDTO> pageEntityToPage(Page<Product> products) {
 
         System.out.println(products.getTotalPages());//3
-        List<ProductDTO> productDTOS=products.stream()
+        List<ProductDTO> productDTOS = products.stream()
                 .map((product -> entityToDto(product)))
                 .collect(Collectors.toList());
 
-        Page<ProductDTO> result = new PageImpl<>(productDTOS , products.getPageable() , products.getSize());
+        Page<ProductDTO> result = new PageImpl<>(productDTOS, products.getPageable(), products.getSize());
         System.out.println(result.getTotalPages()); // 2
         return result;
     }
 
-    public List<ProductDTO> pageEntityToList(Page<Product> products){
+    public Page<ProductDTO> pageEntityToList(Page<Product> products) {
 
 
         Pageable pageable = products.getPageable();
-        List<ProductDTO> productDTOS=products.stream()
+        List<ProductDTO> productDTOS = products.stream()
                 .map((product -> entityToDto(product)))
                 .collect(Collectors.toList());
 
-
-        return productDTOS;
+        return new PageImpl<>(productDTOS, pageable, productDTOS.size());
     }
 
-    public ProductDTO dataToProductDto(Object[] data){
+    public ProductDTO dataToProductDto(Object[] data) {
         return ProductDTO.builder()
                 .id(((BigInteger) data[0]).longValue())
                 .name((String) data[1])
                 .thumbnail((String) data[2])
                 .price((float) data[3])
-                .rate(data[4]==null ?0:(float) data[4])
+                .rate(data[4] == null ? 0 : ((BigDecimal) data[4]).floatValue())
                 .build();
     }
 
-    public Page<ProductDTO> dataPageToPageDto(Page<Object[]> data){
+    public Page<ProductDTO> dataPageToPageDto(Page<Object[]> data) {
 
-        List<ProductDTO> list = data.stream().map((product) ->dataToProductDto(product))
+        List<ProductDTO> list = data.stream().map((product) -> dataToProductDto(product))
                 .collect(Collectors.toList());
 
-        return new PageImpl<>(list , data.getPageable() , list.size());
+        return new PageImpl<>(list, data.getPageable(), list.size());
+    }
+
+    public ProductDetailDTO entityToProductDetailDto(Product product) {
+
+
+        return ProductDetailDTO.builder()
+                .id(product.getId())
+                .name(product.getName())
+                .thumbnail(product.getProductImage().getThumbnail())
+                .retail(product.getPrice())
+                .saleOff(product.getSaleOff())
+                .categoryId(product.getCategory().getName())
+                .image1(product.getProductImage().getImage1())
+                .image2(product.getProductImage().getImage2())
+                .build();
+    }
+
+    public ProductAdminDTO entityToAddDto(Product product) {
+        return ProductAdminDTO.builder()
+                .id(product.getId())
+                .name(product.getName())
+                .price(product.getPrice())
+                .retail(product.getRetail())
+                .description(product.getDescription())
+                .saleOff(product.getSaleOff())
+                .categoryName(product.getCategory().getName())
+                .thumbnail(product.getProductImage().getThumbnail())
+                .image1(product.getProductImage().getImage1())
+                .image2(product.getProductImage().getImage2())
+                .createdDate(product.getCreatedDate())
+                .modifiedDate(product.getModifiedDate())
+                .deleted(product.isDelete())
+                .build();
+    }
+
+    public Page<ProductAdminDTO> entityToPageAddDto(Page<Product> products) {
+        List<ProductAdminDTO> list = products.stream()
+                .map((product) -> entityToAddDto(product))
+                .collect(Collectors.toList());
+        return new PageImpl<>(list, products.getPageable(), list.size());
     }
 
 

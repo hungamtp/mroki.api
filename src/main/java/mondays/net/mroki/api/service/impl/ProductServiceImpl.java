@@ -2,9 +2,9 @@ package mondays.net.mroki.api.service.impl;
 
 import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.converter.ProductConverter;
+import mondays.net.mroki.api.dto.product.ProductAdminDTO;
 import mondays.net.mroki.api.dto.product.ProductDTO;
 import mondays.net.mroki.api.dto.product.ProductDetailDTO;
-import mondays.net.mroki.api.entity.Category;
 import mondays.net.mroki.api.entity.Product;
 import mondays.net.mroki.api.exception.DataNotFoundException;
 import mondays.net.mroki.api.exception.ProductConvertException;
@@ -16,6 +16,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -31,6 +33,7 @@ public class ProductServiceImpl implements ProductService {
 
 
     public Page<ProductDTO> findAllProduct(Pageable pageable) {
+
         try {
             Page<ProductDTO> result = converter.dataPageToPageDto(productRepository.findAllProduct(pageable));
             return result;
@@ -38,20 +41,60 @@ public class ProductServiceImpl implements ProductService {
             throw new ProductConvertException("CONVERT_FAIL");
         }
 
-
     }
 
     public ProductDetailDTO getProductById(Long id) {
-        if (isExist(id)) {
+
+        Optional<Product> optional = productRepository.findById(id);
+
+        if (optional.isPresent() && !optional.get().isDelete()) {
+
             try {
-                converter.entityToDetailDto(productRepository.findProductById(id));
+                return converter.entityToProductDetailDto(optional.get());
             } catch (ProductConvertException ex) {
                 throw new ProductConvertException("CONVERT_FAIL");
             }
+
         } else {
             throw new DataNotFoundException("PRODUCT_NOT_FOUND");
         }
-        return null;
+
+    }
+
+
+    public Page<ProductDTO> getProductByCategory(String categoryId, Pageable pageable) {
+
+        try {
+            return converter.dataPageToPageDto(productRepository.findProductByCategory(categoryId, pageable));
+        } catch (ProductConvertException ex) {
+            throw new ProductConvertException("CONVERT_PRODUCT_FAIL");
+        }
+
+    }
+
+    public Page<ProductDTO> getProductByName(String name, int page) {
+
+        Pageable pageable = PageRequest.of(page, PAGE_SIZE);
+
+        return converter.dataPageToPageDto(productRepository.findByNameLike(name, pageable));
+    }
+
+
+    public boolean isExist(Long productId) {
+        return productRepository.isExist(productId);
+    }
+
+    public int countTotalElement() {
+        return productRepository.getTotalElement();
+    }
+
+    // admin service
+    public void updateProduct(Product product) {
+
+        if (!isExist(product.getId()))
+            throw new IllegalIdentifierException("Id not found");
+        else
+            productRepository.save(product);
 
     }
 
@@ -63,46 +106,20 @@ public class ProductServiceImpl implements ProductService {
 
         if (isExist(id))
             productRepository.deleteProductById(id);
-        else throw new IllegalIdentifierException("DELETE:product's id not found");
+        else throw new DataNotFoundException("PRODUCT_NOT_FOUND");
 
     }
 
-    public Page<Product> getProductByCategory(String categoryId, Pageable pageable) {
+    public Page<ProductAdminDTO> findAllProductAdmin(Pageable pageable) {
 
-        Category category = Category.builder()
-                .id(categoryId)
-                .build();
+        Page<Product> products = productRepository.findAll(pageable);
 
-        return productRepository.findByCategory(category, pageable);
+        try {
+            return converter.entityToPageAddDto(products);
+        } catch (ProductConvertException ex) {
+            throw new ProductConvertException("PRODUCT_CONVERT_FAIL");
+        }
 
-    }
-
-    public Page<Product> getProductByName(String name, int page) {
-
-        Pageable pageable = PageRequest.of(page, PAGE_SIZE);
-
-        return productRepository.findByNameLike(name, pageable);
-    }
-
-    public void updateProduct(Product product) {
-
-        if (!isExist(product.getId()))
-            throw new IllegalIdentifierException("Id not found");
-        else
-            productRepository.save(product);
-
-    }
-
-    public boolean isExist(Long productId) {
-        return productRepository.isExist(productId);
-    }
-
-    public int countTotalElement() {
-        return productRepository.getTotalElement();
-    }
-
-    public Page<ProductDTO> demo() {
-        return converter.dataPageToPageDto(productRepository.findAllProductData(PageRequest.of(0, 5)));
     }
 
 }

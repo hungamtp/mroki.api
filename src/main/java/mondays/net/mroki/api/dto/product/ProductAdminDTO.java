@@ -1,27 +1,29 @@
 package mondays.net.mroki.api.dto.product;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import java.time.LocalDate;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @Builder
-public class ProductDetailDTO {
-
+public class ProductAdminDTO {
     private Long id;
     private String name;
-    private float retail;
+    private Float price;
+    private Float retail;
     private String description;
-    private int saleOff;
-    private String categoryId;
+    private Integer saleOff;
+    private LocalDate createdDate;
+    private LocalDate modifiedDate;
+    private String categoryName;
     private String thumbnail;
     private String image1;
     private String image2;
-
+    private boolean deleted;
 }

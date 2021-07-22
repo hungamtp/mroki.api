@@ -56,7 +56,7 @@ public class CommentController {
         ResponseDTO response = new ResponseDTO();
 
         try {
-            Pageable pageable = PageRequest.of(0, PAGE_SIZE);
+            Pageable pageable = PageRequest.of(page.orElse(0), PAGE_SIZE);
             response.setData(converter.entityToDto(commentService.getComment(pageable, productId)));
             response.setSuccessCode(SuccessCode.GET_ALL_COMMENT.toString());
 
