@@ -1,10 +1,10 @@
-package mondays.net.mroki.api.dto.cart;
+package mondays.net.mroki.api.dto.cartDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import mondays.net.mroki.api.dto.product.ProductCartDTO;
+import mondays.net.mroki.api.dto.productDTO.ProductCartDTO;
 
 import java.util.ArrayList;
 import java.util.List;

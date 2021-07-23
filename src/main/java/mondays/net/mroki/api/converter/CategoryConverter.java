@@ -1,8 +1,8 @@
 package mondays.net.mroki.api.converter;
 
-import mondays.net.mroki.api.dto.CategoryDTO;
+import mondays.net.mroki.api.dto.categoryDTO.CategoryDTO;
+import mondays.net.mroki.api.dto.categoryDTO.ParentCategory;
 import mondays.net.mroki.api.entity.Category;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -16,6 +16,7 @@ public class CategoryConverter {
         return CategoryDTO.builder()
                 .id(category.getId())
                 .name(category.getName())
+                .parentId(category.getParent().getId())
                 .build();
     }
 
@@ -33,5 +34,21 @@ public class CategoryConverter {
                 .name(dto.getName())
                 .build();
     }
+
+    public ParentCategory entityToParentDto(Category category){
+        return ParentCategory.builder()
+                .id(category.getId())
+                .subCategories(category.getSubCategories())
+                .name(category.getName())
+                .build();
+    }
+
+    public List<ParentCategory> entityTOParentDto(List<Category> categories){
+        return categories.stream().
+                map((category -> entityToParentDto(category)))
+                .collect(Collectors.toList());
+    }
+
+
 
 }

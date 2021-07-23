@@ -1,4 +1,5 @@
-package mondays.net.mroki.api.dto.auth;
+package mondays.net.mroki.api.dto.commentDTO;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,11 +10,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class LoginResponseDTO {
-    private String jwt;
+public class CommentDTO {
+
     private String username;
-    private Long userId;
-    private String role;
     private String avatar;
+    private String content;
+    private int rate;
 
 }

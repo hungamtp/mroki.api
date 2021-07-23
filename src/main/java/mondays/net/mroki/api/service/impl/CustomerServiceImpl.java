@@ -1,7 +1,7 @@
 package mondays.net.mroki.api.service.impl;
 
 import lombok.AllArgsConstructor;
-import mondays.net.mroki.api.dto.customer.CustomerDTO;
+import mondays.net.mroki.api.dto.customerDTO.CustomerDTO;
 import mondays.net.mroki.api.entity.Customer;
 import mondays.net.mroki.api.exception.DuplicatedDataException;
 import mondays.net.mroki.api.repository.CustomerRepository;

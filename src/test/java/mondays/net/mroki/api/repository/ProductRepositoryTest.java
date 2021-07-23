@@ -52,5 +52,12 @@ class ProductRepositoryTest {
     }
 
 
+    @Test
+    public void findAllProductAdmin(){
+        Page<Product> products=repo.findByIsDeleteIsFalse(PageRequest.of(0 , 1 , Sort.by("id")));
+
+        assertEquals(2L ,products.getContent().get(0).getId() );
+    }
+
 
 }

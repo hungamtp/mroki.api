@@ -3,9 +3,9 @@ package mondays.net.mroki.api.controller.customer;
 
 import io.jsonwebtoken.Jwts;
 import mondays.net.mroki.api.dto.ResponseDTO;
-import mondays.net.mroki.api.dto.auth.LoginDTO;
-import mondays.net.mroki.api.dto.auth.LoginResponseDTO;
-import mondays.net.mroki.api.dto.auth.SignupDTO;
+import mondays.net.mroki.api.dto.authDTO.LoginDTO;
+import mondays.net.mroki.api.dto.authDTO.LoginResponseDTO;
+import mondays.net.mroki.api.dto.authDTO.SignupDTO;
 import mondays.net.mroki.api.entity.Customer;
 import mondays.net.mroki.api.entity.Role;
 import mondays.net.mroki.api.responseCode.ErrorCode;

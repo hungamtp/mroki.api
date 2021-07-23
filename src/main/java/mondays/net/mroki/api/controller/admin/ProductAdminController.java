@@ -3,7 +3,7 @@ package mondays.net.mroki.api.controller.admin;
 import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.converter.ProductConverter;
 import mondays.net.mroki.api.dto.ResponseDTO;
-import mondays.net.mroki.api.dto.product.ProductAddDTO;
+import mondays.net.mroki.api.dto.productDTO.ProductAddDTO;
 import mondays.net.mroki.api.exception.ProductConvertException;
 import mondays.net.mroki.api.responseCode.ErrorCode;
 import mondays.net.mroki.api.responseCode.SuccessCode;
@@ -36,7 +36,7 @@ public class ProductAdminController {
                                                      @RequestParam String sort) {
         ResponseDTO response = new ResponseDTO();
 
-        if(!Optional.ofNullable(sort).isPresent() ) sort = "id";
+        if (!Optional.ofNullable(sort).isPresent()) sort = "id";
         Pageable pageable = PageRequest.of(Optional.ofNullable(page).orElse(0), size, Sort.by(sort));
 
         response.setData(productService.findAllProductAdmin(pageable));
@@ -95,13 +95,15 @@ public class ProductAdminController {
 
         if (productService.isExist(id)) {
 
-            response.setErrorCode(ErrorCode.PRODUCT_NOT_FOUND.toString());
-            return ResponseEntity.badRequest().body(response);
-        } else {
-
             productService.deleteProductById(id);
             response.setSuccessCode(SuccessCode.DELETE_PRODUCT.toString());
             return ResponseEntity.ok().body(response);
+
+        } else {
+            response.setErrorCode(ErrorCode.PRODUCT_NOT_FOUND.toString());
+            return ResponseEntity.badRequest().body(response);
+
+
         }
 
 

@@ -1,6 +1,5 @@
 package mondays.net.mroki.api.service.impl;
 
-import mondays.net.mroki.api.dto.CategoryDTO;
 import mondays.net.mroki.api.entity.Category;
 import mondays.net.mroki.api.repository.CategoryRepository;
 import org.junit.Before;

@@ -44,8 +44,6 @@ public class Customer {
     @OneToMany(mappedBy = "customer" , fetch = FetchType.LAZY)
     private List<Comment> comment;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private PRNew prNew;
 
     @OneToOne(mappedBy = "customer" ,fetch = FetchType.LAZY)
     private Cart cart;

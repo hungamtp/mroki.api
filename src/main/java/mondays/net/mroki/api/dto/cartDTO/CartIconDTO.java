@@ -1,4 +1,4 @@
-package mondays.net.mroki.api.dto.cart;
+package mondays.net.mroki.api.dto.cartDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

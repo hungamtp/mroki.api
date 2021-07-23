@@ -1,9 +1,9 @@
 package mondays.net.mroki.api.service;
 
 
-import mondays.net.mroki.api.dto.product.ProductAdminDTO;
-import mondays.net.mroki.api.dto.product.ProductDTO;
-import mondays.net.mroki.api.dto.product.ProductDetailDTO;
+import mondays.net.mroki.api.dto.productDTO.ProductAdminDTO;
+import mondays.net.mroki.api.dto.productDTO.ProductDTO;
+import mondays.net.mroki.api.dto.productDTO.ProductDetailDTO;
 import mondays.net.mroki.api.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

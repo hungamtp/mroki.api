@@ -1,7 +1,6 @@
 package mondays.net.mroki.api.service;
 
-import mondays.net.mroki.api.dto.customer.RoleDTO;
-import org.springframework.stereotype.Service;
+import mondays.net.mroki.api.dto.customerDTO.RoleDTO;
 
 import java.util.List;
 

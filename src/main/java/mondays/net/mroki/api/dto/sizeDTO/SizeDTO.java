@@ -1,4 +1,4 @@
-package mondays.net.mroki.api.dto.size;
+package mondays.net.mroki.api.dto.sizeDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

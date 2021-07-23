@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -28,15 +29,17 @@ public class Category {
     @OneToMany(mappedBy = "category" , fetch = FetchType.LAZY)
     private List<Product> products;
 
-    @ManyToOne
-    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
     private Category parent;
 
-    @ManyToMany
+    @ManyToMany(fetch =  FetchType.LAZY)
     @JoinTable(name ="subcategories" ,
             joinColumns = {@JoinColumn(name = "parent_id")},
             inverseJoinColumns = {@JoinColumn(name = "id")})
-    private Set<Category> subCategories = new HashSet<>();
+    private List<Category> subCategories ;
 
+    public Category(String id) {
+        this.id = id;
+    }
 }

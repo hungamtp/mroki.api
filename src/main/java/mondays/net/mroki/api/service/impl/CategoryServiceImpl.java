@@ -2,7 +2,8 @@ package mondays.net.mroki.api.service.impl;
 
 import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.converter.CategoryConverter;
-import mondays.net.mroki.api.dto.CategoryDTO;
+import mondays.net.mroki.api.dto.categoryDTO.CategoryDTO;
+import mondays.net.mroki.api.dto.categoryDTO.ParentCategory;
 import mondays.net.mroki.api.entity.Category;
 import mondays.net.mroki.api.repository.CategoryRepository;
 import mondays.net.mroki.api.service.CategoryService;
@@ -21,8 +22,8 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private final CategoryConverter converter;
 
-    public List<CategoryDTO> getAllCategory() {
-        return converter.entityToDto(categoryRepository.findAll());
+    public List<ParentCategory> getAllCategory() {
+        return converter.entityTOParentDto(categoryRepository.findAllCate());
     }
 
 
@@ -36,6 +37,8 @@ public class CategoryServiceImpl implements CategoryService {
     public boolean isExist(String categoryId) {
         return categoryRepository.checkExist(categoryId);
     }
+
+
 
     @Override
     public void delete(String id) {

@@ -2,7 +2,7 @@ package mondays.net.mroki.api.service.impl;
 
 import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.converter.RoleConverter;
-import mondays.net.mroki.api.dto.customer.RoleDTO;
+import mondays.net.mroki.api.dto.customerDTO.RoleDTO;
 import mondays.net.mroki.api.repository.RoleRepository;
 import mondays.net.mroki.api.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package mondays.net.mroki.api.converter;
 
-import mondays.net.mroki.api.dto.comment.CommentAddDTO;
-import mondays.net.mroki.api.dto.comment.CommentDTO;
+import mondays.net.mroki.api.dto.commentDTO.CommentAddDTO;
+import mondays.net.mroki.api.dto.commentDTO.CommentDTO;
 import mondays.net.mroki.api.entity.Comment;
 import mondays.net.mroki.api.entity.Customer;
 import mondays.net.mroki.api.entity.Product;

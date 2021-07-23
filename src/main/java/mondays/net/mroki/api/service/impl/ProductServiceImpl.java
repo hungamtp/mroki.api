@@ -2,9 +2,9 @@ package mondays.net.mroki.api.service.impl;
 
 import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.converter.ProductConverter;
-import mondays.net.mroki.api.dto.product.ProductAdminDTO;
-import mondays.net.mroki.api.dto.product.ProductDTO;
-import mondays.net.mroki.api.dto.product.ProductDetailDTO;
+import mondays.net.mroki.api.dto.productDTO.ProductAdminDTO;
+import mondays.net.mroki.api.dto.productDTO.ProductDTO;
+import mondays.net.mroki.api.dto.productDTO.ProductDetailDTO;
 import mondays.net.mroki.api.entity.Product;
 import mondays.net.mroki.api.exception.DataNotFoundException;
 import mondays.net.mroki.api.exception.ProductConvertException;
@@ -112,7 +112,7 @@ public class ProductServiceImpl implements ProductService {
 
     public Page<ProductAdminDTO> findAllProductAdmin(Pageable pageable) {
 
-        Page<Product> products = productRepository.findAll(pageable);
+        Page<Product> products = productRepository.findByIsDeleteIsFalse(pageable);
 
         try {
             return converter.entityToPageAddDto(products);

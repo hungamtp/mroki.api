@@ -3,7 +3,7 @@ package mondays.net.mroki.api.security.jwt;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import lombok.AllArgsConstructor;
-import mondays.net.mroki.api.dto.auth.LoginDTO;
+import mondays.net.mroki.api.dto.authDTO.LoginDTO;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

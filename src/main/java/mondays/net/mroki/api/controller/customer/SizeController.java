@@ -2,7 +2,7 @@ package mondays.net.mroki.api.controller.customer;
 
 import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.converter.SizeConverter;
-import mondays.net.mroki.api.dto.size.SizeDTO;
+import mondays.net.mroki.api.dto.sizeDTO.SizeDTO;
 import mondays.net.mroki.api.service.SizeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

@@ -58,5 +58,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query(value = "SELECT count(id) FROM product p  ", nativeQuery = true)
     int getTotalElement();
 
+    Page<Product> findByIsDeleteIsFalse(Pageable pageable);
+
 
 }

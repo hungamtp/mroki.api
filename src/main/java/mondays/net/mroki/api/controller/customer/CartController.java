@@ -1,9 +1,8 @@
 package mondays.net.mroki.api.controller.customer;
 
 import lombok.AllArgsConstructor;
-import mondays.net.mroki.api.dto.cart.CartDTO;
-import mondays.net.mroki.api.dto.cart.CartIconDTO;
-import mondays.net.mroki.api.dto.product.ProductAddToCartDTO;
+import mondays.net.mroki.api.dto.cartDTO.CartDTO;
+import mondays.net.mroki.api.dto.productDTO.ProductAddToCartDTO;
 import mondays.net.mroki.api.dto.ResponseDTO;
 import mondays.net.mroki.api.responseCode.ErrorCode;
 import mondays.net.mroki.api.responseCode.SuccessCode;

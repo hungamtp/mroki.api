@@ -1,7 +1,7 @@
 package mondays.net.mroki.api.converter;
 
-import mondays.net.mroki.api.dto.size.SizeDTO;
-import mondays.net.mroki.api.dto.size.SizeUpdateDTO;
+import mondays.net.mroki.api.dto.sizeDTO.SizeDTO;
+import mondays.net.mroki.api.dto.sizeDTO.SizeUpdateDTO;
 import mondays.net.mroki.api.entity.Size;
 import org.springframework.stereotype.Component;
 

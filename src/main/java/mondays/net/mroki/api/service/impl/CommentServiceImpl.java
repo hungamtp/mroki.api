@@ -2,7 +2,7 @@ package mondays.net.mroki.api.service.impl;
 
 
 import lombok.AllArgsConstructor;
-import mondays.net.mroki.api.dto.comment.CommentTotalDTO;
+import mondays.net.mroki.api.dto.commentDTO.CommentTotalDTO;
 import mondays.net.mroki.api.entity.Comment;
 import mondays.net.mroki.api.entity.Product;
 import mondays.net.mroki.api.exception.CommentConvertException;

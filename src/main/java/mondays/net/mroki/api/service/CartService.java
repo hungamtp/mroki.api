@@ -1,8 +1,7 @@
 package mondays.net.mroki.api.service;
 
-import mondays.net.mroki.api.dto.cart.CartDTO;
-import mondays.net.mroki.api.dto.cart.CartIconDTO;
-import mondays.net.mroki.api.dto.product.ProductAddToCartDTO;
+import mondays.net.mroki.api.dto.cartDTO.CartDTO;
+import mondays.net.mroki.api.dto.productDTO.ProductAddToCartDTO;
 
 
 public interface CartService {

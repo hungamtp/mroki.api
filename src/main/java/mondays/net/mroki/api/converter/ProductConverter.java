@@ -1,6 +1,6 @@
 package mondays.net.mroki.api.converter;
 
-import mondays.net.mroki.api.dto.product.*;
+import mondays.net.mroki.api.dto.productDTO.*;
 import mondays.net.mroki.api.entity.Category;
 import mondays.net.mroki.api.entity.Product;
 import mondays.net.mroki.api.entity.ProductImage;

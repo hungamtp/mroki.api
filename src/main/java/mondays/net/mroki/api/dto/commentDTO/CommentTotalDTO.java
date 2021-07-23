@@ -1,4 +1,4 @@
-package mondays.net.mroki.api.dto.comment;
+package mondays.net.mroki.api.dto.commentDTO;
 
 
 import lombok.AllArgsConstructor;

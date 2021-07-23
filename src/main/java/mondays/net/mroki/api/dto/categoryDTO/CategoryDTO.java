@@ -1,4 +1,4 @@
-package mondays.net.mroki.api.dto;
+package mondays.net.mroki.api.dto.categoryDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,7 +18,7 @@ public class CategoryDTO {
     @Size(max = 1, min = 1)
     private String id;
 
-    private Long parentId;
+    private String parentId;
 
     @NotBlank(message = "name is empty")
     private String name;

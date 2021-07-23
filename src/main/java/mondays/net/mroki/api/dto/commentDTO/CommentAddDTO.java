@@ -1,4 +1,4 @@
-package mondays.net.mroki.api.dto.size;
+package mondays.net.mroki.api.dto.commentDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,21 +9,22 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @Builder
-public class SizeUpdateDTO {
+public class CommentAddDTO {
 
-    @NotNull
+    @NotNull(message = "productId is null")
     private Long productId;
 
-    @NotNull
-    @Min(35)
-    @Max(48)
-    private int size;
+    @NotNull(message = "customerId is null")
+    private Long customerId;
 
-    @NotNull
-    @Min(0)
-    private int quantity;
+    private String content;
+
+    @NotNull(message = "rate is null")
+    @Min(1)
+    @Max(5)
+    private Integer rate;
 }

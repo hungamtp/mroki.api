@@ -1,8 +1,11 @@
 package mondays.net.mroki.api.controller.admin;
 
+import io.swagger.annotations.Tag;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.converter.CategoryConverter;
-import mondays.net.mroki.api.dto.CategoryDTO;
+import mondays.net.mroki.api.dto.categoryDTO.CategoryDTO;
 import mondays.net.mroki.api.dto.ResponseDTO;
 import mondays.net.mroki.api.entity.Category;
 import mondays.net.mroki.api.exception.CategoryConverterException;
@@ -21,6 +24,8 @@ import java.util.Optional;
 @AllArgsConstructor
 @CrossOrigin
 public class CategoryAdminController {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(CategoryAdminController.class);
 
     @Autowired
     private CategoryService categoryService;
