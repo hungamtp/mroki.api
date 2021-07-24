@@ -6,8 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import mondays.net.mroki.api.entity.Category;
 
-import java.util.List;
-import java.util.ArrayList;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,5 +20,5 @@ public class ParentCategory {
 
     private String name;
 
-    List<Category> subCategories = new ArrayList<>();
+    Set<Category> subCategories = new HashSet<>();
 }

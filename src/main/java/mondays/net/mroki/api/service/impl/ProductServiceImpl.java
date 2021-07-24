@@ -2,21 +2,27 @@ package mondays.net.mroki.api.service.impl;
 
 import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.converter.ProductConverter;
+import mondays.net.mroki.api.dto.PageDTO;
 import mondays.net.mroki.api.dto.productDTO.ProductAdminDTO;
 import mondays.net.mroki.api.dto.productDTO.ProductDTO;
 import mondays.net.mroki.api.dto.productDTO.ProductDetailDTO;
 import mondays.net.mroki.api.entity.Product;
 import mondays.net.mroki.api.exception.DataNotFoundException;
 import mondays.net.mroki.api.exception.ProductConvertException;
+import mondays.net.mroki.api.filter.ProductSpecification;
+import mondays.net.mroki.api.filter.SearchCriteria;
 import mondays.net.mroki.api.repository.ProductRepository;
 import mondays.net.mroki.api.service.ProductService;
 import org.hibernate.boot.model.naming.IllegalIdentifierException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -32,10 +38,10 @@ public class ProductServiceImpl implements ProductService {
     private final ProductConverter converter;
 
 
-    public Page<ProductDTO> findAllProduct(Pageable pageable) {
+    public PageDTO findAllProduct(Pageable pageable , Specification specification) {
 
         try {
-            Page<ProductDTO> result = converter.dataPageToPageDto(productRepository.findAllProduct(pageable));
+            PageDTO result = converter.dataPageToPageDto(productRepository.findAllProduct(pageable , specification));
             return result;
         } catch (ProductConvertException ex) {
             throw new ProductConvertException("CONVERT_FAIL");
@@ -62,22 +68,22 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-    public Page<ProductDTO> getProductByCategory(String categoryId, Pageable pageable) {
-
-        try {
-            return converter.dataPageToPageDto(productRepository.findProductByCategory(categoryId, pageable));
-        } catch (ProductConvertException ex) {
-            throw new ProductConvertException("CONVERT_PRODUCT_FAIL");
-        }
-
-    }
-
-    public Page<ProductDTO> getProductByName(String name, int page) {
-
-        Pageable pageable = PageRequest.of(page, PAGE_SIZE);
-
-        return converter.dataPageToPageDto(productRepository.findByNameLike(name, pageable));
-    }
+//    public Page<ProductDTO> getProductByCategory(String categoryId, Pageable pageable) {
+//
+//        try {
+//            return converter.dataPageToPageDto(productRepository.findProductByCategory(categoryId, pageable));
+//        } catch (ProductConvertException ex) {
+//            throw new ProductConvertException("CONVERT_PRODUCT_FAIL");
+//        }
+//
+//    }
+//
+//    public Page<ProductDTO> getProductByName(String name, int page) {
+//
+//        Pageable pageable = PageRequest.of(page, PAGE_SIZE);
+//
+//        return converter.dataPageToPageDto(productRepository.findByNameLike(name, pageable));
+//    }
 
 
     public boolean isExist(Long productId) {
@@ -110,9 +116,10 @@ public class ProductServiceImpl implements ProductService {
 
     }
 
-    public Page<ProductAdminDTO> findAllProductAdmin(Pageable pageable) {
+    public PageDTO findAllProductAdmin(Pageable pageable , Specification specification) {
 
-        Page<Product> products = productRepository.findByIsDeleteIsFalse(pageable);
+        //Page<Product> products = productRepository.findByIsDeleteIsFalse(pageable, specification);
+        Page<Product> products = productRepository.findAll(specification, pageable);
 
         try {
             return converter.entityToPageAddDto(products);
@@ -120,6 +127,14 @@ public class ProductServiceImpl implements ProductService {
             throw new ProductConvertException("PRODUCT_CONVERT_FAIL");
         }
 
+    }
+
+    @Override
+    public Page<ProductAdminDTO> searchProduct(SearchCriteria searchCriteria) {
+
+        List<Product> products = productRepository.findAll(new ProductSpecification(searchCriteria));
+        Page<ProductAdminDTO> result =new PageImpl(products , PageRequest.of(0 ,5) ,products.size());
+        return result;
     }
 
 }

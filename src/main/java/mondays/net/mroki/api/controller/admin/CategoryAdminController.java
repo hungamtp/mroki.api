@@ -34,6 +34,12 @@ public class CategoryAdminController {
     private CategoryConverter converter;
 
 
+    @GetMapping
+    public ResponseEntity<ResponseDTO> getAllSubcategory(){
+                ResponseDTO response = new ResponseDTO();
+                response.setData(categoryService.getALlSubcategory());
+        return ResponseEntity.ok().body(response);
+    }
 
     @PostMapping
     public ResponseEntity<ResponseDTO> addCategory(@Valid @RequestBody CategoryDTO categoryDTO) {

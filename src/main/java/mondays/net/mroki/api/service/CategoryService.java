@@ -19,7 +19,7 @@ public interface CategoryService {
 
     boolean isExist(String categoryId);
 
-
+    List<CategoryDTO> getALlSubcategory();
 
 
 

@@ -16,7 +16,6 @@ public class CategoryConverter {
         return CategoryDTO.builder()
                 .id(category.getId())
                 .name(category.getName())
-                .parentId(category.getParent().getId())
                 .build();
     }
 

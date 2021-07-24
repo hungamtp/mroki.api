@@ -38,6 +38,10 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryRepository.checkExist(categoryId);
     }
 
+    @Override
+    public List<CategoryDTO> getALlSubcategory() {
+        return converter.entityToDto(categoryRepository.findAllSubCate());
+    }
 
 
     @Override
@@ -48,7 +52,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category update(Category category) {
-        
+
         return categoryRepository.save(category);
     }
 

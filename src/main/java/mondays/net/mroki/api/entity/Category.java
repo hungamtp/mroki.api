@@ -27,17 +27,12 @@ public class Category {
     private boolean delete;
 
     @OneToMany(mappedBy = "category" , fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Product> products;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL , fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
-    private Category parent;
-
-    @ManyToMany(fetch =  FetchType.LAZY)
-    @JoinTable(name ="subcategories" ,
-            joinColumns = {@JoinColumn(name = "parent_id")},
-            inverseJoinColumns = {@JoinColumn(name = "id")})
-    private List<Category> subCategories ;
+    private Set<Category> subCategories = new HashSet<>();
 
     public Category(String id) {
         this.id = id;

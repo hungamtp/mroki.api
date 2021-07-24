@@ -5,13 +5,18 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
-public class ProductAddDTO {
+public class ProductUpdateDTO {
+    private Long id;
 
     @NotBlank(message = "name is empty")
     private String name;
@@ -37,7 +42,8 @@ public class ProductAddDTO {
     @NotBlank(message = "thumbnail is empty")
     private String thumbnail;
 
+    LocalDate createDate;
+
     private String image1;
     private String image2;
-
 }

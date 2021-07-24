@@ -1,28 +1,25 @@
 package mondays.net.mroki.api.service;
 
 
+import mondays.net.mroki.api.dto.PageDTO;
 import mondays.net.mroki.api.dto.productDTO.ProductAdminDTO;
-import mondays.net.mroki.api.dto.productDTO.ProductDTO;
 import mondays.net.mroki.api.dto.productDTO.ProductDetailDTO;
 import mondays.net.mroki.api.entity.Product;
+import mondays.net.mroki.api.filter.SearchCriteria;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 
 
 public interface ProductService {
-    Page<ProductDTO> findAllProduct(Pageable pageable);
+    PageDTO findAllProduct(Pageable pageable, Specification specification);
 
     ProductDetailDTO getProductById(Long id) throws Exception;
 
 
-    Page<ProductDTO> getProductByCategory(String categoryId, Pageable pageable);
-
-    Page<ProductDTO> getProductByName(String name, int page);
-
     boolean isExist(Long productId);
 
     //addmin service
-    int countTotalElement();
 
     void deleteProductById(Long id);
 
@@ -30,7 +27,9 @@ public interface ProductService {
 
     void updateProduct(Product product);
 
-    Page<ProductAdminDTO> findAllProductAdmin(Pageable pageable);
+    PageDTO findAllProductAdmin(Pageable pageable, Specification spec);
+
+    Page<ProductAdminDTO> searchProduct(SearchCriteria searchCriteria);
 
 
 }

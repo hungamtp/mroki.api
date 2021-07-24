@@ -1,5 +1,6 @@
 package mondays.net.mroki.api.converter;
 
+import mondays.net.mroki.api.dto.PageDTO;
 import mondays.net.mroki.api.dto.productDTO.*;
 import mondays.net.mroki.api.entity.Category;
 import mondays.net.mroki.api.entity.Product;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,12 +32,6 @@ public class ProductConverter {
         return dto;
     }
 
-    public List<ProductDTO> entityToDto(List<Product> products) {
-
-        return products.stream()
-                .map(product -> entityToDto(product))
-                .collect(Collectors.toList());
-    }
 
     public Product addDtoToEntity(ProductAddDTO dto) {
 
@@ -45,16 +41,38 @@ public class ProductConverter {
                 image2(dto.getImage2()).
                 build();
 
-        Product product = Product.builder().
-                id(dto.getId()).
-                name(dto.getName()).
-                price(dto.getPrice()).
-                retail(dto.getRetail()).
-                description(dto.getDescription()).
-                saleOff(dto.getSaleOff()).
-                category(Category.builder().id(dto.getCategoryId()).build()).
-                productImage(productImage).
+        Product product = Product.builder()
+                .name(dto.getName())
+                .price(dto.getPrice())
+                .retail(dto.getRetail())
+                .description(dto.getDescription())
+                .saleOff(dto.getSaleOff())
+                .category(Category.builder().id(dto.getCategoryId()).build())
+                .productImage(productImage)
+                .createdDate(LocalDate.now())
+                .build();
+        return product;
+    }
+    public Product updateDtoToEntity(ProductUpdateDTO dto) {
+
+        ProductImage productImage = ProductImage.builder().
+                thumbnail(dto.getThumbnail()).
+                image1(dto.getImage1()).
+                image2(dto.getImage2()).
                 build();
+
+        Product product = Product.builder()
+                .id(dto.getId())
+                .name(dto.getName())
+                .price(dto.getPrice())
+                .retail(dto.getRetail())
+                .description(dto.getDescription())
+                .saleOff(dto.getSaleOff())
+                .category(Category.builder().id(dto.getCategoryId()).build())
+                .productImage(productImage)
+                .createdDate(dto.getCreateDate())
+                .modifiedDate(LocalDate.now())
+                .build();
         return product;
     }
 
@@ -133,12 +151,16 @@ public class ProductConverter {
                 .build();
     }
 
-    public Page<ProductDTO> dataPageToPageDto(Page<Object[]> data) {
+    public PageDTO dataPageToPageDto(Page<Object[]> data) {
 
         List<ProductDTO> list = data.stream().map((product) -> dataToProductDto(product))
                 .collect(Collectors.toList());
 
-        return new PageImpl<>(list, data.getPageable(), list.size());
+        return PageDTO.builder()
+                .data(list)
+                .totalPage(data.getTotalPages())
+                .totalElement(data.getTotalElements())
+                .build();
     }
 
     public ProductDetailDTO entityToProductDetailDto(Product product) {
@@ -174,11 +196,15 @@ public class ProductConverter {
                 .build();
     }
 
-    public Page<ProductAdminDTO> entityToPageAddDto(Page<Product> products) {
+    public PageDTO entityToPageAddDto(Page<Product> products) {
         List<ProductAdminDTO> list = products.stream()
                 .map((product) -> entityToAddDto(product))
                 .collect(Collectors.toList());
-        return new PageImpl<>(list, products.getPageable(), list.size());
+        return PageDTO.builder()
+                .totalElement(products.getTotalElements())
+                .totalPage(products.getTotalPages())
+                .data(list)
+                .build();
     }
 
 

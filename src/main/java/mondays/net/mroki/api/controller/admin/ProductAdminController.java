@@ -4,7 +4,10 @@ import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.converter.ProductConverter;
 import mondays.net.mroki.api.dto.ResponseDTO;
 import mondays.net.mroki.api.dto.productDTO.ProductAddDTO;
+import mondays.net.mroki.api.dto.productDTO.ProductUpdateDTO;
+import mondays.net.mroki.api.entity.Product;
 import mondays.net.mroki.api.exception.ProductConvertException;
+import mondays.net.mroki.api.filter.ProductSpecificationsBuilder;
 import mondays.net.mroki.api.responseCode.ErrorCode;
 import mondays.net.mroki.api.responseCode.SuccessCode;
 import mondays.net.mroki.api.service.ProductService;
@@ -12,11 +15,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping("admin/product")
@@ -33,13 +39,24 @@ public class ProductAdminController {
     @GetMapping
     public ResponseEntity<ResponseDTO> getAllProduct(@RequestParam Integer page,
                                                      @RequestParam Integer size,
-                                                     @RequestParam String sort) {
+                                                     @RequestParam String sort,
+                                                     @RequestParam String search) {
         ResponseDTO response = new ResponseDTO();
 
         if (!Optional.ofNullable(sort).isPresent()) sort = "id";
         Pageable pageable = PageRequest.of(Optional.ofNullable(page).orElse(0), size, Sort.by(sort));
 
-        response.setData(productService.findAllProductAdmin(pageable));
+        ProductSpecificationsBuilder builder = new ProductSpecificationsBuilder();
+        Pattern pattern = Pattern.compile("(\\w+?)(:|<|>)(\\w+?),");
+        Matcher matcher = pattern.matcher(search + ",");
+        while (matcher.find()) {
+            builder.with(matcher.group(1), matcher.group(2), matcher.group(3));
+        }
+
+        Specification<Product> spec = builder.build();
+
+
+        response.setData(productService.findAllProductAdmin(pageable , spec));
 
         return ResponseEntity.ok().body(response);
     }
@@ -64,23 +81,17 @@ public class ProductAdminController {
 
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<ResponseDTO> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductAddDTO productDTO) {
+    @PutMapping()
+    public ResponseEntity<ResponseDTO> updateProduct(@Valid @RequestBody ProductUpdateDTO product) {
 
         ResponseDTO response = new ResponseDTO();
 
-        if (!Optional.ofNullable(id).isPresent()) {
+        if (!productService.isExist(product.getId())) {
             response.setErrorCode(ErrorCode.PRODUCT_NOT_FOUND.toString());
             return ResponseEntity.badRequest().body(response);
         }
 
-        if (!productService.isExist(id)) {
-            response.setErrorCode(ErrorCode.PRODUCT_NOT_FOUND.toString());
-            return ResponseEntity.badRequest().body(response);
-        }
-
-        productDTO.setId(id);
-        productService.updateProduct(converter.addDtoToEntity(productDTO));
+        productService.updateProduct(converter.updateDtoToEntity(product));
         response.setSuccessCode(SuccessCode.UPDATE_PRODUCT.toString());
         return ResponseEntity.ok().body(response);
 
