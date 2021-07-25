@@ -96,48 +96,7 @@ public class ProductController {
 
     }
 
-//    @GetMapping("/category/{categoryId}")
-//    public ResponseEntity<ResponseDTO> getProductByCategory(@PathVariable String categoryId,
-//                                                            @RequestParam(required = false) Integer page,
-//                                                            @RequestParam(required = false) Integer size) {
-//
-//        ResponseDTO response = new ResponseDTO();
-//        try {
-//            Pageable pageable = PageRequest.of(Optional.ofNullable(page).orElse(0), Optional.ofNullable(size).orElse(9));
-//            Page<ProductDTO> products = productService.getProductByCategory(categoryId, pageable);
-//
-//            response.setData(products);
-//            response.setSuccessCode(SuccessCode.GET_PRODUCT_BY_CATEGORY.toString());
-//            return ResponseEntity.ok().body(response);
-//        } catch (ProductConvertException ex) {
-//
-//            response.setErrorCode(ErrorCode.GET_PRODUCT_BY_CATEGORY.toString());
-//            return ResponseEntity.badRequest().body(response);
-//        }
-//
-//    }
 
-//    @GetMapping("/name/{name}")
-//    public ResponseEntity<ResponseDTO> findByName(@PathVariable String name,
-//                                                  @RequestParam(required = false) Optional<Integer> page) {
-//        ResponseDTO response = new ResponseDTO();
-//        response.setData(productService.getProductByName(name, page.orElse(0)));
-//        return ResponseEntity.ok().body(response);
-//    }
-//
-//    @GetMapping("/sortType")
-//    public EnumSet<SortType> getSortType() {
-//        EnumSet<SortType> sortType = EnumSet.allOf(SortType.class);
-//        return sortType;
-//    }
-//
-//    @GetMapping("/totalPage")
-//    public int getTotalPage() {
-//
-//        int totalPage = productService.countTotalElement();
-//
-//        return totalPage % PAGE_SIZE == 0 ? totalPage / PAGE_SIZE : totalPage / PAGE_SIZE + 1;
-//    }
 
 
 }

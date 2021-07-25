@@ -41,13 +41,14 @@ public class ProductServiceImpl implements ProductService {
     public PageDTO findAllProduct(Pageable pageable , Specification specification) {
 
         try {
-            PageDTO result = converter.dataPageToPageDto(productRepository.findAllProduct(pageable , specification));
+            PageDTO result = converter.entityToProductHomePageDTO(productRepository.findAll(specification, pageable));
             return result;
         } catch (ProductConvertException ex) {
             throw new ProductConvertException("CONVERT_FAIL");
         }
 
     }
+
 
     public ProductDetailDTO getProductById(Long id) {
 
@@ -67,23 +68,6 @@ public class ProductServiceImpl implements ProductService {
 
     }
 
-
-//    public Page<ProductDTO> getProductByCategory(String categoryId, Pageable pageable) {
-//
-//        try {
-//            return converter.dataPageToPageDto(productRepository.findProductByCategory(categoryId, pageable));
-//        } catch (ProductConvertException ex) {
-//            throw new ProductConvertException("CONVERT_PRODUCT_FAIL");
-//        }
-//
-//    }
-//
-//    public Page<ProductDTO> getProductByName(String name, int page) {
-//
-//        Pageable pageable = PageRequest.of(page, PAGE_SIZE);
-//
-//        return converter.dataPageToPageDto(productRepository.findByNameLike(name, pageable));
-//    }
 
 
     public boolean isExist(Long productId) {

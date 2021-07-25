@@ -71,10 +71,6 @@ public class CategoryAdminController {
 
         ResponseDTO response = new ResponseDTO();
 
-        if (!Optional.ofNullable(categoryId).isPresent())
-            throw new RuntimeException("Id is null");
-
-
         if (!categoryService.isExist(categoryId)) {
             response.setErrorCode(ErrorCode.ID_CATEGORY_NOT_FOUND.toString());
             return ResponseEntity.badRequest().body(response);

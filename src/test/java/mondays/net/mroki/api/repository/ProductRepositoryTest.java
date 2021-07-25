@@ -1,5 +1,6 @@
 package mondays.net.mroki.api.repository;
 
+import mondays.net.mroki.api.entity.Category;
 import mondays.net.mroki.api.entity.Product;
 import mondays.net.mroki.api.filter.ProductSpecification;
 import mondays.net.mroki.api.filter.SearchCriteria;
@@ -70,12 +71,14 @@ class ProductRepositoryTest {
           specification = new ProductSpecification(new SearchCriteria("price" , ":" , 150));
 
 
-          Page<Product>   product = repo.findByIsDeleteIsFalse(PageRequest.of(0,5),specification);
+          Page<Product>   product = repo.findAll(specification, PageRequest.of(0,5));
 
 
         product.forEach((pro) ->assertEquals(pro.getPrice() ,150 ));
 
     }
+
+
 
 
 }

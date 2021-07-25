@@ -16,6 +16,6 @@ public class ProductDTO{
     private float rate;
     private String thumbnail;
     private float price;
-    private int quantity;
+
 
 }

@@ -3,11 +3,10 @@ package mondays.net.mroki.api.converter;
 import mondays.net.mroki.api.dto.PageDTO;
 import mondays.net.mroki.api.dto.productDTO.*;
 import mondays.net.mroki.api.entity.Category;
+import mondays.net.mroki.api.entity.Comment;
 import mondays.net.mroki.api.entity.Product;
 import mondays.net.mroki.api.entity.ProductImage;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -24,14 +23,32 @@ public class ProductConverter {
         ProductDTO dto = ProductDTO.builder()
                 .id(product.getId())
                 .name(product.getName())
-                .rate(product.getRate())
                 .thumbnail(product.getProductImage().getThumbnail())
                 .price(product.getPrice())
                 .build();
 
+        float rate = 0;
+
+        for (Comment c : product.getComments())
+            rate += (float) c.getRate();
+
+        dto.setRate(rate / (float) product.getComments().size());
+
         return dto;
     }
 
+    public PageDTO entityToProductHomePageDTO(Page<Product> products) {
+
+        List<ProductDTO> dto = products.stream()
+                .map((product -> entityToDto(product)))
+                .collect(Collectors.toList());
+
+        return  PageDTO.builder()
+                .totalPage(products.getTotalPages())
+                .totalElement(products.getTotalElements())
+                .data(dto)
+                .build();
+    }
 
     public Product addDtoToEntity(ProductAddDTO dto) {
 
@@ -53,6 +70,7 @@ public class ProductConverter {
                 .build();
         return product;
     }
+
     public Product updateDtoToEntity(ProductUpdateDTO dto) {
 
         ProductImage productImage = ProductImage.builder().
@@ -77,26 +95,6 @@ public class ProductConverter {
     }
 
 
-    public List<ProductDTO> dataToDto(List<Object[]> data) {
-
-        List<ProductDTO> result = new ArrayList<>();
-
-        data.stream().forEach((product) -> {
-
-            Long id = ((BigInteger) product[0]).longValue();
-            String name = (String) product[1];
-            String thumbnail = (String) product[2];
-            float price = (float) product[3];
-            int quantity = (int) product[4];
-            float rate = ((BigDecimal) product[5]).floatValue();
-
-            result.add(new ProductDTO(id, name, rate, thumbnail, price, quantity));
-        });
-
-        return result;
-
-    }
-
     public List<ProductCartDTO> dataToCartDto(List<Object[]> data) {
 
         List<ProductCartDTO> result = new ArrayList<>();
@@ -118,28 +116,6 @@ public class ProductConverter {
 
     }
 
-    public Page<ProductDTO> pageEntityToPage(Page<Product> products) {
-
-        System.out.println(products.getTotalPages());//3
-        List<ProductDTO> productDTOS = products.stream()
-                .map((product -> entityToDto(product)))
-                .collect(Collectors.toList());
-
-        Page<ProductDTO> result = new PageImpl<>(productDTOS, products.getPageable(), products.getSize());
-        System.out.println(result.getTotalPages()); // 2
-        return result;
-    }
-
-    public Page<ProductDTO> pageEntityToList(Page<Product> products) {
-
-
-        Pageable pageable = products.getPageable();
-        List<ProductDTO> productDTOS = products.stream()
-                .map((product -> entityToDto(product)))
-                .collect(Collectors.toList());
-
-        return new PageImpl<>(productDTOS, pageable, productDTOS.size());
-    }
 
     public ProductDTO dataToProductDto(Object[] data) {
         return ProductDTO.builder()

@@ -1,5 +1,6 @@
 package mondays.net.mroki.api.converter;
 
+import mondays.net.mroki.api.dto.PageDTO;
 import mondays.net.mroki.api.dto.commentDTO.CommentAddDTO;
 import mondays.net.mroki.api.dto.commentDTO.CommentDTO;
 import mondays.net.mroki.api.entity.Comment;
@@ -35,11 +36,17 @@ public class CommentConverter {
 
     }
 
-    public List<CommentDTO> entityToDto(Page<Comment> comments) {
+    public PageDTO entityToDto(Page<Comment> comments) {
 
-        return  comments.stream()
+        List<CommentDTO> dto =  comments.stream()
                 .map((comment -> entityToDto(comment)))
                 .collect(Collectors.toList());
+
+        return PageDTO.builder()
+                .totalPage(comments.getTotalPages())
+                .totalElement(comments.getTotalElements())
+                .data(dto)
+                .build();
 
 
     }

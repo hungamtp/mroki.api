@@ -1,5 +1,6 @@
 package mondays.net.mroki.api.repository;
 
+import mondays.net.mroki.api.entity.Category;
 import mondays.net.mroki.api.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -48,7 +49,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> , JpaSpe
     @Query(value = "SELECT count(id) FROM product p  ", nativeQuery = true)
     int getTotalElement();
 
-    Page<Product> findByIsDeleteIsFalse(Pageable pageable , Specification specification);
+
 
 
 }

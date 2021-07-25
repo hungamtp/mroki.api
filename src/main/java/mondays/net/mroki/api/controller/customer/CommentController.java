@@ -57,7 +57,7 @@ public class CommentController {
 
         try {
             Pageable pageable = PageRequest.of(page.orElse(0), PAGE_SIZE);
-            response.setData(converter.entityToDto(commentService.getComment(pageable, productId)));
+            response.setData(commentService.getComment(pageable, productId));
             response.setSuccessCode(SuccessCode.GET_ALL_COMMENT.toString());
 
             return ResponseEntity.ok().body(response);
@@ -75,13 +75,5 @@ public class CommentController {
 
     }
 
-    @GetMapping("/count/{productId}")
-    public int getCountComment(@PathVariable Long productId) {
-
-        int total = commentService.getCountComment(productId);
-
-        return total % PAGE_SIZE == 0 ? (total / PAGE_SIZE) : (total / PAGE_SIZE + 1);
-
-    }
 
 }

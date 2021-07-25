@@ -2,13 +2,13 @@ package mondays.net.mroki.api.filter;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import mondays.net.mroki.api.entity.Category;
+import mondays.net.mroki.api.entity.Customer;
 import mondays.net.mroki.api.entity.Product;
+import mondays.net.mroki.api.entity.Role;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 
 @AllArgsConstructor
 public class ProductSpecification implements Specification<Product> {
@@ -17,6 +17,25 @@ public class ProductSpecification implements Specification<Product> {
 
     @Override
     public Predicate toPredicate(Root<Product> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
+        if(criteria.getKey().equals("categoryId")){
+            Join<Product, Category> categoryJoin = root.join("category") ;
+            return builder.equal(builder.upper(categoryJoin.<String> get("id")) , criteria.getValue());
+        }
+        if(criteria.getKey().equals("price")){
+            System.out.println("oke");
+            System.out.println(criteria.getValue().toString().split("-")[0]);
+            System.out.println(criteria.getValue().toString().split("-")[1]);
+            return builder.between(
+                    root.<String>get(criteria.getKey()) ,
+                    criteria.getValue().toString().split("-")[0] ,
+                    criteria.getValue().toString().split("-")[1] );
+        }
+        if(criteria.getValue().equals("true") ){
+            return  builder.isTrue( root.<Boolean>get(criteria.getKey()));
+        }
+        if(criteria.getValue().equals("false")){
+            return  builder.isFalse( root.<Boolean>get(criteria.getKey()));
+        }
         if (criteria.getOperation().equalsIgnoreCase(">")) {
             return builder.greaterThanOrEqualTo(
                     root.<String>get(criteria.getKey()), criteria.getValue().toString());
