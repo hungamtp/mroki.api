@@ -21,14 +21,12 @@ public class ProductSpecification implements Specification<Product> {
             Join<Product, Category> categoryJoin = root.join("category") ;
             return builder.equal(builder.upper(categoryJoin.<String> get("id")) , criteria.getValue());
         }
-        if(criteria.getKey().equals("price")){
-            System.out.println("oke");
-            System.out.println(criteria.getValue().toString().split("-")[0]);
-            System.out.println(criteria.getValue().toString().split("-")[1]);
+        if(criteria.getKey().startsWith("price")){
+
             return builder.between(
-                    root.<String>get(criteria.getKey()) ,
-                    criteria.getValue().toString().split("-")[0] ,
-                    criteria.getValue().toString().split("-")[1] );
+                    root.<Float>get("price") ,
+                    Float.parseFloat( criteria.getValue().toString().split("-")[0]) ,
+                    Float.parseFloat(  criteria.getValue().toString().split("-")[1] ) );
         }
         if(criteria.getValue().equals("true") ){
             return  builder.isTrue( root.<Boolean>get(criteria.getKey()));

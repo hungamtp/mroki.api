@@ -17,6 +17,11 @@ public class ProductSpecificationsBuilder {
     }
 
     public ProductSpecificationsBuilder with(String key, String operation, Object value) {
+
+        if(key.startsWith("price")){
+            value = key.replace("price" , "")  + "-" + value;
+            key = "price";
+        }
         params.add(new SearchCriteria(key, operation, value));
         return this;
     }
