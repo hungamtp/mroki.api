@@ -2,8 +2,8 @@ package mondays.net.mroki.api.controller.customer;
 
 
 import lombok.AllArgsConstructor;
-import mondays.net.mroki.api.dto.productDTO.ProductDTO;
 import mondays.net.mroki.api.dto.ResponseDTO;
+import mondays.net.mroki.api.dto.productDTO.ProductAddToCartDTO;
 import mondays.net.mroki.api.responseCode.ErrorCode;
 import mondays.net.mroki.api.responseCode.SuccessCode;
 import mondays.net.mroki.api.service.OrderService;
@@ -22,14 +22,19 @@ public class OrdersController {
     private final OrderService orderService;
 
     @PostMapping
-    public ResponseEntity<ResponseDTO> order(@RequestBody List<ProductDTO> cart, @RequestParam Long customerId) {
+    public ResponseEntity<ResponseDTO> order(@RequestBody List<ProductAddToCartDTO> cart, @RequestParam Long customerId) {
 
         ResponseDTO response = new ResponseDTO();
         try {
-            orderService.order(cart, customerId);
-            response.setSuccessCode(SuccessCode.ORDER.toString());
+            if (orderService.order(cart, customerId) == null) {
 
-            return ResponseEntity.ok().body(response);
+                response.setErrorCode(ErrorCode.ORDER.toString());
+                return ResponseEntity.badRequest().body(response);
+            } else {
+                response.setSuccessCode(SuccessCode.ORDER.toString());
+                return ResponseEntity.ok().body(response);
+            }
+
         } catch (Exception ex) {
             response.setErrorCode(ErrorCode.ORDER.toString());
 

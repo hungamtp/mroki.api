@@ -28,9 +28,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> , JpaSpe
     @Query(value = "UPDATE product SET is_delete = true WHERE id = ?1", nativeQuery = true)
     void deleteProductById(Long id);
 
-    @Query(value = "SELECT CASE WHEN ?2 >  quantity  THEN true ELSE false END checkQuantity " +
-            "FROM size s WHERE s.product_id = ?1 AND s.size =?3 ", nativeQuery = true)
-    boolean checkQuantity(Long productId, int quantity, int size);
+
 
     @Query(value = "SELECT CASE " +
             "WHEN count(id) > 0 THEN true ELSE false " +

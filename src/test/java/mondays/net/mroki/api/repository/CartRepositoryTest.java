@@ -19,4 +19,12 @@ class CartRepositoryTest {
         assertEquals(true , check);
     }
 
+    @Test
+    public void testDeleteProductInCart(){
+        repo.deleteProductInCart(5L , 46 , 48L);
+        boolean check = repo.isProductInCart(5L , 48L , 46);
+
+        assertEquals(false , check);
+    }
+
 }

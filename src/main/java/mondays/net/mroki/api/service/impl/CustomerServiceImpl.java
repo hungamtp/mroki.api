@@ -1,12 +1,16 @@
 package mondays.net.mroki.api.service.impl;
 
 import lombok.AllArgsConstructor;
+import mondays.net.mroki.api.converter.CustomerConverter;
+import mondays.net.mroki.api.dto.PageDTO;
 import mondays.net.mroki.api.dto.customerDTO.CustomerDTO;
 import mondays.net.mroki.api.entity.Customer;
 import mondays.net.mroki.api.exception.DuplicatedDataException;
 import mondays.net.mroki.api.repository.CustomerRepository;
 import mondays.net.mroki.api.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
@@ -17,7 +21,7 @@ import java.util.List;
 @AllArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
 
-    private final int PAGE_SIZE = 30;
+    private final CustomerConverter converter;
 
     @Autowired
     private final CustomerRepository customerRepository;
@@ -35,30 +39,12 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<CustomerDTO> getAlLCustomer(int page) {
+    public PageDTO getAlLCustomer(Pageable pageable , Specification specification) {
 
-        return convertCustomerToCustomerDTO(customerRepository.findAllCustomer(PAGE_SIZE, PAGE_SIZE * page));
+        return converter.entityToDto(customerRepository.findAll(specification, pageable));
     }
 
-    List<CustomerDTO> convertCustomerToCustomerDTO(List<Object[]> customers) {
 
-        List<CustomerDTO> result = new ArrayList<>();
-
-        customers.stream().forEach((customer) -> {
-
-            Long id = ((BigInteger) customer[0]).longValue();
-            String username = (String) customer[1];
-            String avatar = (String) customer[2];
-            String phone = (String) customer[3];
-            String email = (String) customer[4];
-            String roleId = (String) customer[5];
-            boolean isVerifiedEmail = Boolean.parseBoolean((String) customer[5]);
-
-            result.add(new CustomerDTO(id, username, avatar, phone, email, roleId, true));
-        });
-
-        return result;
-    }
 
     public Customer findByUsername(String username) {
         return customerRepository.findByUsername(username);

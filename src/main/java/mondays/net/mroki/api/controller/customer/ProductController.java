@@ -42,10 +42,10 @@ public class ProductController {
     private final ProductConverter converter;
 
     @GetMapping
-    public ResponseEntity<ResponseDTO> getAllProduct(@RequestParam(required = false) Integer page,
-                                                     @RequestParam(required = false) Integer size,
-                                                     @RequestBody(required = false) String sort,
-                                                     @RequestBody(required = false) String search) {
+    public ResponseEntity<ResponseDTO> getAllProduct(@RequestParam Integer page,
+                                                     @RequestParam Integer size,
+                                                     @RequestParam String sort,
+                                                     @RequestParam String search) {
 
         ResponseDTO response = new ResponseDTO();
         try {

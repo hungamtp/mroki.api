@@ -16,6 +16,6 @@ public class CustomerDTO {
     private String avatar;
     private String phone;
     private String email;
-    private String roleId;
+    private String roleName;
     private boolean isVerifiedEmail;
 }

@@ -40,15 +40,11 @@ class ProductRepositoryTest {
 
     @Test
     public void findProductByID() {
-//        assertEquals(repo.findProductById(5L).getName(), "Nike 2");
-//        assertNull(repo.findProductById(-1L));
-//        assertNotEquals(repo.findProductById(5L).getName(), "Nike 3");
+        assertEquals(repo.findById(5L).get().getName(), "Nike 2");
+        assertNull(repo.findById(-1L));
+        assertNotEquals(repo.findById(5L).get().getName(), "Nike 3");
     }
 
-    @Test
-    public void checkQuantity() {
-        assertEquals(repo.checkQuantity(5L , 5 , 41) , true);
-    }
 
     @Test
     public void isExist(){

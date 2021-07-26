@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.converter.ProductConverter;
 import mondays.net.mroki.api.dto.PageDTO;
 import mondays.net.mroki.api.dto.productDTO.ProductAdminDTO;
-import mondays.net.mroki.api.dto.productDTO.ProductDTO;
 import mondays.net.mroki.api.dto.productDTO.ProductDetailDTO;
 import mondays.net.mroki.api.entity.Product;
 import mondays.net.mroki.api.exception.DataNotFoundException;
@@ -38,10 +37,11 @@ public class ProductServiceImpl implements ProductService {
     private final ProductConverter converter;
 
 
-    public PageDTO findAllProduct(Pageable pageable , Specification specification) {
+    public PageDTO findAllProduct(Pageable pageable, Specification specification) {
 
         try {
-            PageDTO result = converter.entityToProductHomePageDTO(productRepository.findAll(specification, pageable));
+            PageDTO result = converter.entityToProductHomePageDTO(
+                    productRepository.findAll(specification, pageable));
             return result;
         } catch (ProductConvertException ex) {
             throw new ProductConvertException("CONVERT_FAIL");
@@ -67,7 +67,6 @@ public class ProductServiceImpl implements ProductService {
         }
 
     }
-
 
 
     public boolean isExist(Long productId) {
@@ -100,9 +99,8 @@ public class ProductServiceImpl implements ProductService {
 
     }
 
-    public PageDTO findAllProductAdmin(Pageable pageable , Specification specification) {
+    public PageDTO findAllProductAdmin(Pageable pageable, Specification specification) {
 
-        //Page<Product> products = productRepository.findByIsDeleteIsFalse(pageable, specification);
         Page<Product> products = productRepository.findAll(specification, pageable);
 
         try {
@@ -117,7 +115,7 @@ public class ProductServiceImpl implements ProductService {
     public Page<ProductAdminDTO> searchProduct(SearchCriteria searchCriteria) {
 
         List<Product> products = productRepository.findAll(new ProductSpecification(searchCriteria));
-        Page<ProductAdminDTO> result =new PageImpl(products , PageRequest.of(0 ,5) ,products.size());
+        Page<ProductAdminDTO> result = new PageImpl(products, PageRequest.of(0, 5), products.size());
         return result;
     }
 

@@ -1,11 +1,8 @@
 package mondays.net.mroki.api.filter;
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import mondays.net.mroki.api.entity.Category;
-import mondays.net.mroki.api.entity.Customer;
 import mondays.net.mroki.api.entity.Product;
-import mondays.net.mroki.api.entity.Role;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.*;

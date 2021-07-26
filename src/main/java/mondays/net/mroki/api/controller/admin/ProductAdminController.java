@@ -55,7 +55,6 @@ public class ProductAdminController {
 
         Specification<Product> spec = builder.build();
 
-
         response.setData(productService.findAllProductAdmin(pageable , spec));
 
         return ResponseEntity.ok().body(response);

@@ -1,17 +1,17 @@
 package mondays.net.mroki.api.service;
 
 
-import mondays.net.mroki.api.dto.customerDTO.CustomerDTO;
+import mondays.net.mroki.api.dto.PageDTO;
 import mondays.net.mroki.api.entity.Customer;
-
-import java.util.List;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 
 
 public interface CustomerService {
 
     void save(Customer customer);
 
-    List<CustomerDTO> getAlLCustomer(int page);
+    PageDTO getAlLCustomer(Pageable pageable , Specification specification);
 
     Customer findByUsername(String username);
 }
