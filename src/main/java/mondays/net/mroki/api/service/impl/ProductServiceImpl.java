@@ -6,6 +6,7 @@ import mondays.net.mroki.api.dto.PageDTO;
 import mondays.net.mroki.api.dto.productDTO.ProductAdminDTO;
 import mondays.net.mroki.api.dto.productDTO.ProductDetailDTO;
 import mondays.net.mroki.api.entity.Product;
+import mondays.net.mroki.api.entity.Size;
 import mondays.net.mroki.api.exception.DataNotFoundException;
 import mondays.net.mroki.api.exception.ProductConvertException;
 import mondays.net.mroki.api.filter.ProductSpecification;
@@ -21,6 +22,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -73,9 +75,6 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.isExist(productId);
     }
 
-    public int countTotalElement() {
-        return productRepository.getTotalElement();
-    }
 
     // admin service
     public void updateProduct(Product product) {
@@ -88,7 +87,18 @@ public class ProductServiceImpl implements ProductService {
     }
 
     public void save(Product product) {
+        List<Size> size = new ArrayList<>();
+
+        for (int i = 35; i <= 47; i++) {
+            size.add(Size.builder()
+                    .size(i)
+                    .quantity(100)
+                    .build());
+        }
+        product.setSize(size);
+
         productRepository.save(product);
+
     }
 
     public void deleteProductById(Long id) {

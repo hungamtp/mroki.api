@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 @Component
 public class CategoryConverter {
 
-    public CategoryDTO entityToDto(Category category){
+    public CategoryDTO entityToDto(Category category) {
 
         return CategoryDTO.builder()
                 .id(category.getId())
@@ -19,22 +19,21 @@ public class CategoryConverter {
                 .build();
     }
 
-    public List<CategoryDTO> entityToDto(List<Category> categories){
+    public List<CategoryDTO> entityToDto(List<Category> categories) {
 
         return categories.stream()
                 .map(category -> entityToDto(category))
                 .collect(Collectors.toList());
     }
 
-    public Category dtoToEntity(CategoryDTO dto){
-
+    public Category dtoToEntity(CategoryDTO dto) {
         return Category.builder()
                 .id(dto.getId())
                 .name(dto.getName())
                 .build();
     }
 
-    public ParentCategory entityToParentDto(Category category){
+    public ParentCategory entityToParentDto(Category category) {
         return ParentCategory.builder()
                 .id(category.getId())
                 .subCategories(category.getSubCategories())
@@ -42,12 +41,11 @@ public class CategoryConverter {
                 .build();
     }
 
-    public List<ParentCategory> entityTOParentDto(List<Category> categories){
+    public List<ParentCategory> entityTOParentDto(List<Category> categories) {
         return categories.stream().
                 map((category -> entityToParentDto(category)))
                 .collect(Collectors.toList());
     }
-
 
 
 }

@@ -45,22 +45,13 @@ public class CategoryAdminController {
     public ResponseEntity<ResponseDTO> addCategory(@Valid @RequestBody CategoryDTO categoryDTO) {
 
         ResponseDTO response = new ResponseDTO();
-
-        if (categoryService.isExist(categoryDTO.getId())) {
-            response.setErrorCode(ErrorCode.ID_IS_EXISTS.toString());
-            return ResponseEntity.badRequest().body(response);
-        }
-
-        Category category;
-
         try {
 
-            category = converter.dtoToEntity(categoryDTO);
-            categoryService.save(category);
+            categoryService.save(categoryDTO);
             response.setSuccessCode(SuccessCode.ADD_CATEGORY.toString());
 
         } catch (CategoryConverterException exception) {
-            throw new CategoryConverterException("CONVERT CATEGORY ERROR");
+            throw new CategoryConverterException("CONVERT_CATEGORY_ERROR");
         }
 
         return ResponseEntity.ok().body(response);

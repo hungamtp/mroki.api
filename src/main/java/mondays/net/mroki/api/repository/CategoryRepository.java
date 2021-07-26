@@ -30,5 +30,15 @@ public interface CategoryRepository extends JpaRepository<Category, String> {
     @Query(value = "SELECT id , name , delete , parent_id FROM category WHERE delete = false AND parent_id IS NOT NULL" , nativeQuery = true)
     List<Category> findAllSubCate();
 
+    @Modifying
+    @Transactional
+    @Query(value = "INSERT INTO category VALUES(?1 ,?2 , false , ?3)" ,nativeQuery = true)
+    void addSubCategory(String categoryId , String name ,String parentId);
+
+    @Modifying
+    @Transactional
+    @Query(value = "INSERT INTO category VALUES(?1 ,?2 , false )" ,nativeQuery = true)
+    void addParentCategory(String categoryId , String name);
+
 
 }

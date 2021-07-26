@@ -23,5 +23,6 @@ public class SignupDTO {
     private String password;
 
     @Email
+    @NotBlank
     private String email;
 }

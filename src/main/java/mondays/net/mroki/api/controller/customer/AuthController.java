@@ -8,6 +8,7 @@ import mondays.net.mroki.api.dto.authDTO.LoginResponseDTO;
 import mondays.net.mroki.api.dto.authDTO.SignupDTO;
 import mondays.net.mroki.api.entity.Customer;
 import mondays.net.mroki.api.entity.Role;
+import mondays.net.mroki.api.exception.DuplicatedDataException;
 import mondays.net.mroki.api.responseCode.ErrorCode;
 import mondays.net.mroki.api.responseCode.SuccessCode;
 import mondays.net.mroki.api.security.jwt.JwtConfig;
@@ -69,10 +70,12 @@ public class AuthController {
 
             customerService.save(customer);
             response.setSuccessCode(SuccessCode.SIGN_UP_SUCCESS.toString());
-        } catch (RuntimeException ex) {
-            response.setErrorCode(ErrorCode.SIGN_UP_FAILED.toString());
+            return ResponseEntity.ok().body(response);
+        } catch (DuplicatedDataException ex) {
+            response.setErrorCode(ex.getMessage());
+            return ResponseEntity.ok().body(response);
         }
-        return ResponseEntity.ok().body(response);
+
 
     }
 

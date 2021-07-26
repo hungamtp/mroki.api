@@ -23,12 +23,6 @@ class ProductRepositoryTest {
     @Autowired
     private ProductRepository repo;
 
-    @Test
-    public void findAllProduct() {
-//        Page<Product> list = repo.findAllProduct(PageRequest.of(0, 9 , Sort.by("id") ) );
-//
-//        assertEquals(list.get().collect(Collectors.toList()).get(0).getId(), 2L);
-    }
 
     @Test
     public void deleteProductById() {
@@ -52,12 +46,6 @@ class ProductRepositoryTest {
     }
 
 
-    @Test
-    public void findAllProductAdmin(){
-//        Page<Product> products=repo.findByIsDeleteIsFalse(PageRequest.of(0 , 1 , Sort.by("id")));
-//
-//        assertEquals(2L ,products.getContent().get(0).getId() );
-    }
 
     @Test
     public void search(){

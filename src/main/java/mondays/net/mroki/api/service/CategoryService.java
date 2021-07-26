@@ -11,7 +11,7 @@ public interface CategoryService {
 
     List<ParentCategory> getAllCategory();
 
-    Category save(Category category);
+    void save(CategoryDTO category);
 
     void delete(String id);
 

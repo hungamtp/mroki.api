@@ -15,7 +15,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(DuplicatedDataException.class)
     public ResponseEntity dataNotFoundException(DuplicatedDataException ex, WebRequest request) {
         ResponseDTO errorResponse = new ResponseDTO(null, null , ex.getMessage());
-        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(AuthenticationException.class)

@@ -5,6 +5,7 @@ import mondays.net.mroki.api.converter.CategoryConverter;
 import mondays.net.mroki.api.dto.categoryDTO.CategoryDTO;
 import mondays.net.mroki.api.dto.categoryDTO.ParentCategory;
 import mondays.net.mroki.api.entity.Category;
+import mondays.net.mroki.api.exception.DuplicatedDataException;
 import mondays.net.mroki.api.repository.CategoryRepository;
 import mondays.net.mroki.api.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +28,16 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
 
-    public Category save(Category category) {
+    public void save(CategoryDTO category) {
 
-        category.setDelete(true);
-        return categoryRepository.save(category);
+        if (isExist(category.getId())) {
+            throw new DuplicatedDataException("CATEGORY_ID_NOT_AVAILABLE");
+        }
+
+        if (category.getParentId() == null)
+            categoryRepository.addParentCategory(category.getId(), category.getName());
+        else
+            categoryRepository.addSubCategory(category.getId(), category.getName(), category.getParentId());
 
     }
 

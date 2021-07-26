@@ -11,11 +11,11 @@ public interface CustomerRepository extends JpaRepository<Customer, Long>  , Jpa
 
     Customer findByUsername(String username);
 
-    @Query(value = "SELECT id , username , avatar , phone , email , role_id , is_verified_email" +
-            " FROM customer WHERE role_id != 'A' LIMIT ?1 OFFSET ?2", nativeQuery = true)
-    List<Object[]> findAllCustomer(int limit, int offset);
-
     @Query(value = "SELECT CASE WHEN count(id) > 0 THEN true ELSE false END checkUserExist "+
             "FROM customer c WHERE c.username = ?1 LIMIT 1" , nativeQuery = true)
     boolean isExist(String username);
+
+    @Query(value = "SELECT CASE WHEN count(id) > 0 THEN true ELSE false END checkUserExist "+
+            "FROM customer c WHERE c.email = ?1 LIMIT 1" , nativeQuery = true)
+    boolean isEmailExist(String email);
 }
