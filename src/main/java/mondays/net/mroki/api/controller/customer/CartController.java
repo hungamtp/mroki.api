@@ -9,6 +9,7 @@ import mondays.net.mroki.api.responseCode.SuccessCode;
 import mondays.net.mroki.api.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -31,6 +32,7 @@ public class CartController {
     }
 
     @PostMapping("/{customerId}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<ResponseDTO> addProductToCart(@PathVariable Long customerId,
                                                         @Valid @RequestBody ProductAddToCartDTO product) {
 
@@ -50,6 +52,7 @@ public class CartController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<ResponseDTO> getCartIconDTO(@RequestParam Long customerId) {
         ResponseDTO response = new ResponseDTO();
         Integer count = service.getIconData(customerId);

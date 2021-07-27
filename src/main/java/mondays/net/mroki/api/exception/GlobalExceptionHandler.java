@@ -15,11 +15,23 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(DuplicatedDataException.class)
     public ResponseEntity dataNotFoundException(DuplicatedDataException ex, WebRequest request) {
         ResponseDTO errorResponse = new ResponseDTO(null, null , ex.getMessage());
-        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errorResponse, HttpStatus.ACCEPTED);
     }
 
     @ExceptionHandler(AuthenticationException.class)
     public ResponseEntity wrongUsernameOrPassword(AuthenticationException ex , WebRequest request){
+        ResponseDTO errorResponse = new ResponseDTO(null, null , ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(DataNotFoundException.class)
+    public ResponseEntity dataNotFound(AuthenticationException ex , WebRequest request){
+        ResponseDTO errorResponse = new ResponseDTO(null, null , ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity tokenInvalid(AuthenticationException ex , WebRequest request){
         ResponseDTO errorResponse = new ResponseDTO(null, null , ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
     }

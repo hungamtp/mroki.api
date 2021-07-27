@@ -1,10 +1,7 @@
 package mondays.net.mroki.api.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,7 +10,8 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Data
+@Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -25,6 +23,7 @@ public class Category {
     private String name;
 
     private boolean delete;
+
 
     @OneToMany(mappedBy = "category" , fetch = FetchType.LAZY)
     @JsonIgnore

@@ -5,7 +5,9 @@ import mondays.net.mroki.api.dto.categoryDTO.ParentCategory;
 import mondays.net.mroki.api.entity.Category;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
@@ -34,9 +36,15 @@ public class CategoryConverter {
     }
 
     public ParentCategory entityToParentDto(Category category) {
+        Set<Category> subCate = new HashSet<>();
+
+       List<Category> categories =category.getSubCategories().stream().filter((cate) -> !cate.isDelete()).collect(Collectors.toList());
+
+       categories.stream().forEach((category1 -> subCate.add(category1)));
+
         return ParentCategory.builder()
                 .id(category.getId())
-                .subCategories(category.getSubCategories())
+                .subCategories(subCate)
                 .name(category.getName())
                 .build();
     }

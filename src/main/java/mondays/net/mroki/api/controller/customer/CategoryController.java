@@ -2,10 +2,12 @@ package mondays.net.mroki.api.controller.customer;
 
 
 import lombok.AllArgsConstructor;
+import mondays.net.mroki.api.dto.ResponseDTO;
 import mondays.net.mroki.api.dto.categoryDTO.CategoryDTO;
 import mondays.net.mroki.api.dto.categoryDTO.ParentCategory;
 import mondays.net.mroki.api.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,8 +26,10 @@ public class CategoryController {
         return categoryService.getAllCategory();
     }
 
-//    @GetMapping("/{id}")
-//    public List<CategoryDTO> getSubCategory(@PathVariable String parentId) {
-//        return categoryService.getALlSubcategory(parentId);
-//    }
+    @GetMapping("/sub")
+    public ResponseEntity<ResponseDTO> getAllSubcategory(){
+        ResponseDTO response = new ResponseDTO();
+        response.setData(categoryService.getALlSubcategory());
+        return ResponseEntity.ok().body(response);
+    }
 }

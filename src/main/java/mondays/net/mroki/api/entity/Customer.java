@@ -1,21 +1,18 @@
 package mondays.net.mroki.api.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@JsonIgnoreProperties({"password", "email", "phone", "isVerifiedEmail", "role", "comment", "orders", "shoppingCart"})
 public class Customer {
 
     @Id
@@ -35,7 +32,7 @@ public class Customer {
 
     private boolean isVerifiedEmail;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Role role;
 
     @OneToMany(mappedBy = "customer" , fetch = FetchType.LAZY)

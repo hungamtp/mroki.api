@@ -5,6 +5,7 @@ import mondays.net.mroki.api.converter.CategoryConverter;
 import mondays.net.mroki.api.dto.categoryDTO.CategoryDTO;
 import mondays.net.mroki.api.dto.categoryDTO.ParentCategory;
 import mondays.net.mroki.api.entity.Category;
+import mondays.net.mroki.api.exception.DataNotFoundException;
 import mondays.net.mroki.api.exception.DuplicatedDataException;
 import mondays.net.mroki.api.repository.CategoryRepository;
 import mondays.net.mroki.api.service.CategoryService;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -48,6 +50,16 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<CategoryDTO> getALlSubcategory() {
         return converter.entityToDto(categoryRepository.findAllSubCate());
+    }
+
+    @Override
+    public CategoryDTO getCategoryById(String id) {
+        Optional<Category> category = categoryRepository.findById(id);
+
+        if(!category.isPresent())
+            throw new DataNotFoundException("CATEGORY_NOT_FOUND");
+
+        return converter.entityToDto(category.get());
     }
 
 

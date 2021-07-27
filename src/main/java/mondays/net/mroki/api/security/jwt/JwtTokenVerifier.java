@@ -61,7 +61,7 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
             var authorities = (List<Map<String, String>>) body.get("authorities");
 
             Set<SimpleGrantedAuthority> simpleGrantedAuthorities = authorities.stream()
-                    .map(m -> new SimpleGrantedAuthority(m.get("authority")))
+                    .map(m -> new SimpleGrantedAuthority("ROLE_"+m.get("authority")))
                     .collect(Collectors.toSet());
 
             Authentication authentication = new UsernamePasswordAuthenticationToken(

@@ -17,7 +17,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("admin/category")
@@ -34,10 +33,13 @@ public class CategoryAdminController {
     private CategoryConverter converter;
 
 
-    @GetMapping
-    public ResponseEntity<ResponseDTO> getAllSubcategory(){
-                ResponseDTO response = new ResponseDTO();
-                response.setData(categoryService.getALlSubcategory());
+
+
+    @GetMapping("/{id}")
+    ResponseEntity<ResponseDTO> getCategoryById(@PathVariable String id){
+        ResponseDTO response = new ResponseDTO();
+
+        response.setData(categoryService.getCategoryById(id));
         return ResponseEntity.ok().body(response);
     }
 
@@ -87,7 +89,6 @@ public class CategoryAdminController {
         categoryService.update(converter.dtoToEntity(categoryDTO));
 
         return ResponseEntity.ok().body(response);
-
 
     }
 
