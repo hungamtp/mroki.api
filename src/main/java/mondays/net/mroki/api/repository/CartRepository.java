@@ -28,7 +28,6 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
     @Modifying(clearAutomatically = true)
     @Transactional
     @Query(value = "UPDATE product_cart c SET quantity = " +
-            //get old quantity then add with new quantity
             "(?1+(SELECT quantity FROM product_cart pc WHERE pc.products_id =?2 AND pc.cart_id = " +
             "(SELECT id FROM cart WHERE customer_id =?3 LIMIT 1) LIMIT 1 )) " +
             "WHERE c.cart_id  = (SELECT id FROM cart WHERE customer_id =?3 LIMIT 1) " +
@@ -43,21 +42,21 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
             "WHERE pc.cart_id = (SELECT id FROM cart c WHERE c.customer_id = ?1 LIMIT 1)", nativeQuery = true)
     List<Object[]> getProductInCart(Long customerId);
 
+    @Modifying
+    @Transactional
     @Query(value = "DELETE FROM product_cart WHERE products_id = ?1 AND size = ?2 AND cart_id = " +
-            "(SELECT id FROM cart c WHERE c.customer_id = ?2 LIMIT 1) ", nativeQuery = true)
+            "(SELECT id FROM cart c WHERE c.customer_id = ?3 LIMIT 1) ", nativeQuery = true)
     void deleteProductInCart(Long productId, int size, Long customerId);
 
 
-    //    @Query(value = "SELECT count(products_id) as count FROM product_cart pc " +
-//            "GROUP BY pc.cart_id " +
-//            "HAVING pc.cart_id =(SELECT id FROM cart c WHERE c.customer_id = ?1 LIMIT 1)" , nativeQuery = true)
-//    Integer getCountProductInCart(Long customerId);
     @Query(value = "SELECT count(quantity) as count FROM product_cart pc " +
             "WHERE pc.cart_id =(SELECT id FROM cart c WHERE c.customer_id = ?1 LIMIT 1)", nativeQuery = true)
     Integer getCountProductInCart(Long customerId);
 
     @Query(value = "SELECT id FROM cart WHERE customer_id = ?1 LIMIT 1", nativeQuery = true)
     Long getCartId(Long customerId);
+
+
 
 
 }

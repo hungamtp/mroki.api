@@ -78,4 +78,8 @@ public class CartServiceImpl implements CartService {
         return repo.isExist(customerId);
     }
 
+    public void deleteProductInCart(Long productId , int size , Long userId){
+        repo.deleteProductInCart(productId , size , userId);
+    }
+
 }

@@ -17,5 +17,6 @@ public enum SuccessCode {
     DELETE_PRODUCT,
     GET_ALL_COMMENT,
     GET_SIZE,
-    LOGIN
+    LOGIN,
+    DELETE_PRODUCT_IN_CART
 }

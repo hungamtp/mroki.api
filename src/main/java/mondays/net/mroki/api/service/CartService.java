@@ -14,4 +14,6 @@ public interface CartService {
 
     Integer getIconData(Long customerId);
 
+    void deleteProductInCart(Long productId , int size , Long userId);
+
 }

@@ -60,5 +60,16 @@ public class CartController {
         return ResponseEntity.ok().body(response);
     }
 
+    @DeleteMapping
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<ResponseDTO> deleteProductInCard(@RequestParam Long productId ,
+                                                           @RequestParam int size ,
+                                                           @RequestParam Long userId) {
+        ResponseDTO response = new ResponseDTO();
+        response.setSuccessCode(SuccessCode.DELETE_PRODUCT_IN_CART.toString());
+        service.deleteProductInCart(productId , size , userId);
+        return ResponseEntity.ok().body(response);
+    }
+
 
 }
