@@ -14,6 +14,7 @@ import mondays.net.mroki.api.responseCode.SuccessCode;
 import mondays.net.mroki.api.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -22,6 +23,7 @@ import javax.validation.Valid;
 @RequestMapping("admin/category")
 @AllArgsConstructor
 @CrossOrigin
+@PreAuthorize("hasRole('ADMIN')")
 public class CategoryAdminController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CategoryAdminController.class);

@@ -23,11 +23,13 @@ public interface CategoryRepository extends JpaRepository<Category, String> {
     @Query(value = "UPDATE category SET delete = true WHERE id = ?1 ", nativeQuery = true)
     void deleteCategoryById(String id);
 
-    @Query(value = "SELECT id , name , delete , parent_id FROM category WHERE delete = false AND parent_id IS NULL" , nativeQuery = true)
+    @Query(value = "SELECT id , name , delete , parent_id FROM category "+
+            "WHERE delete = false AND parent_id IS NULL" , nativeQuery = true)
     List<Category> findAllCate();
 
 
-    @Query(value = "SELECT id , name , delete , parent_id FROM category WHERE delete = false AND parent_id IS NOT NULL" , nativeQuery = true)
+    @Query(value = "SELECT id , name , delete , parent_id FROM category "+
+            "WHERE delete = false AND parent_id IS NOT NULL" , nativeQuery = true)
     List<Category> findAllSubCate();
 
     @Modifying

@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,6 +28,7 @@ import java.util.regex.Pattern;
 @AllArgsConstructor
 @RequestMapping("admin/user")
 @CrossOrigin
+@PreAuthorize("hasRole('ADMIN')")
 public class UserController {
 
     @Autowired

@@ -65,11 +65,4 @@ public class JwtUsernamePasswordAuthenticationFilter extends UsernamePasswordAut
 
     }
 
-    @Override
-    protected void unsuccessfulAuthentication(HttpServletRequest request,
-                                              HttpServletResponse response,
-                                              AuthenticationException failed) throws IOException, ServletException {
-
-        response.addHeader("Error", "Wrong user name or password");
-    }
 }

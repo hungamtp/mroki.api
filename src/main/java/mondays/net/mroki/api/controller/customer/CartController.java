@@ -25,6 +25,7 @@ public class CartController {
     private final CartService service;
 
     @GetMapping("/{customerId}")
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     public ResponseEntity<CartDTO> getCart(@PathVariable Long customerId) {
 
         return ResponseEntity.ok().body(service.getCart(customerId));
@@ -32,7 +33,7 @@ public class CartController {
     }
 
     @PostMapping("/{customerId}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     public ResponseEntity<ResponseDTO> addProductToCart(@PathVariable Long customerId,
                                                         @Valid @RequestBody ProductAddToCartDTO product) {
 
@@ -52,7 +53,7 @@ public class CartController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     public ResponseEntity<ResponseDTO> getCartIconDTO(@RequestParam Long customerId) {
         ResponseDTO response = new ResponseDTO();
         Integer count = service.getIconData(customerId);
@@ -61,7 +62,7 @@ public class CartController {
     }
 
     @DeleteMapping
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     public ResponseEntity<ResponseDTO> deleteProductInCard(@RequestParam Long productId ,
                                                            @RequestParam int size ,
                                                            @RequestParam Long userId) {
