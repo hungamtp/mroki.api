@@ -1,7 +1,9 @@
 package mondays.net.mroki.api.exception;
 
+import mondays.net.mroki.api.responseCode.ErrorCode;
+
 public class DuplicatedDataException extends RuntimeException{
-    public DuplicatedDataException(String message) {
-        super(message);
+    public DuplicatedDataException(ErrorCode message) {
+        super(message.toString());
     }
 }

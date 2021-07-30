@@ -5,7 +5,6 @@ import mondays.net.mroki.api.converter.SizeConverter;
 import mondays.net.mroki.api.dto.sizeDTO.SizeDTO;
 import mondays.net.mroki.api.service.SizeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

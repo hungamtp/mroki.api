@@ -34,11 +34,11 @@ public class SizeAdminController {
 
         try {
             List<SizeUpdateDTO> sizeDto = converter.dtoToEntity(service.findByProduct(productId));
-            response.setSuccessCode(SuccessCode.GET_SIZE.toString());
+            response.setSuccessCode(SuccessCode.GET_SIZE_SUCCESS);
             response.setData(sizeDto);
             return ResponseEntity.ok().body(response);
         } catch (SizeConvertException ex) {
-            response.setErrorCode(ErrorCode.GET_SIZE.toString());
+            response.setErrorCode(ErrorCode.GET_SIZE_FAIL);
             return ResponseEntity.badRequest().body(response);
         }
 

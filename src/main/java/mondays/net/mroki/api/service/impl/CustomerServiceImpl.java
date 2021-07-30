@@ -6,6 +6,7 @@ import mondays.net.mroki.api.dto.PageDTO;
 import mondays.net.mroki.api.entity.Customer;
 import mondays.net.mroki.api.exception.DuplicatedDataException;
 import mondays.net.mroki.api.repository.CustomerRepository;
+import mondays.net.mroki.api.responseCode.ErrorCode;
 import mondays.net.mroki.api.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -25,10 +26,10 @@ public class CustomerServiceImpl implements CustomerService {
     public void save(Customer customer) {
 
         if (isExist(customer.getUsername()))
-            throw new DuplicatedDataException("USERNAME_NOT_AVAILABLE");
+            throw new DuplicatedDataException(ErrorCode.USERNAME_NOT_AVAILABLE);
 
         if (customerRepository.isEmailExist(customer.getEmail()))
-            throw new DuplicatedDataException("EMAIL_NOT_AVAILABLE");
+            throw new DuplicatedDataException(ErrorCode.EMAIL_NOT_AVAILABLE);
 
         customerRepository.save(customer);
 

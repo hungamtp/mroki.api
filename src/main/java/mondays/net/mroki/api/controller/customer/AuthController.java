@@ -69,10 +69,10 @@ public class AuthController {
                     .build();
 
             customerService.save(customer);
-            response.setSuccessCode(SuccessCode.SIGN_UP_SUCCESS.toString());
+            response.setSuccessCode(SuccessCode.SIGN_UP_SUCCESS);
             return ResponseEntity.ok().body(response);
         } catch (DuplicatedDataException ex) {
-            response.setErrorCode(ex.getMessage());
+            response.setErrorCode(ErrorCode.SIGN_UP_FAIL);
             return ResponseEntity.ok().body(response);
         }
 
@@ -112,17 +112,17 @@ public class AuthController {
                         .build();
 
                 response.setData(loginResponse);
-                response.setSuccessCode(SuccessCode.LOGIN.toString());
+                response.setSuccessCode(SuccessCode.LOGIN_SUCCESS);
                 return ResponseEntity.ok().body(response);
             } else {
 
-                response.setErrorCode(ErrorCode.LOGIN.toString());
+                response.setErrorCode(ErrorCode.LOGIN_FAIL);
                 return ResponseEntity.ok().body(response);
 
             }
 
         } catch (AuthenticationException ex) {
-            response.setErrorCode(ErrorCode.WRONG_USERNAME_OR_PASSWORD.toString());
+            response.setErrorCode(ErrorCode.WRONG_USERNAME_OR_PASSWORD);
             return ResponseEntity.ok().body(response);
         }
 

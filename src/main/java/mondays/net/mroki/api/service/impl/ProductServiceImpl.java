@@ -12,6 +12,7 @@ import mondays.net.mroki.api.exception.ProductConvertException;
 import mondays.net.mroki.api.filter.ProductSpecification;
 import mondays.net.mroki.api.filter.SearchCriteria;
 import mondays.net.mroki.api.repository.ProductRepository;
+import mondays.net.mroki.api.responseCode.ErrorCode;
 import mondays.net.mroki.api.service.ProductService;
 import org.hibernate.boot.model.naming.IllegalIdentifierException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +47,7 @@ public class ProductServiceImpl implements ProductService {
                     productRepository.findAll(specification, pageable));
             return result;
         } catch (ProductConvertException ex) {
-            throw new ProductConvertException("CONVERT_FAIL");
+            throw new ProductConvertException(ErrorCode.PRODUCT_CONVERT_FAIL);
         }
 
     }
@@ -61,11 +62,11 @@ public class ProductServiceImpl implements ProductService {
             try {
                 return converter.entityToProductDetailDto(optional.get());
             } catch (ProductConvertException ex) {
-                throw new ProductConvertException("CONVERT_FAIL");
+                throw new ProductConvertException(ErrorCode.PRODUCT_CONVERT_FAIL);
             }
 
         } else {
-            throw new DataNotFoundException("PRODUCT_NOT_FOUND");
+            throw new DataNotFoundException(ErrorCode.PRODUCT_NOT_FOUND);
         }
 
     }
@@ -80,7 +81,7 @@ public class ProductServiceImpl implements ProductService {
     public void updateProduct(Product product) {
 
         if (!isExist(product.getId()))
-            throw new IllegalIdentifierException("Id not found");
+            throw new DataNotFoundException(ErrorCode.PRODUCT_NOT_FOUND);
         else
             productRepository.save(product);
 
@@ -105,7 +106,7 @@ public class ProductServiceImpl implements ProductService {
 
         if (isExist(id))
             productRepository.deleteProductById(id);
-        else throw new DataNotFoundException("PRODUCT_NOT_FOUND");
+        else throw new DataNotFoundException(ErrorCode.PRODUCT_NOT_FOUND);
 
     }
 
@@ -116,7 +117,7 @@ public class ProductServiceImpl implements ProductService {
         try {
             return converter.entityToPageAddDto(products);
         } catch (ProductConvertException ex) {
-            throw new ProductConvertException("PRODUCT_CONVERT_FAIL");
+            throw new ProductConvertException(ErrorCode.PRODUCT_CONVERT_FAIL);
         }
 
     }
@@ -127,6 +128,11 @@ public class ProductServiceImpl implements ProductService {
         List<Product> products = productRepository.findAll(new ProductSpecification(searchCriteria));
         Page<ProductAdminDTO> result = new PageImpl(products, PageRequest.of(0, 5), products.size());
         return result;
+    }
+
+    @Override
+    public boolean isNameExist(String productName) {
+        return productRepository.isNameExist(productName);
     }
 
 }

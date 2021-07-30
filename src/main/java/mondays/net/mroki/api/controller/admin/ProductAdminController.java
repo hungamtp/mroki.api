@@ -6,6 +6,7 @@ import mondays.net.mroki.api.dto.ResponseDTO;
 import mondays.net.mroki.api.dto.productDTO.ProductAddDTO;
 import mondays.net.mroki.api.dto.productDTO.ProductUpdateDTO;
 import mondays.net.mroki.api.entity.Product;
+import mondays.net.mroki.api.exception.DuplicatedDataException;
 import mondays.net.mroki.api.exception.ProductConvertException;
 import mondays.net.mroki.api.filter.ProductSpecificationsBuilder;
 import mondays.net.mroki.api.responseCode.ErrorCode;
@@ -69,14 +70,17 @@ public class ProductAdminController {
         ResponseDTO response = new ResponseDTO();
 
         try {
+            if(productService.isNameExist(productDTO.getName())){
+                throw new DuplicatedDataException(ErrorCode.PRODUCT_NAME_IS_EXIST);
+            }
 
             productService.save(converter.addDtoToEntity(productDTO));
-            response.setSuccessCode(SuccessCode.SAVE_PRODUCT.toString());
+            response.setSuccessCode(SuccessCode.SAVE_PRODUCT_SUCCESS);
 
             return ResponseEntity.ok().body(response);
         } catch (ProductConvertException ex) {
 
-            response.setErrorCode(ErrorCode.SAVE_PRODUCT.toString());
+            response.setErrorCode(ErrorCode.SAVE_PRODUCT_FAIL);
             return ResponseEntity.ok().body(response);
         }
 
@@ -88,12 +92,12 @@ public class ProductAdminController {
         ResponseDTO response = new ResponseDTO();
 
         if (!productService.isExist(product.getId())) {
-            response.setErrorCode(ErrorCode.PRODUCT_NOT_FOUND.toString());
+            response.setErrorCode(ErrorCode.PRODUCT_NOT_FOUND);
             return ResponseEntity.badRequest().body(response);
         }
 
         productService.updateProduct(converter.updateDtoToEntity(product));
-        response.setSuccessCode(SuccessCode.UPDATE_PRODUCT.toString());
+        response.setSuccessCode(SuccessCode.UPDATE_PRODUCT_SUCCESS);
         return ResponseEntity.ok().body(response);
 
 
@@ -108,16 +112,14 @@ public class ProductAdminController {
         if (productService.isExist(id)) {
 
             productService.deleteProductById(id);
-            response.setSuccessCode(SuccessCode.DELETE_PRODUCT.toString());
+            response.setSuccessCode(SuccessCode.DELETE_PRODUCT_SUCCESS);
             return ResponseEntity.ok().body(response);
 
         } else {
-            response.setErrorCode(ErrorCode.PRODUCT_NOT_FOUND.toString());
+            response.setErrorCode(ErrorCode.PRODUCT_NOT_FOUND);
             return ResponseEntity.badRequest().body(response);
 
-
         }
-
 
     }
 }

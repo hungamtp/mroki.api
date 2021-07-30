@@ -8,6 +8,7 @@ import mondays.net.mroki.api.entity.Category;
 import mondays.net.mroki.api.exception.DataNotFoundException;
 import mondays.net.mroki.api.exception.DuplicatedDataException;
 import mondays.net.mroki.api.repository.CategoryRepository;
+import mondays.net.mroki.api.responseCode.ErrorCode;
 import mondays.net.mroki.api.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,7 +34,7 @@ public class CategoryServiceImpl implements CategoryService {
     public void save(CategoryDTO category) {
 
         if (isExist(category.getId())) {
-            throw new DuplicatedDataException("CATEGORY_ID_NOT_AVAILABLE");
+            throw new DuplicatedDataException(ErrorCode.CATEGORY_ID_NOT_AVAILABLE);
         }
 
         if (category.getParentId() == null)
@@ -57,7 +58,7 @@ public class CategoryServiceImpl implements CategoryService {
         Optional<Category> category = categoryRepository.findById(id);
 
         if(!category.isPresent())
-            throw new DataNotFoundException("CATEGORY_NOT_FOUND");
+            throw new DataNotFoundException(ErrorCode.CATEGORY_NOT_FOUND);
 
         return converter.entityToDto(category.get());
     }

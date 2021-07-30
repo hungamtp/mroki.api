@@ -43,10 +43,10 @@ public class CartController {
 
             service.addToCart(customerId, product);
 
-            response.setSuccessCode(SuccessCode.ADD_PRODUCT_TO_CART.toString());
+            response.setSuccessCode(SuccessCode.ADD_PRODUCT_TO_CART_SUCCESS);
             return ResponseEntity.ok().body(response);
         } catch (Exception e) {
-            response.setErrorCode(ErrorCode.ADD_PRODUCT_TO_CART.toString());
+            response.setErrorCode(ErrorCode.ADD_PRODUCT_TO_CART_FAIL);
             return ResponseEntity.badRequest().body(response);
         }
 
@@ -67,9 +67,15 @@ public class CartController {
                                                            @RequestParam int size ,
                                                            @RequestParam Long userId) {
         ResponseDTO response = new ResponseDTO();
-        response.setSuccessCode(SuccessCode.DELETE_PRODUCT_IN_CART.toString());
-        service.deleteProductInCart(productId , size , userId);
-        return ResponseEntity.ok().body(response);
+        try{
+            response.setSuccessCode(SuccessCode.DELETE_PRODUCT_IN_CART_SUCCESS);
+            service.deleteProductInCart(productId , size , userId);
+            return ResponseEntity.ok().body(response);
+        }catch (Exception ex){
+            response.setErrorCode(ErrorCode.DELETE_PRODUCT_IN_CART_FAIL);
+            return ResponseEntity.badRequest().body(response);
+        }
+
     }
 
 

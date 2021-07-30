@@ -12,7 +12,7 @@ import mondays.net.mroki.api.responseCode.SuccessCode;
 @NoArgsConstructor
 @Builder
 public class ResponseDTO {
-    private String successCode;
+    private SuccessCode successCode;
     private Object data;
-    private String errorCode;
+    private ErrorCode errorCode;
 }

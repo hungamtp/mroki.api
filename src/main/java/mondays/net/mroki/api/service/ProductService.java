@@ -31,5 +31,7 @@ public interface ProductService {
 
     Page<ProductAdminDTO> searchProduct(SearchCriteria searchCriteria);
 
+    boolean isNameExist(String productName);
+
 
 }

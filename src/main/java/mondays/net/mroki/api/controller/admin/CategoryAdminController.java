@@ -1,17 +1,15 @@
 package mondays.net.mroki.api.controller.admin;
 
-import io.swagger.annotations.Tag;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.converter.CategoryConverter;
-import mondays.net.mroki.api.dto.categoryDTO.CategoryDTO;
 import mondays.net.mroki.api.dto.ResponseDTO;
-import mondays.net.mroki.api.entity.Category;
+import mondays.net.mroki.api.dto.categoryDTO.CategoryDTO;
 import mondays.net.mroki.api.exception.CategoryConverterException;
 import mondays.net.mroki.api.responseCode.ErrorCode;
 import mondays.net.mroki.api.responseCode.SuccessCode;
 import mondays.net.mroki.api.service.CategoryService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -35,10 +33,8 @@ public class CategoryAdminController {
     private CategoryConverter converter;
 
 
-
-
     @GetMapping("/{id}")
-    ResponseEntity<ResponseDTO> getCategoryById(@PathVariable String id){
+    ResponseEntity<ResponseDTO> getCategoryById(@PathVariable String id) {
         ResponseDTO response = new ResponseDTO();
 
         response.setData(categoryService.getCategoryById(id));
@@ -52,10 +48,10 @@ public class CategoryAdminController {
         try {
 
             categoryService.save(categoryDTO);
-            response.setSuccessCode(SuccessCode.ADD_CATEGORY.toString());
+            response.setSuccessCode(SuccessCode.ADD_CATEGORY_SUCCESS);
 
         } catch (CategoryConverterException exception) {
-            throw new CategoryConverterException("CONVERT_CATEGORY_ERROR");
+            throw new CategoryConverterException(ErrorCode.CONVERT_CATEGORY_ERROR);
         }
 
         return ResponseEntity.ok().body(response);
@@ -67,10 +63,10 @@ public class CategoryAdminController {
         ResponseDTO response = new ResponseDTO();
 
         if (!categoryService.isExist(categoryId)) {
-            response.setErrorCode(ErrorCode.ID_CATEGORY_NOT_FOUND.toString());
+            response.setErrorCode(ErrorCode.ID_CATEGORY_NOT_FOUND);
             return ResponseEntity.badRequest().body(response);
         } else {
-            response.setSuccessCode(SuccessCode.DELETE_CATEGORY.toString());
+            response.setSuccessCode(SuccessCode.DELETE_CATEGORY_SUCCESS);
             categoryService.delete(categoryId);
             return ResponseEntity.ok().body(response);
         }
@@ -81,17 +77,23 @@ public class CategoryAdminController {
     public ResponseEntity<ResponseDTO> updateCategory(@Valid @RequestBody CategoryDTO categoryDTO) {
 
         ResponseDTO response = new ResponseDTO();
+        try {
+            if (!categoryService.isExist(categoryDTO.getId())) {
+                response.setErrorCode(ErrorCode.ID_CATEGORY_NOT_FOUND);
+                return ResponseEntity.badRequest().body(response);
+            }
 
-        if (!categoryService.isExist(categoryDTO.getId())) {
-            response.setErrorCode(ErrorCode.ID_CATEGORY_NOT_FOUND.toString());
+            response.setSuccessCode(SuccessCode.UPDATE_CATEGORY_SUCCESS);
+            categoryService.update(converter.dtoToEntity(categoryDTO));
+
+            return ResponseEntity.ok().body(response);
+
+
+        } catch (Exception e) {
+            response.setErrorCode(ErrorCode.UPDATE_CATEGORY_FAIL);
             return ResponseEntity.badRequest().body(response);
         }
 
-        response.setSuccessCode(SuccessCode.UPDATE_CATEGORY.toString());
-        categoryService.update(converter.dtoToEntity(categoryDTO));
-
-        return ResponseEntity.ok().body(response);
 
     }
-
 }

@@ -68,10 +68,10 @@ public class ProductController {
 
             response.setData(productService.findAllProduct(pageable , spec));
 
-            response.setSuccessCode(SuccessCode.GET_PRODUCT.toString());
+            response.setSuccessCode(SuccessCode.GET_PRODUCT_SUCCESS);
             return ResponseEntity.ok().body(response);
         } catch (ProductConvertException ex) {
-            response.setErrorCode(ErrorCode.GET_PRODUCT.toString());
+            response.setErrorCode(ErrorCode.GET_PRODUCT_FAIL);
             return ResponseEntity.badRequest().body(response);
         }
 
@@ -85,13 +85,13 @@ public class ProductController {
         try {
 
             ProductDetailDTO productDTO = productService.getProductById(id);
-            response.setSuccessCode(SuccessCode.GET_PRODUCT_DETAIL.toString());
+            response.setSuccessCode(SuccessCode.GET_PRODUCT_DETAIL_SUCCESS);
             response.setData(productDTO);
 
             return ResponseEntity.ok().body(response);
 
         } catch (Exception ex) {
-            response.setErrorCode(ErrorCode.GET_PRODUCT_DETAIL.toString());
+            response.setErrorCode(ErrorCode.GET_PRODUCT_DETAIL_FAIL);
             return ResponseEntity.badRequest().body(response);
         }
 
