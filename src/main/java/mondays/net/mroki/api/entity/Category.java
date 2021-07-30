@@ -15,6 +15,9 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "category" ,
+        indexes = @Index(columnList = "id, name")
+)
 public class Category {
 
     @Id

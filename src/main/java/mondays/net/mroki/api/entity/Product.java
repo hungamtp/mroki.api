@@ -16,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Table(name = "product" ,
-        indexes = @Index(columnList = "id")
+        indexes = @Index(columnList = "id,name,price")
 )
 public class Product {
 

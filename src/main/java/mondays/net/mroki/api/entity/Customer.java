@@ -1,10 +1,9 @@
 package mondays.net.mroki.api.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import java.util.List;
 
 @Entity
@@ -13,6 +12,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "customer" ,
+        indexes = @Index(columnList = "id, username , email , phone")
+)
 public class Customer {
 
     @Id
