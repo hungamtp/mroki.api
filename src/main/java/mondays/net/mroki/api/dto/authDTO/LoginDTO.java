@@ -12,7 +12,7 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 public class LoginDTO {
 
-    @NotBlank
+    @NotBlank(message = "Username is empty")
     private String username;
     @NotBlank
     private String password;
