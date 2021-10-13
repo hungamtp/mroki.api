@@ -19,7 +19,6 @@ public class ProductSpecification implements Specification<Product> {
             return builder.equal(builder.upper(categoryJoin.<String> get("id")) , criteria.getValue());
         }
         if(criteria.getKey().startsWith("price")){
-
             return builder.between(
                     root.<Float>get("price") ,
                     Float.parseFloat( criteria.getValue().toString().split("-")[0]) ,
@@ -40,7 +39,7 @@ public class ProductSpecification implements Specification<Product> {
         } else if (criteria.getOperation().equalsIgnoreCase(":")) {
             if (root.get(criteria.getKey()).getJavaType() == String.class) {
                 return builder.like(
-                        root.<String>get(criteria.getKey()), "%" + criteria.getValue() + "%");
+                        builder.lower(root.<String>get(criteria.getKey())), "%" + criteria.getValue().toString().toLowerCase() + "%");
             } else {
                 return builder.equal(root.get(criteria.getKey()), criteria.getValue());
             }
