@@ -20,24 +20,31 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-//    @ExceptionHandler(DuplicatedDataException.class)
-//    public ResponseEntity dataNotFoundException(DuplicatedDataException ex, WebRequest request) {
-//        ResponseDTO errorResponse = new ResponseDTO(null, null , ex.getErrorCode());
-//        return new ResponseEntity<>(errorResponse, HttpStatus.ACCEPTED);
-//    }
-//
-//    @ExceptionHandler(AuthException.class)
-//    public ResponseEntity wrongUsernameOrPassword(AuthException ex , WebRequest request){
-//        ResponseDTO errorResponse = new ResponseDTO(null, null , ex.getErrorCode());
-//        return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
-//    }
-//
-//    @ExceptionHandler(DataNotFoundException.class)
-//    public ResponseEntity dataNotFound(DataNotFoundException ex , WebRequest request){
-//        ResponseDTO errorResponse = new ResponseDTO(null, null , ex.getErrorCode());
-//        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
-//    }
-//
+
+    @ExceptionHandler(DuplicatedDataException.class)
+    public ResponseEntity dataNotFoundException(DuplicatedDataException ex, WebRequest request) {
+        ResponseDTO errorResponse = new ResponseDTO(null, null, ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.ACCEPTED);
+    }
+
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity dataNotFoundException(IllegalStateException ex, WebRequest request) {
+        ResponseDTO errorResponse = new ResponseDTO(null, null, ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.ACCEPTED);
+    }
+
+    @ExceptionHandler(AuthException.class)
+    public ResponseEntity wrongUsernameOrPassword(AuthException ex, WebRequest request) {
+        ResponseDTO errorResponse = new ResponseDTO(null, null, ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(DataNotFoundException.class)
+    public ResponseEntity dataNotFound(DataNotFoundException ex, WebRequest request) {
+        ResponseDTO errorResponse = new ResponseDTO(null, null, ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
 //    @ResponseStatus(HttpStatus.BAD_REQUEST)
 //    @ExceptionHandler(MethodArgumentNotValidException.class)
 //    public Map<String, String> handleValidationExceptions(
@@ -53,7 +60,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 //
 //        return errors;
 //    }
-
 
 
 }
