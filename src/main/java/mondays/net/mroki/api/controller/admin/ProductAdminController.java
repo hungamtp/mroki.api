@@ -33,10 +33,7 @@ import java.util.regex.Pattern;
 @PreAuthorize("hasRole('ADMIN')")
 public class ProductAdminController {
 
-    @Autowired
     private final ProductService productService;
-
-    @Autowired
     private final ProductConverter converter;
 
     @GetMapping
