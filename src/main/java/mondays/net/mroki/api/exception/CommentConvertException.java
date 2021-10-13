@@ -9,10 +9,9 @@ import mondays.net.mroki.api.responseCode.ErrorCode;
 @Setter
 public class CommentConvertException extends RuntimeException{
 
-    ErrorCode errorCode;
-    public CommentConvertException(ErrorCode e) {
 
-        super(e.toString());
-        setErrorCode(e);
+    public CommentConvertException(String e) {
+
+        super(e);
     }
 }

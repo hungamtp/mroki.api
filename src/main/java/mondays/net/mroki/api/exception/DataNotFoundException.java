@@ -7,9 +7,8 @@ import mondays.net.mroki.api.responseCode.ErrorCode;
 @Getter
 @Setter
 public class DataNotFoundException extends RuntimeException{
-    ErrorCode errorCode;
-    public DataNotFoundException(ErrorCode message) {
-        super(message.toString());
-        setErrorCode(message);
+
+    public DataNotFoundException(String message) {
+        super(message);
     }
 }

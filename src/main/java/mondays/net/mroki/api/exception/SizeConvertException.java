@@ -7,9 +7,7 @@ import mondays.net.mroki.api.responseCode.ErrorCode;
 @Getter
 @Setter
 public class SizeConvertException extends RuntimeException{
-    private ErrorCode errorCode;
-    public SizeConvertException(ErrorCode message) {
-        super(message.toString());
-        setErrorCode(message);
+    public SizeConvertException(String message) {
+        super(message);
     }
 }

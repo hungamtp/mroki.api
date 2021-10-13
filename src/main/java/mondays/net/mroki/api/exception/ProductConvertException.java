@@ -8,11 +8,9 @@ import mondays.net.mroki.api.responseCode.ErrorCode;
 @Setter
 public class ProductConvertException extends RuntimeException {
 
-    ErrorCode errorCode;
 
 
-    public ProductConvertException(ErrorCode message) {
-        super(message.toString());
-        setErrorCode(errorCode);
+    public ProductConvertException(String message) {
+        super(message);
     }
 }

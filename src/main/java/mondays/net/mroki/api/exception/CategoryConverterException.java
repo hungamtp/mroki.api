@@ -7,10 +7,8 @@ import mondays.net.mroki.api.responseCode.ErrorCode;
 @Getter
 @Setter
 public class CategoryConverterException extends RuntimeException{
-    private ErrorCode errorCode;
 
-    public CategoryConverterException(ErrorCode message) {
-        super(message.toString());
-        setErrorCode(errorCode);
+    public CategoryConverterException(String message) {
+        super(message);
     }
 }

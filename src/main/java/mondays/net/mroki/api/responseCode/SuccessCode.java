@@ -1,24 +1,23 @@
 package mondays.net.mroki.api.responseCode;
 
-public enum SuccessCode {
+public class SuccessCode {
 
-    SIGN_UP_SUCCESS,
-    COMMENT_SUCCESS,
-    GET_ALL_COMMENT_SUCCESS,
-    LOGIN_SUCCESS,
-    ORDER_SUCCESS,
-    GET_PRODUCT_SUCCESS,
-    GET_PRODUCT_DETAIL_SUCCESS,
-    SAVE_PRODUCT_SUCCESS,
-    UPDATE_PRODUCT_SUCCESS,
-    DELETE_PRODUCT_SUCCESS,
-    GET_SIZE_SUCCESS,
-    ADD_PRODUCT_TO_CART_SUCCESS,
-    DELETE_PRODUCT_IN_CART_SUCCESS,
-    UPDATE_CATEGORY_SUCCESS,
-    DELETE_CATEGORY_SUCCESS,
-    ADD_CATEGORY_SUCCESS
-
+    public static final String  SIGN_UP_SUCCESS ="SIGN_UP_SUCCESS";
+    public static final String  COMMENT_SUCCESS ="COMMENT_SUCCESS";
+    public static final String  GET_ALL_COMMENT_SUCCESS ="GET_ALL_COMMENT_SUCCESS";
+    public static final String  ORDER_SUCCESS ="ORDER_SUCCESS";
+    public static final String  GET_PRODUCT_SUCCESS ="GET_PRODUCT_SUCCESS";
+    public static final String  GET_PRODUCT_DETAIL_SUCCESS ="GET_PRODUCT_DETAIL_SUCCESS";
+    public static final String  SAVE_PRODUCT_SUCCESS ="SAVE_PRODUCT_SUCCESS";
+    public static final String  UPDATE_PRODUCT_SUCCESS ="UPDATE_PRODUCT_SUCCESS";
+    public static final String  DELETE_PRODUCT_SUCCESS ="DELETE_PRODUCT_SUCCESS";
+    public static final String  GET_SIZE_SUCCESS ="GET_SIZE_SUCCESS";
+    public static final String  ADD_PRODUCT_TO_CART_SUCCESS ="ADD_PRODUCT_TO_CART_SUCCESS";
+    public static final String  DELETE_PRODUCT_IN_CART_SUCCESS ="DELETE_PRODUCT_IN_CART_SUCCESS";
+    public static final String  UPDATE_CATEGORY_SUCCESS ="UPDATE_CATEGORY_SUCCESS";
+    public static final String  DELETE_CATEGORY_SUCCESS ="DELETE_CATEGORY_SUCCESS";
+    public static final String  ADD_CATEGORY_SUCCESS ="ADD_CATEGORY_SUCCESS";
+    public static final String  LOGIN_SUCCESS ="LOGIN_SUCCESS";
 
 
 }

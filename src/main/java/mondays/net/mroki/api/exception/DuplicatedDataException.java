@@ -7,9 +7,8 @@ import mondays.net.mroki.api.responseCode.ErrorCode;
 @Setter
 @Getter
 public class DuplicatedDataException extends RuntimeException{
-    ErrorCode errorCode;
-    public DuplicatedDataException(ErrorCode message) {
-        super(message.toString());
-        setErrorCode(message);
+
+    public DuplicatedDataException(String message) {
+        super(message);
     }
 }

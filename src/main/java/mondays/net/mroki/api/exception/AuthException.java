@@ -8,9 +8,9 @@ import org.springframework.security.core.AuthenticationException;
 @Setter
 @Getter
 public class AuthException extends AuthenticationException {
-    private ErrorCode errorCode;
-    public AuthException(ErrorCode message) {
-        super(message.toString());
-        setErrorCode(message);
+
+    public AuthException(String message) {
+        super(message);
+
     }
 }
