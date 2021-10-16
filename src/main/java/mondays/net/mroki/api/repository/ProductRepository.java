@@ -5,10 +5,7 @@ import mondays.net.mroki.api.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
@@ -47,6 +44,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> , JpaSpe
     @Query(value = "SELECT CASE WHEN count(p.id) >0  THEN true ELSE false END checkQuantity "+
             "FROM product p WHERE  p.name = ?1 LIMIT 1" , nativeQuery = true)
     boolean isNameExist(String name);
+
 
 
 

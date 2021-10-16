@@ -18,8 +18,6 @@ import org.springframework.stereotype.Service;
 public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerConverter converter;
-
-    @Autowired
     private final CustomerRepository customerRepository;
 
     @Override

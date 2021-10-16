@@ -26,8 +26,6 @@ public class Cart {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @ManyToMany(mappedBy = "cart" , fetch = FetchType.EAGER)
-    private List<Product> products = new ArrayList<>();
 
     @OneToMany(mappedBy = "product")
     private List<CartDetail> cartDetails;

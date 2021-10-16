@@ -2,12 +2,14 @@ package mondays.net.mroki.api.repository;
 
 
 import mondays.net.mroki.api.entity.Cart;
+import mondays.net.mroki.api.entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 public interface CartRepository extends JpaRepository<Cart, Long> {
 
@@ -55,6 +57,8 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
 
     @Query(value = "SELECT id FROM cart WHERE customer_id = ?1 LIMIT 1", nativeQuery = true)
     Long getCartId(Long customerId);
+
+    Optional<Cart> findOneByCustomer(Customer customer);
 
 
 
