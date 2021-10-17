@@ -12,6 +12,8 @@ public class CartDetailConverter {
 
     public CartDetailDTO entityToDTO (CartDetail cartDetail){
         return CartDetailDTO.builder()
+                .name(cartDetail.getProduct().getName())
+                .productId(cartDetail.getProduct().getId())
                 .price(cartDetail.getProduct().getPrice() * cartDetail.getQuantity())
                 .quantity(cartDetail.getQuantity())
                 .thumbnail(cartDetail.getProduct().getProductImage().getThumbnail())
