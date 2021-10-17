@@ -23,10 +23,8 @@ public class CartDetail {
     private int size;
 
     @ManyToOne
-    @JoinTable(name="product_cartdetail")
     private Product product;
 
     @ManyToOne
-    @JoinTable(name="cartdetailt_cart")
     private Cart cart;
 }

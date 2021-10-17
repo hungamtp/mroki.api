@@ -18,6 +18,7 @@ public class SuccessCode {
     public static final String  DELETE_CATEGORY_SUCCESS ="DELETE_CATEGORY_SUCCESS";
     public static final String  ADD_CATEGORY_SUCCESS ="ADD_CATEGORY_SUCCESS";
     public static final String  LOGIN_SUCCESS ="LOGIN_SUCCESS";
+    public static final String  GET_ALL_CART_DETAIL ="GET_ALL_CART_DETAIL";
 
 
 }

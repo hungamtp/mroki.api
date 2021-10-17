@@ -53,6 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers("/user/**").permitAll()
                 .antMatchers("/admin/**").permitAll()
+                .antMatchers("/cartdetail/**").permitAll()
                 .anyRequest()
                 .authenticated();
     }
@@ -87,7 +88,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedMethods("http://localhost:8081");
+                registry.addMapping("/**").allowedMethods("*").allowedOrigins("*");
             }
         };
     }
