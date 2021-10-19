@@ -34,11 +34,7 @@ import java.util.regex.Pattern;
 @CrossOrigin
 public class ProductController {
 
-    private final int PAGE_SIZE = 9;
-    @Autowired
     private final ProductService productService;
-
-    @Autowired
     private final ProductConverter converter;
 
     @GetMapping
