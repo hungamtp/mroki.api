@@ -13,6 +13,7 @@ import mondays.net.mroki.api.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,10 +21,19 @@ import java.util.Optional;
 @AllArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
 
+    @Autowired
+    private CategoryRepository categoryRepository;
+
 
     @Override
     public List<ParentCategory> getAllCategory() {
-        return null;
+        List<Category> categories = categoryRepository.findByParentIsNullAndIsDeletedFalse();
+        List<ParentCategory> parentCategories = new ArrayList<>();
+
+        for(Category category : categories){
+            parentCategories.add(new ParentCategory(category.getId() , category.getName(), category.getSubCategories()));
+        }
+        return parentCategories;
     }
 
     @Override

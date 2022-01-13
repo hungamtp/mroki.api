@@ -1,6 +1,7 @@
 package mondays.net.mroki.api.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -24,17 +25,18 @@ public class Category {
 
     private String name;
 
-    private boolean delete;
+    private boolean isDeleted;
 
 
     @OneToMany(mappedBy = "category" , fetch = FetchType.LAZY)
     private List<Product> products;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "parent_id")
     private Category parent;
 
-    @OneToMany(mappedBy = "parent", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.REMOVE, orphanRemoval = true , fetch = FetchType.EAGER)
     private List<Category> subCategories = new ArrayList<Category>();
 
     public Category(Long id) {
