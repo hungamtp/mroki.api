@@ -3,7 +3,7 @@ package mondays.net.mroki.api.converter;
 import mondays.net.mroki.api.dto.PageDTO;
 import mondays.net.mroki.api.dto.productDTO.*;
 import mondays.net.mroki.api.entity.Category;
-import mondays.net.mroki.api.entity.Comment;
+import mondays.net.mroki.api.entity.Rate;
 import mondays.net.mroki.api.entity.Product;
 import mondays.net.mroki.api.entity.ProductImage;
 import org.springframework.data.domain.Page;
@@ -29,10 +29,10 @@ public class ProductConverter {
 
         float rate = 0;
 
-        for (Comment c : product.getComments())
+        for (Rate c : product.getRates())
             rate += (float) c.getRate();
 
-        dto.setRate(rate / (float) product.getComments().size());
+        dto.setRate(rate / (float) product.getRates().size());
 
         return dto;
     }
@@ -61,7 +61,7 @@ public class ProductConverter {
         Product product = Product.builder()
                 .name(dto.getName())
                 .price(dto.getPrice())
-                .retail(dto.getRetail())
+                .retailPrice(dto.getRetail())
                 .description(dto.getDescription())
                 .saleOff(dto.getSaleOff())
                 .category(Category.builder().id(dto.getCategoryId()).build())
@@ -83,7 +83,7 @@ public class ProductConverter {
                 .id(dto.getId())
                 .name(dto.getName())
                 .price(dto.getPrice())
-                .retail(dto.getRetail())
+                .retailPrice(dto.getRetail())
                 .description(dto.getDescription())
                 .saleOff(dto.getSaleOff())
                 .category(Category.builder().id(dto.getCategoryId()).build())
@@ -134,7 +134,37 @@ public class ProductConverter {
                 .build();
     }
 
-//    public ProductDetailDTO entityToProductDetailDTO(Product product){
+
+    public PageDTO entityToPageAddDto(Page<Product> products) {
+        List<ProductAdminDTO> list = products.stream()
+                .map((product) -> entityToAddDto(product))
+                .collect(Collectors.toList());
+        return PageDTO.builder()
+                .totalElement(products.getTotalElements())
+                .totalPage(products.getTotalPages())
+                .data(list)
+                .build();
+    }
+
+
+    public ProductAdminDTO entityToAddDto(Product product) {
+        return ProductAdminDTO.builder()
+                .id(product.getId())
+                .name(product.getName())
+                .price(product.getPrice())
+                .retail(product.getRetailPrice())
+                .description(product.getDescription())
+                .saleOff(product.getSaleOff())
+                .categoryName(product.getCategory().getName())
+                .thumbnail(product.getProductImage().getThumbnail())
+                .image1(product.getProductImage().getImage1())
+                .image2(product.getProductImage().getImage2())
+                .createdDate(product.getCreatedDate())
+                .modifiedDate(product.getModifiedDate())
+                .deleted(product.isDelete())
+                .build();
+    }
+    //    public ProductDetailDTO entityToProductDetailDTO(Product product){
 //        float averageRate = 0;
 //        int rate1 =0 , rate2=0 , rate3=0 , rate4=0 , rate5=0;
 //
@@ -179,35 +209,4 @@ public class ProductConverter {
 //                .build();
 //
 //    }
-
-    public ProductAdminDTO entityToAddDto(Product product) {
-        return ProductAdminDTO.builder()
-                .id(product.getId())
-                .name(product.getName())
-                .price(product.getPrice())
-                .retail(product.getRetail())
-                .description(product.getDescription())
-                .saleOff(product.getSaleOff())
-                .categoryName(product.getCategory().getName())
-                .thumbnail(product.getProductImage().getThumbnail())
-                .image1(product.getProductImage().getImage1())
-                .image2(product.getProductImage().getImage2())
-                .createdDate(product.getCreatedDate())
-                .modifiedDate(product.getModifiedDate())
-                .deleted(product.isDelete())
-                .build();
-    }
-
-    public PageDTO entityToPageAddDto(Page<Product> products) {
-        List<ProductAdminDTO> list = products.stream()
-                .map((product) -> entityToAddDto(product))
-                .collect(Collectors.toList());
-        return PageDTO.builder()
-                .totalElement(products.getTotalElements())
-                .totalPage(products.getTotalPages())
-                .data(list)
-                .build();
-    }
-
-
 }

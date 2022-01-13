@@ -27,7 +27,7 @@ public class Product {
     private String name;
     private String description;
     private float price;
-    private float retail;
+    private float retailPrice;
     private int saleOff;
     private boolean isDelete;
 
@@ -46,16 +46,19 @@ public class Product {
     @ManyToOne(fetch = FetchType.LAZY)
     private Category category;
 
-    @ManyToMany(fetch =FetchType.LAZY)
-    private List<Orders> order;
-
     @OneToMany(mappedBy = "product" , fetch = FetchType.LAZY)
-    private List<Comment> comments;
+    private List<Rate> rates;
 
     @OneToMany(mappedBy = "product" , fetch = FetchType.LAZY)
     private List<Size> size;
 
     @OneToMany(mappedBy = "product")
     private List<CartDetail> cartDetails;
+
+    @ManyToOne
+    private Discount discount;
+
+    @OneToMany(mappedBy = "product")
+    private List<OrderDetail> orderDetails;
 
 }

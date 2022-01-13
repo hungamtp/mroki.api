@@ -50,7 +50,7 @@ public class OrderServiceImpl implements OrderService {
 
 
         });
-            orders.setProduct(productOrder);
+          //  orders.setProduct(productOrder);
         // if any product do not have enough then no order
         if (listOfProductIsNotEnough.size() != 0) return listOfProductIsNotEnough;
         else {

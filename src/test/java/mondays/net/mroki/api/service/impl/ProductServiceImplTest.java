@@ -99,7 +99,7 @@ class ProductServiceImplTest {
                 .id(5L)
                 .name("product")
                 .productImage(ProductImage.builder().thumbnail("thumbnail").image2("image2").image1("image1").build())
-                .retail(12)
+                .retailPrice(12)
                 .saleOff(12)
                 .isDelete(false)
                 .category(new Category("G"))

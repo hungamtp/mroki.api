@@ -1,14 +1,11 @@
 package mondays.net.mroki.api.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -33,13 +30,12 @@ public class Orders {
     private boolean isInArchiveBox;
 
     @ManyToOne
-    @JsonIgnore
     private Customer customer;
-
-    @ManyToMany
-    private List<Product> product;
 
     @OneToOne
     private ArchiveBox archiveBox;
+
+    @OneToMany(mappedBy = "order")
+    private List<OrderDetail> orderDetails;
 
 }

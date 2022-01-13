@@ -5,13 +5,12 @@ import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.converter.CommentConverter;
 import mondays.net.mroki.api.dto.PageDTO;
 import mondays.net.mroki.api.dto.commentDTO.CommentTotalDTO;
-import mondays.net.mroki.api.entity.Comment;
+import mondays.net.mroki.api.entity.Rate;
 import mondays.net.mroki.api.entity.Product;
 import mondays.net.mroki.api.exception.CommentConvertException;
 import mondays.net.mroki.api.repository.CommentRepository;
 import mondays.net.mroki.api.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -30,9 +29,9 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     private final CommentConverter converter;
 
-    public void comment(Comment comment) {
+    public void comment(Rate rate) {
 
-        commentRepository.save(comment);
+        commentRepository.save(rate);
     }
 
     public PageDTO getComment(Pageable pageable, Long productId) {

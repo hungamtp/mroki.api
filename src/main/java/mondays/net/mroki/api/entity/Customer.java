@@ -41,7 +41,7 @@ public class Customer {
     private List<Orders> orders;
 
     @OneToMany(mappedBy = "customer" , fetch = FetchType.LAZY)
-    private List<Comment> comment;
+    private List<Rate> rate;
 
 
     @OneToOne(mappedBy = "customer" ,fetch = FetchType.LAZY)

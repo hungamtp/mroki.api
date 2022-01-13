@@ -11,10 +11,10 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "comment" ,
+@Table(name = "rate" ,
         indexes = @Index(columnList = "product_id")
 )
-public class Comment {
+public class Rate {
 
     @Id
     @GeneratedValue

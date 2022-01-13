@@ -1,6 +1,6 @@
 package mondays.net.mroki.api.repository;
 
-import mondays.net.mroki.api.entity.Comment;
+import mondays.net.mroki.api.entity.Rate;
 import mondays.net.mroki.api.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,9 +12,9 @@ import java.util.List;
 
 
 @Repository
-public interface CommentRepository extends JpaRepository<Comment, Long> {
+public interface CommentRepository extends JpaRepository<Rate, Long> {
 
-    Page<Comment> findByProduct(Pageable pageable, Product productId);
+    Page<Rate> findByProduct(Pageable pageable, Product productId);
 
     @Query(value = "SELECT count(id) as count, avg(rate) as rate "+
             "FROM comment WHERE product_id =?1 "+
