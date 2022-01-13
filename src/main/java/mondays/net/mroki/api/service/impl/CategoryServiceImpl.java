@@ -20,60 +20,39 @@ import java.util.Optional;
 @AllArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
 
-    @Autowired
-    private final CategoryRepository categoryRepository;
 
-    @Autowired
-    private final CategoryConverter converter;
-
+    @Override
     public List<ParentCategory> getAllCategory() {
-        return converter.entityTOParentDto(categoryRepository.findAllCate());
+        return null;
     }
 
-
+    @Override
     public void save(CategoryDTO category) {
 
-        if (isExist(category.getId())) {
-            throw new DuplicatedDataException(ErrorCode.CATEGORY_ID_NOT_AVAILABLE);
-        }
-
-        if (category.getParentId() == null)
-            categoryRepository.addParentCategory(category.getId(), category.getName());
-        else
-            categoryRepository.addSubCategory(category.getId(), category.getName(), category.getParentId());
-
     }
-
-    public boolean isExist(String categoryId) {
-        return categoryRepository.checkExist(categoryId);
-    }
-
-    @Override
-    public List<CategoryDTO> getALlSubcategory() {
-        return converter.entityToDto(categoryRepository.findAllSubCate());
-    }
-
-    @Override
-    public CategoryDTO getCategoryById(String id) {
-        Optional<Category> category = categoryRepository.findById(id);
-
-        if(!category.isPresent())
-            throw new DataNotFoundException(ErrorCode.CATEGORY_NOT_FOUND);
-
-        return converter.entityToDto(category.get());
-    }
-
 
     @Override
     public void delete(String id) {
 
-        categoryRepository.deleteCategoryById(id);
     }
 
     @Override
     public Category update(Category category) {
-
-        return categoryRepository.save(category);
+        return null;
     }
 
+    @Override
+    public boolean isExist(String categoryId) {
+        return false;
+    }
+
+    @Override
+    public List<CategoryDTO> getALlSubcategory() {
+        return null;
+    }
+
+    @Override
+    public CategoryDTO getCategoryById(String id) {
+        return null;
+    }
 }

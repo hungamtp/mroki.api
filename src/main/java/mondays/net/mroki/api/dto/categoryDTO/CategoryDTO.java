@@ -16,7 +16,7 @@ public class CategoryDTO {
 
     @NotBlank(message = "Category id must be 1 char")
     @Size(max = 1, min = 1)
-    private String id;
+    private Long id;
 
     private String parentId;
 

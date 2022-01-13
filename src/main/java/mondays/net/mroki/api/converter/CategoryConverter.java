@@ -35,25 +35,25 @@ public class CategoryConverter {
                 .build();
     }
 
-    public ParentCategory entityToParentDto(Category category) {
-        Set<Category> subCate = new HashSet<>();
+//    public ParentCategory entityToParentDto(Category category) {
+//        Set<Category> subCate = new HashSet<>();
+//
+//       List<Category> categories =category.getSubCategories().stream().filter((cate) -> !cate.isDelete()).collect(Collectors.toList());
+//
+//       categories.stream().forEach((category1 -> subCate.add(category1)));
+//
+//        return ParentCategory.builder()
+//                .id(category.getId())
+//                .subCategories(subCate)
+//                .name(category.getName())
+//                .build();
+//    }
 
-       List<Category> categories =category.getSubCategories().stream().filter((cate) -> !cate.isDelete()).collect(Collectors.toList());
-
-       categories.stream().forEach((category1 -> subCate.add(category1)));
-
-        return ParentCategory.builder()
-                .id(category.getId())
-                .subCategories(subCate)
-                .name(category.getName())
-                .build();
-    }
-
-    public List<ParentCategory> entityTOParentDto(List<Category> categories) {
-        return categories.stream().
-                map((category -> entityToParentDto(category)))
-                .collect(Collectors.toList());
-    }
+//    public List<ParentCategory> entityTOParentDto(List<Category> categories) {
+//        return categories.stream().
+//                map((category -> entityToParentDto(category)))
+//                .collect(Collectors.toList());
+//    }
 
 
 }

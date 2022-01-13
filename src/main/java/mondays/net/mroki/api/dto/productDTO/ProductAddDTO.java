@@ -32,7 +32,7 @@ public class ProductAddDTO {
     private Integer saleOff;
 
     @NotBlank(message = "cate is empty")
-    private String categoryId;
+    private Long categoryId;
 
     @NotBlank(message = "thumbnail is empty")
     private String thumbnail;

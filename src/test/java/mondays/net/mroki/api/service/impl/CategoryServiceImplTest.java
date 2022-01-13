@@ -26,40 +26,6 @@ class CategoryServiceImplTest {
         MockitoAnnotations.initMocks(this);
     }
 
-    @Test
-    public void save(){
-        Category data = Category.builder()
-                .id("D")
-                .name("DEMO")
-                .build();
-
-        Category expect = Category.builder()
-                .id("D")
-                .name("DEMO")
-                .delete(false)
-                .build();
-
-        when(repository.save(data)).thenReturn(expect);
-
-//        assertEquals(categoryService.save(data) , expect);
-    }
-    @Test
-    public void saveFail(){
-        Category data = Category.builder()
-                .id("D")
-                .name("DEMO")
-                .build();
-
-        Category expect = Category.builder()
-                .id("D")
-                .name("DEMO")
-                .delete(false)
-                .build();
-
-        when(repository.save(data)).thenReturn(expect);
-
-//        assertEquals(categoryService.save(data) , expect);
-    }
 
 
 }

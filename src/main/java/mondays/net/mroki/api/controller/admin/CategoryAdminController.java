@@ -73,27 +73,27 @@ public class CategoryAdminController {
 
     }
 
-    @PutMapping
-    public ResponseEntity<ResponseDTO> updateCategory(@Valid @RequestBody CategoryDTO categoryDTO) {
-
-        ResponseDTO response = new ResponseDTO();
-        try {
-            if (!categoryService.isExist(categoryDTO.getId())) {
-                response.setErrorCode(ErrorCode.ID_CATEGORY_NOT_FOUND);
-                return ResponseEntity.badRequest().body(response);
-            }
-
-            response.setSuccessCode(SuccessCode.UPDATE_CATEGORY_SUCCESS);
-            categoryService.update(converter.dtoToEntity(categoryDTO));
-
-            return ResponseEntity.ok().body(response);
-
-
-        } catch (Exception e) {
-            response.setErrorCode(ErrorCode.UPDATE_CATEGORY_FAIL);
-            return ResponseEntity.badRequest().body(response);
-        }
-
-
-    }
+//    @PutMapping
+//    public ResponseEntity<ResponseDTO> updateCategory(@Valid @RequestBody CategoryDTO categoryDTO) {
+//
+//        ResponseDTO response = new ResponseDTO();
+//        try {
+//            if (!categoryService.isExist(categoryDTO.getId())) {
+//                response.setErrorCode(ErrorCode.ID_CATEGORY_NOT_FOUND);
+//                return ResponseEntity.badRequest().body(response);
+//            }
+//
+//            response.setSuccessCode(SuccessCode.UPDATE_CATEGORY_SUCCESS);
+//            categoryService.update(converter.dtoToEntity(categoryDTO));
+//
+//            return ResponseEntity.ok().body(response);
+//
+//
+//        } catch (Exception e) {
+//            response.setErrorCode(ErrorCode.UPDATE_CATEGORY_FAIL);
+//            return ResponseEntity.badRequest().body(response);
+//        }
+//
+//
+//    }
 }

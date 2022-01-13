@@ -102,7 +102,7 @@ class ProductServiceImplTest {
                 .retailPrice(12)
                 .saleOff(12)
                 .isDelete(false)
-                .category(new Category("G"))
+                .category(new Category(1L))
                 .build();
 
         ProductDetailDTO dto = converter.entityToProductDetailDto(product);

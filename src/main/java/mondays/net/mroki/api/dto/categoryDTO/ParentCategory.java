@@ -16,7 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class ParentCategory {
 
-    private String id;
+    private Long id;
 
     private String name;
 
