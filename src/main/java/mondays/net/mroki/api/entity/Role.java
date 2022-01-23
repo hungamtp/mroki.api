@@ -14,8 +14,8 @@ import java.util.List;
 public class Role {
 
     @Id
-    @Column(length = 1)
-    private String id;
+    @GeneratedValue
+    private Long id;
 
     private String roleName;
 

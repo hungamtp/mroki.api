@@ -32,9 +32,6 @@ public class Orders {
     @ManyToOne
     private Customer customer;
 
-    @OneToOne
-    private ArchiveBox archiveBox;
-
     @OneToMany(mappedBy = "order")
     private List<OrderDetail> orderDetails;
 

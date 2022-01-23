@@ -2,14 +2,10 @@ package mondays.net.mroki.api.service.impl;
 
 import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.dto.productDTO.ProductAddToCartDTO;
-import mondays.net.mroki.api.dto.productDTO.ProductDTO;
-import mondays.net.mroki.api.entity.ArchiveBox;
 import mondays.net.mroki.api.entity.Customer;
 import mondays.net.mroki.api.entity.Orders;
 import mondays.net.mroki.api.entity.Product;
-import mondays.net.mroki.api.repository.ArchiveBoxRepository;
 import mondays.net.mroki.api.repository.OrderRepository;
-import mondays.net.mroki.api.repository.ProductRepository;
 import mondays.net.mroki.api.repository.SizeRepository;
 import mondays.net.mroki.api.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;

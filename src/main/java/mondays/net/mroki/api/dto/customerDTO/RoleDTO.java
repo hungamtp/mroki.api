@@ -17,7 +17,7 @@ public class RoleDTO {
 
     @NotBlank(message = "id is empty")
     @Size(min = 1 ,max = 1)
-    private String id;
+    private Long id;
 
     @NotBlank(message = "name is empty")
     private String roleName;

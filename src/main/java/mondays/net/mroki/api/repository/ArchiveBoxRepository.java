@@ -1,6 +1,5 @@
 package mondays.net.mroki.api.repository;
 
-import mondays.net.mroki.api.entity.ArchiveBox;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

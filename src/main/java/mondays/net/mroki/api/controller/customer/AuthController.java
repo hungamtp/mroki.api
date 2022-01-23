@@ -64,7 +64,7 @@ public class AuthController {
                     .username(user.getUsername())
                     .password("{bcrypt}" + passwordEncoder.encode(user.getPassword()))
                     .email(user.getEmail())
-                    .role(Role.builder().id("U").build())
+                    .role(Role.builder().id(1L).build())
                     .isVerifiedEmail(false)
                     .build();
 
