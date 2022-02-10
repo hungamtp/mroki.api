@@ -1,10 +1,18 @@
+//role
+(id, role_name)
+VALUES(1, 'User');
+INSERT INTO public."role"
+(id, role_name)
+VALUES(2, 'Admin');
+
+
 //user (password="hunghung")
 INSERT INTO public.customer
 (id, avatar, email, is_verified_email, "password", phone, username, role_id)
-VALUES(2, NULL, 'hungamtp@gmail.com', false, '{bcrypt}$2a$10$DHLjFxpa.GUObjSnRASZ9uVPzBkY1fk29eoyY4Qppglmw75udcnSy', '0902751408', 'hung', 'U');
+VALUES(2, NULL, 'hungamtp@gmail.com', false, '{bcrypt}$2a$10$DHLjFxpa.GUObjSnRASZ9uVPzBkY1fk29eoyY4Qppglmw75udcnSy', '0902751408', 'hung', 1);
 INSERT INTO public.customer
 (id, avatar, email, is_verified_email, "password", phone, username, role_id)
-VALUES(3, NULL, 'admin@gmail.com', false, '{bcrypt}$2a$10$6t85vBDIgPq5J68aAKHxbut/kG1YmwPhId4aVov2ITt61AutIssbu', '0902751401', 'admin', 'A');
+VALUES(3, NULL, 'admin@gmail.com', false, '{bcrypt}$2a$10$6t85vBDIgPq5J68aAKHxbut/kG1YmwPhId4aVov2ITt61AutIssbu', '0902751401', 'admin', 2);
 
 
 // product
