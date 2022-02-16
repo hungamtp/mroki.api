@@ -23,10 +23,11 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public void save(Customer customer) {
 
-        if (isExist(customer.getUsername()))
+        Customer c = customerRepository.findByUsername(customer.getUsername());
+        if (c != null)
             throw new DuplicatedDataException(ErrorCode.USERNAME_NOT_AVAILABLE);
 
-        if (customerRepository.isEmailExist(customer.getEmail()))
+        if (customerRepository.findCustomerByEmail(customer.getEmail()).isPresent())
             throw new DuplicatedDataException(ErrorCode.EMAIL_NOT_AVAILABLE);
 
         customerRepository.save(customer);

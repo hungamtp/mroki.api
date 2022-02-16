@@ -72,7 +72,7 @@ public class AuthController {
             response.setSuccessCode(SuccessCode.SIGN_UP_SUCCESS);
             return ResponseEntity.ok().body(response);
         } catch (DuplicatedDataException ex) {
-            response.setErrorCode(ErrorCode.SIGN_UP_FAIL);
+            response.setErrorCode(ex.getMessage());
             return ResponseEntity.ok().body(response);
         }
 
