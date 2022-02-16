@@ -16,7 +16,7 @@ public class Size {
     @GeneratedValue
     private  Long id;
 
-    private int size;
+    private String size;
     private int quantity;
 
     @ManyToOne(fetch = FetchType.LAZY)

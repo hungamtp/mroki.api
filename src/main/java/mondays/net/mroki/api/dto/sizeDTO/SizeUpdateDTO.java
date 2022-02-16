@@ -21,7 +21,7 @@ public class SizeUpdateDTO {
     @NotNull
     @Min(35)
     @Max(48)
-    private int size;
+    private String size;
 
     @NotNull
     @Min(0)

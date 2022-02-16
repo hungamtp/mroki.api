@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SizeDTO {
 
-    int size;
+    String size;
     boolean isSoldOut;
 
 }

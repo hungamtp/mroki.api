@@ -88,15 +88,15 @@ public class ProductServiceImpl implements ProductService {
     }
 
     public void save(Product product) {
-        List<Size> size = new ArrayList<>();
-
-        for (int i = 35; i <= 47; i++) {
-            size.add(Size.builder()
-                    .size(i)
-                    .quantity(100)
-                    .build());
-        }
-        product.setSize(size);
+//        List<Size> size = new ArrayList<>();
+//
+//        for (int i = 35; i <= 47; i++) {
+//            size.add(Size.builder()
+//                    .size(i)
+//                    .quantity(100)
+//                    .build());
+//        }
+//        product.setSize(size);
 
         productRepository.save(product);
 
