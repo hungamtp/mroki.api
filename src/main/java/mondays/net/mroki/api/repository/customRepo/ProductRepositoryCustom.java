@@ -1,4 +1,4 @@
-package mondays.net.mroki.api.repository;
+package mondays.net.mroki.api.repository.customRepo;
 
 import mondays.net.mroki.api.entity.Product;
 import org.springframework.data.domain.Page;
