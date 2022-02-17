@@ -2,6 +2,7 @@ package mondays.net.mroki.api.service;
 
 
 import mondays.net.mroki.api.dto.PageDTO;
+import mondays.net.mroki.api.dto.authDTO.LoginDTO;
 import mondays.net.mroki.api.entity.Customer;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -14,4 +15,8 @@ public interface CustomerService {
     PageDTO getAlLCustomer(Pageable pageable , Specification specification);
 
     Customer findByUsername(String username);
+
+    boolean findByEmail(String email);
+
+    boolean updatePassword(LoginDTO user);
 }

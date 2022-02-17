@@ -20,4 +20,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Long>  , Jpa
     @Query(value = "SELECT CASE WHEN count(id) > 0 THEN true ELSE false END checkUserExist "+
             "FROM customer c WHERE c.email = ?1 LIMIT 1" , nativeQuery = true)
     boolean isEmailExist(String email);
+
+    Boolean findByEmail(String email);
 }
