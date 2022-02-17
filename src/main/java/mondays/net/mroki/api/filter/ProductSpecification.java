@@ -14,9 +14,9 @@ public class ProductSpecification implements Specification<Product> {
 
     @Override
     public Predicate toPredicate(Root<Product> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
-        if(criteria.getKey().equals("categoryId")){
+        if(criteria.getKey().equals("category")){
             Join<Product, Category> categoryJoin = root.join("category") ;
-            return builder.equal(builder.upper(categoryJoin.get("id")) ,Long.parseLong(criteria.getValue().toString()));
+            return builder.equal(categoryJoin.get("id") ,Long.parseLong(criteria.getValue().toString()));
         }
         if(criteria.getKey().startsWith("price")){
             return builder.between(
