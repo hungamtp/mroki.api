@@ -20,6 +20,7 @@ public class SuccessCode {
     public static final String  LOGIN_SUCCESS ="LOGIN_SUCCESS";
     public static final String  GET_ALL_CART_DETAIL ="GET_ALL_CART_DETAIL";
     public static final String  UPDATE_PASS ="CHANGE_PASS_SUCCESS";
+    public static final String  SEND_EMAIL ="SEND_EMAIL_SUCCESS";
 
 
 }
