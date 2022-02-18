@@ -1,11 +1,13 @@
 package mondays.net.mroki.api.converter;
 
+import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.dto.PageDTO;
 import mondays.net.mroki.api.dto.productDTO.*;
 import mondays.net.mroki.api.entity.Category;
 import mondays.net.mroki.api.entity.Rate;
 import mondays.net.mroki.api.entity.Product;
 import mondays.net.mroki.api.entity.ProductImage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +19,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
+@AllArgsConstructor
 public class ProductConverter {
+
+    private SizeConverter sizeConverter;
 
     public ProductDTO entityToDto(Product product) {
         ProductDTO dto = ProductDTO.builder()
@@ -26,6 +31,8 @@ public class ProductConverter {
                 .thumbnail(product.getProductImage().getThumbnail())
                 .price(product.getPrice())
                 .build();
+
+        dto.setSizes(sizeConverter.entityToDTO(product.getSize()));
 
         float rate = 0;
 

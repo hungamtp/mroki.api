@@ -3,6 +3,7 @@ package mondays.net.mroki.api.controller.customer;
 
 import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.converter.ProductConverter;
+import mondays.net.mroki.api.converter.SizeConverter;
 import mondays.net.mroki.api.dto.ResponseDTO;
 import mondays.net.mroki.api.dto.productDTO.ProductDTO;
 import mondays.net.mroki.api.dto.productDTO.ProductDetailDTO;
@@ -14,6 +15,7 @@ import mondays.net.mroki.api.filter.ProductSpecificationsBuilder;
 import mondays.net.mroki.api.responseCode.ErrorCode;
 import mondays.net.mroki.api.responseCode.SuccessCode;
 import mondays.net.mroki.api.service.ProductService;
+import mondays.net.mroki.api.service.SizeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -36,6 +38,8 @@ public class ProductController {
 
     private final ProductService productService;
     private final ProductConverter converter;
+    private final SizeService service;
+    private final SizeConverter sizeConverter;
 
     @GetMapping
     public ResponseEntity<ResponseDTO> getAllProduct(@RequestParam Integer page,
@@ -81,6 +85,7 @@ public class ProductController {
         try {
 
             ProductDetailDTO productDTO = productService.getProductById(id);
+            productDTO.setSizes(sizeConverter.entityToDTO(service.findByProduct(id)));
             response.setSuccessCode(SuccessCode.GET_PRODUCT_DETAIL_SUCCESS);
             response.setData(productDTO);
 
