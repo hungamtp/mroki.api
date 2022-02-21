@@ -128,5 +128,23 @@ public class AuthController {
 
     }
 
+    public ResponseEntity<ResponseDTO> changePassword (@Valid @RequestBody LoginDTO user ){
+        ResponseDTO response = new ResponseDTO();
+        try {
+            if(customerService.updatePassword(user)== false){
+                response.setSuccessCode(SuccessCode.UPDATE_PASS);
+                return ResponseEntity.ok().body(response);
+            }
+            else {
+                response.setErrorCode(ErrorCode.UPDATE_PASS);
+                return ResponseEntity.ok().body(response);
+            }
+        } catch (Exception e){
+            response.setErrorCode(ErrorCode.UPDATE_PASS);
+            return ResponseEntity.ok().body(response);
+        }
+
+    }
+
 
 }
