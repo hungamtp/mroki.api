@@ -17,7 +17,7 @@ public class ProductDetailDTO {
 
     private Long id;
     private String name;
-    private float retail;
+    private float price;
     private String description;
     private int saleOff;
     private String categoryId;
