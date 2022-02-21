@@ -70,7 +70,6 @@ public class ProductConverter {
                 .price(dto.getPrice())
                 .retailPrice(dto.getRetail())
                 .description(dto.getDescription())
-                .saleOff(dto.getSaleOff())
                 .category(Category.builder().id(dto.getCategoryId()).build())
                 .productImage(productImage)
                 .createdDate(LocalDate.now())
@@ -92,7 +91,6 @@ public class ProductConverter {
                 .price(dto.getPrice())
                 .retailPrice(dto.getRetail())
                 .description(dto.getDescription())
-                .saleOff(dto.getSaleOff())
                 .category(Category.builder().id(dto.getCategoryId()).build())
                 .productImage(productImage)
                 .createdDate(dto.getCreateDate())
@@ -129,16 +127,22 @@ public class ProductConverter {
     public ProductDetailDTO entityToProductDetailDto(Product product) {
 
 
-        return ProductDetailDTO.builder()
+        var result = ProductDetailDTO.builder()
                 .id(product.getId())
                 .name(product.getName())
                 .thumbnail(product.getProductImage().getThumbnail())
                 .retail(product.getPrice())
-                .saleOff(product.getSaleOff())
+
                 .categoryId(product.getCategory().getName())
                 .image1(product.getProductImage().getImage1())
                 .image2(product.getProductImage().getImage2())
                 .build();
+
+        if(product.getDiscount() != null){
+             result.setSaleOff(product.getDiscount().getSaleOff());
+             return result;
+        }
+        return  result;
     }
 
 
@@ -155,13 +159,12 @@ public class ProductConverter {
 
 
     public ProductAdminDTO entityToAddDto(Product product) {
-        return ProductAdminDTO.builder()
+        var result = ProductAdminDTO.builder()
                 .id(product.getId())
                 .name(product.getName())
                 .price(product.getPrice())
                 .retail(product.getRetailPrice())
                 .description(product.getDescription())
-                .saleOff(product.getSaleOff())
                 .categoryName(product.getCategory().getName())
                 .thumbnail(product.getProductImage().getThumbnail())
                 .image1(product.getProductImage().getImage1())
@@ -170,6 +173,11 @@ public class ProductConverter {
                 .modifiedDate(product.getModifiedDate())
                 .deleted(product.isDelete())
                 .build();
+        if(product.getDiscount() != null){
+            result.setSaleOff(product.getDiscount().getSaleOff());
+            return result;
+        }
+        return  result;
     }
     //    public ProductDetailDTO entityToProductDetailDTO(Product product){
 //        float averageRate = 0;
