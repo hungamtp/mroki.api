@@ -25,6 +25,7 @@ public class ErrorCode {
     public static final String  DELETE_PRODUCT_IN_CART_FAIL ="DELETE_PRODUCT_IN_CART_FAIL";
     public static final String  UPDATE_CATEGORY_FAIL ="UPDATE_CATEGORY_FAIL";
     public static final String  CART_NOT_FOUND ="CART_NOT_FOUND";
-
+    public static final String  UPDATE_PASS ="CHANGE_PASS_FAIL";
+    public static final String  SEND_EMAIL ="SEND_EMAIL_FAIL";
 
 }
