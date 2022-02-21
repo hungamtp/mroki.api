@@ -130,6 +130,7 @@ public class ProductConverter {
         var result = ProductDetailDTO.builder()
                 .id(product.getId())
                 .name(product.getName())
+                .description(product.getDescription())
                 .thumbnail(product.getProductImage().getThumbnail())
                 .price(product.getPrice())
                 .categoryId(product.getCategory().getName())
