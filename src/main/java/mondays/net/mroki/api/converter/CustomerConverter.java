@@ -3,7 +3,6 @@ package mondays.net.mroki.api.converter;
 import mondays.net.mroki.api.dto.PageDTO;
 import mondays.net.mroki.api.dto.customerDTO.CustomerDTO;
 import mondays.net.mroki.api.entity.Customer;
-import mondays.net.mroki.api.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 

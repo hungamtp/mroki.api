@@ -3,6 +3,7 @@ package mondays.net.mroki.api.service.impl;
 import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.converter.CustomerConverter;
 import mondays.net.mroki.api.dto.PageDTO;
+import mondays.net.mroki.api.dto.authDTO.EmailDTO;
 import mondays.net.mroki.api.dto.authDTO.LoginDTO;
 import mondays.net.mroki.api.entity.Customer;
 import mondays.net.mroki.api.exception.DuplicatedDataException;
@@ -49,19 +50,18 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public boolean findByEmail(String email) {
-        if(customerRepository.findByEmail(email)) return true;
-        return false;
+        if(customerRepository.findByEmail(email) == null) return false;
+        return true;
     }
 
     @Override
-    public boolean updatePassword(LoginDTO user) {
-        Customer customer = findByUsername(user.getUsername());
+    public boolean updatePassword(EmailDTO user) {
+        Customer customer = customerRepository.findByEmail(user.getEmail());
         if(customer == null) return false;
         customer.setPassword("{bcrypt}" + passwordEncoder.encode(user.getPassword()));
         customerRepository.save(customer);
-        return  true;
+        return true;
     }
-
     public boolean isExist(String username) {
         return customerRepository.isExist(username);
     }
