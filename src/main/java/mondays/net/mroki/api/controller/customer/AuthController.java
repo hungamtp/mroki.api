@@ -74,7 +74,7 @@ public class AuthController {
             return ResponseEntity.ok().body(response);
         } catch (DuplicatedDataException ex) {
             response.setErrorCode(ex.getMessage());
-            return ResponseEntity.ok().body(response);
+            return ResponseEntity.badRequest().body(response);
         }
 
 
@@ -124,7 +124,7 @@ public class AuthController {
 
         } catch (AuthenticationException ex) {
             response.setErrorCode(ErrorCode.WRONG_USERNAME_OR_PASSWORD);
-            return ResponseEntity.ok().body(response);
+            return ResponseEntity.badRequest().body(response);
         }
 
     }

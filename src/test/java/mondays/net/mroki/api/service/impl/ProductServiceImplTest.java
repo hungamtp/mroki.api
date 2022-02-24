@@ -95,23 +95,6 @@ class ProductServiceImplTest {
     public void getProductByID(){
 
 
-        Product product = Product.builder()
-                .id(5L)
-                .name("product")
-                .productImage(ProductImage.builder().thumbnail("thumbnail").image2("image2").image1("image1").build())
-                .retailPrice(12)
-                .saleOff(12)
-                .isDelete(false)
-                .category(new Category(1L))
-                .build();
-
-        ProductDetailDTO dto = converter.entityToProductDetailDto(product);
-
-        when(repo.findById(5L)).thenReturn(Optional.of(product));
-
-        ProductDetailDTO product1 = service.getProductById(5L);
-
-        assertEquals(product1 , dto);
     }
 
 

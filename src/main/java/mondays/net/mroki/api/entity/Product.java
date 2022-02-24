@@ -28,7 +28,6 @@ public class Product {
     private String description;
     private float price;
     private float retailPrice;
-    private int saleOff;
     private boolean isDelete;
 
     @Transient
