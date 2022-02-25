@@ -31,7 +31,6 @@ public class ProductAddDTO {
     @Max(100)
     private Integer saleOff;
 
-    @NotBlank(message = "cate is empty")
     private Long categoryId;
 
     @NotBlank(message = "thumbnail is empty")
