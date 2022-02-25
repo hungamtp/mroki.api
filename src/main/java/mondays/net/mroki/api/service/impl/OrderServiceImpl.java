@@ -42,7 +42,7 @@ public class OrderServiceImpl implements OrderService {
         cart.forEach((product) -> {
             try {
                 if (!productRepository.isEnough(product.getId(), product.getSize(),  product.getQuantity()))
-                    listOfProductIsNotEnough.add(product.getId().toString());
+                    listOfProductIsNotEnough.add(product.getId().toString() + "-" + product.getSize());
                 else
                     orderDetails.add(OrderDetail.builder()
                             .product(new Product(product.getId()))
