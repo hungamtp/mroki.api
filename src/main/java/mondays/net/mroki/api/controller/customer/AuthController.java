@@ -3,6 +3,7 @@ package mondays.net.mroki.api.controller.customer;
 
 import io.jsonwebtoken.Jwts;
 import mondays.net.mroki.api.dto.ResponseDTO;
+import mondays.net.mroki.api.dto.authDTO.EmailDTO;
 import mondays.net.mroki.api.dto.authDTO.LoginDTO;
 import mondays.net.mroki.api.dto.authDTO.LoginResponseDTO;
 import mondays.net.mroki.api.dto.authDTO.SignupDTO;
@@ -98,7 +99,7 @@ public class AuthController {
                         .signWith(secretKey)
                         .compact();
 
-                String defaultAvatar = "https://firebasestorage.googleapis.com/v0/b/timer-34f5a.appspot.com/"+
+                String defaultAvatar = "https://firebasestorage.googleapis.com/v0/b/timer-34f5a.appspot.com/" +
                         "o/avatar%2Favatar%20default.png?alt=media&token=b12a3df6-93f5-4662-8628-e34c94817c9f";
                 Customer customer = customerService.findByUsername(user.getUsername());
 
@@ -128,23 +129,21 @@ public class AuthController {
 
     }
 
-    public ResponseEntity<ResponseDTO> changePassword (@Valid @RequestBody LoginDTO user ){
+    @PostMapping("change-password")
+    public ResponseEntity<ResponseDTO> changePassword(@Valid @RequestBody EmailDTO user) {
         ResponseDTO response = new ResponseDTO();
         try {
-            if(customerService.updatePassword(user)== false){
+            if (customerService.updatePassword(user) == false) {
                 response.setSuccessCode(SuccessCode.UPDATE_PASS);
                 return ResponseEntity.ok().body(response);
-            }
-            else {
+            } else {
                 response.setErrorCode(ErrorCode.UPDATE_PASS);
                 return ResponseEntity.ok().body(response);
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             response.setErrorCode(ErrorCode.UPDATE_PASS);
             return ResponseEntity.ok().body(response);
         }
-
     }
-
 
 }

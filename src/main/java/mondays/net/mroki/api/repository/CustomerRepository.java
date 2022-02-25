@@ -21,5 +21,5 @@ public interface CustomerRepository extends JpaRepository<Customer, Long>  , Jpa
             "FROM customer c WHERE c.email = ?1 LIMIT 1" , nativeQuery = true)
     boolean isEmailExist(String email);
 
-    Boolean findByEmail(String email);
+    Customer findByEmail(String email);
 }
