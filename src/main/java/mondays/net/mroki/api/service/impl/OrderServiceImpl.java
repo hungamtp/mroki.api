@@ -80,8 +80,11 @@ public class OrderServiceImpl implements OrderService {
             orderDetails.forEach((orderDetail -> {
                 orderDetail.setOrder(new Orders(savedOrder.getId()));
                 orderDetailRepository.save(orderDetail);
+
             }));
-//            sizeRepository.reduceQuantity(cart);
+            cart.forEach(productAddToCartDTO -> {
+                productRepository.reduceQuantity(productAddToCartDTO.getId() , productAddToCartDTO.getQuantity(), productAddToCartDTO.getSize());
+            });
 
             return null;
         }
