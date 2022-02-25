@@ -41,9 +41,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> , JpaSpe
             , nativeQuery = true)
     void reduceQuantity(Long productId, int quantity, int size);
 
-    @Query(value = "SELECT CASE WHEN count(p.id) >0  THEN true ELSE false END checkQuantity "+
-            "FROM product p WHERE  p.name = ?1 LIMIT 1" , nativeQuery = true)
-    boolean isNameExist(String name);
+    Product findByName(String name);
 
 
 
