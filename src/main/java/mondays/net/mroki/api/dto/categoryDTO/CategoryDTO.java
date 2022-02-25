@@ -14,13 +14,9 @@ import javax.validation.constraints.Size;
 @Builder
 public class CategoryDTO {
 
-    @NotBlank(message = "Category id must be 1 char")
-    @Size(max = 1, min = 1)
     private Long id;
 
     private String parentId;
 
-    @NotBlank(message = "name is empty")
-    @Size(max = 25, min = 1)
     private String name;
 }
