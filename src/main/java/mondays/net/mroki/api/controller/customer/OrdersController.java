@@ -22,7 +22,8 @@ public class OrdersController {
     private final OrderService orderService;
 
     @PostMapping
-    public ResponseEntity<ResponseDTO> order(@RequestBody List<ProductAddToCartDTO> cart, @RequestParam Long customerId) {
+    public ResponseEntity<ResponseDTO> order(@RequestBody List<ProductAddToCartDTO> cart
+            , @RequestParam(required = false) Long customerId) {
 
         ResponseDTO response = new ResponseDTO();
         try {

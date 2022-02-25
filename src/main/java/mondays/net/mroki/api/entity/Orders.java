@@ -35,4 +35,7 @@ public class Orders {
     @OneToMany(mappedBy = "order")
     private List<OrderDetail> orderDetails;
 
+    public Orders(Long id) {
+        this.id = id;
+    }
 }

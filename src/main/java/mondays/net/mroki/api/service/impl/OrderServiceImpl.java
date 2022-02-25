@@ -6,6 +6,7 @@ import mondays.net.mroki.api.entity.Customer;
 import mondays.net.mroki.api.entity.OrderDetail;
 import mondays.net.mroki.api.entity.Orders;
 import mondays.net.mroki.api.entity.Product;
+import mondays.net.mroki.api.repository.OrderDetailRepository;
 import mondays.net.mroki.api.repository.OrderRepository;
 import mondays.net.mroki.api.repository.ProductRepository;
 import mondays.net.mroki.api.repository.SizeRepository;
@@ -24,6 +25,8 @@ import java.util.zip.DataFormatException;
 public class OrderServiceImpl implements OrderService {
 
     private OrderRepository orderRepository;
+
+    private OrderDetailRepository orderDetailRepository;
 
     private ProductRepository productRepository;
 
@@ -63,6 +66,7 @@ public class OrderServiceImpl implements OrderService {
                         .createdDate(LocalDate.now())
                         .orderDetails(orderDetails)
                         .build();
+
             }else{
 
                  orders = Orders.builder()
@@ -72,7 +76,11 @@ public class OrderServiceImpl implements OrderService {
                         .build();
             }
 
-            orderRepository.save(orders);
+            Orders savedOrder =orderRepository.save(orders);
+            orderDetails.forEach((orderDetail -> {
+                orderDetail.setOrder(new Orders(savedOrder.getId()));
+                orderDetailRepository.save(orderDetail);
+            }));
 //            sizeRepository.reduceQuantity(cart);
 
             return null;
