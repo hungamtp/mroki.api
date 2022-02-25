@@ -1,4 +1,5 @@
 //role
+INSERT INTO public."role"
 (id, role_name)
 VALUES(1, 'User');
 INSERT INTO public."role"

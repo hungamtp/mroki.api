@@ -9,6 +9,7 @@ import mondays.net.mroki.api.responseCode.ErrorCode;
 import mondays.net.mroki.api.responseCode.SuccessCode;
 import mondays.net.mroki.api.service.SizeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -22,11 +23,12 @@ import java.util.List;
 @PreAuthorize("hasRole('ADMIN')")
 public class SizeAdminController {
 
+    @Qualifier("sizeServiceImpl")
     @Autowired
-    private final SizeService service;
+    private SizeService service;
 
     @Autowired
-    private final SizeConverter converter;
+    private SizeConverter converter;
 
     @GetMapping("/{productId}")
     public ResponseEntity<ResponseDTO> getSizeByProduct(@PathVariable Long productId) {

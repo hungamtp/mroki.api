@@ -1,5 +1,6 @@
 package mondays.net.mroki.api.dto.productDTO;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.validation.constraints.Max;
@@ -7,6 +8,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 @Data
+@AllArgsConstructor
 public class ProductAddToCartDTO {
 
     @NotNull
@@ -16,7 +18,5 @@ public class ProductAddToCartDTO {
     private int quantity;
 
     @NotNull
-    @Max(50)
-    @Min(35)
-    private int size;
+    private String size;
 }

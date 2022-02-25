@@ -60,4 +60,7 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<OrderDetail> orderDetails;
 
+    public Product(Long id) {
+        this.id = id;
+    }
 }

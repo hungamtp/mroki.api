@@ -28,12 +28,12 @@ public class CartServiceImpl implements CartService {
 
     public void addToCart(Long customerId, ProductAddToCartDTO product) {
 
-        if (repo.isProductInCart(product.getId(), customerId, product.getSize()))
-            repo.updateQuantity(product.getQuantity(), product.getId(), customerId, product.getSize());
-        else {
-            Long cartId = repo.getCartId(customerId);
-            repo.addToCart(cartId, product.getId(), product.getQuantity(), product.getSize());
-        }
+//        if (repo.isProductInCart(product.getId(), customerId, product.getSize()))
+//            repo.updateQuantity(product.getQuantity(), product.getId(), customerId, product.getSize());
+//        else {
+//            Long cartId = repo.getCartId(customerId);
+//            repo.addToCart(cartId, product.getId(), product.getQuantity(), product.getSize());
+//        }
 
     }
 

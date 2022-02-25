@@ -4,5 +4,5 @@ import mondays.net.mroki.api.entity.Product;
 import org.springframework.data.domain.Page;
 
 public interface ProductRepositoryCustom {
-//    Page<Product> getAllProduct
+    Boolean isEnough(Long productId , String size , int quantity) throws Exception;
 }

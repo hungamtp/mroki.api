@@ -2,6 +2,7 @@ package mondays.net.mroki.api.repository;
 
 import mondays.net.mroki.api.entity.Category;
 import mondays.net.mroki.api.entity.Product;
+import mondays.net.mroki.api.repository.customRepo.ProductRepositoryCustom;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import javax.transaction.Transactional;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product, Long> , JpaSpecificationExecutor<Product>  {
+public interface ProductRepository extends JpaRepository<Product, Long> , JpaSpecificationExecutor<Product> , ProductRepositoryCustom {
 
     @Query(value = "SELECT p.id , p.name,p.thumbnail ,p.price ,avg(c.rate) as rate , p.retail,p.sale_off " +
             "FROM product p LEFT JOIN comment c ON p.id = c.product_id " +
@@ -39,11 +40,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> , JpaSpe
             "((SELECT quantity FROM size WHERE product_Id = ?1 AND size = ?3 LIMIT 1) - ?2 ) " +
             "WHERE product_Id = ?1 AND size =?3"
             , nativeQuery = true)
-    void reduceQuantity(Long productId, int quantity, int size);
+    void reduceQuantity(Long productId, int quantity, String size);
 
     Product findByName(String name);
-
-
 
 
 }

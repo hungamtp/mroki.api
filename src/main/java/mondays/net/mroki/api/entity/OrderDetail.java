@@ -19,7 +19,7 @@ public class OrderDetail {
     private Long id;
 
     private int quantity;
-    private int size;
+    private String size;
 
     @ManyToOne
     private Product product;

@@ -62,6 +62,12 @@ class ProductRepositoryTest {
 
     }
 
+    @Test
+    public void isEnoughTest() throws Exception {
+        repo.isEnough(2L , "M" , 13);
+    }
+
+
 
 
 
