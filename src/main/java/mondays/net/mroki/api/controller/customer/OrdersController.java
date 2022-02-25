@@ -27,12 +27,14 @@ public class OrdersController {
 
         ResponseDTO response = new ResponseDTO();
         try {
-            if (orderService.order(cart, customerId) == null) {
+            List<String> productIsNotEnough = orderService.order(cart, customerId);
+            if (productIsNotEnough == null) {
 
                 response.setSuccessCode(SuccessCode.ORDER_SUCCESS);
                 return ResponseEntity.ok().body(response);
             } else {
                 response.setErrorCode(ErrorCode.ORDER_FAIL);
+                response.setData(productIsNotEnough);
                 return ResponseEntity.badRequest().body(response);
             }
 
