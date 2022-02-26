@@ -2,6 +2,7 @@ package mondays.net.mroki.api.repository.impl;
 
 import mondays.net.mroki.api.dto.productDTO.ProductDTO;
 import mondays.net.mroki.api.dto.productDTO.ProductHomeDTO;
+import mondays.net.mroki.api.entity.Discount;
 import mondays.net.mroki.api.entity.Product;
 import mondays.net.mroki.api.entity.Size;
 import mondays.net.mroki.api.repository.customRepo.ProductRepositoryCustom;
@@ -39,6 +40,21 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
             throw new Exception("Wrong param");
         }
 
+    }
+
+    @Override
+    public void addDiscount(List<Long> productIds, Long discountId) {
+        try {
+            CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+            CriteriaUpdate<Product> criteriaUpdate = criteriaBuilder.createCriteriaUpdate(Product.class);
+            Root<Product> root = criteriaUpdate.from(Product.class);
+            Predicate productIdIn = criteriaBuilder.in(root.get("id")).value(productIds);
+            criteriaUpdate.set(root.get("discount"), new Discount(discountId));
+            criteriaUpdate.where(productIdIn);
+            entityManager.createQuery(criteriaUpdate).executeUpdate();
+        }catch (Exception ex){
+
+        }
     }
 
 

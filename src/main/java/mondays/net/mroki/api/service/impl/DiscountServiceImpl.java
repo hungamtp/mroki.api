@@ -63,6 +63,6 @@ public class DiscountServiceImpl implements DiscountService {
 
         Product updateProduct = product.get();
         updateProduct.setDiscount(new Discount(addDiscountForProductDTO.getDiscountId()));
-
+        productRepository.save(updateProduct);
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,8 +27,9 @@ class ProductRepositoryTest {
 
     @Test
     public void deleteProductById() {
-
-        assertEquals(repo.isExist(5L), true);
+        List<Long> productIds = new ArrayList<>();
+        productIds.add(1L);
+        repo.addDiscount(productIds , 1L);
 
     }
 
