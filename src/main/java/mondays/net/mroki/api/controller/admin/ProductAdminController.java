@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
 @RequestMapping("admin/product")
 @AllArgsConstructor
 @CrossOrigin
-@PreAuthorize("hasRole('ADMIN')")
+@PreAuthorize("hasRole('Admin')")
 public class ProductAdminController {
 
     private final ProductService productService;
