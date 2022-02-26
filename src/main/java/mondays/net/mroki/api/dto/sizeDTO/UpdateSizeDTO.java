@@ -1,5 +1,6 @@
 package mondays.net.mroki.api.dto.sizeDTO;
 
+
 import lombok.*;
 
 @Getter
@@ -7,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AddSizeDTO {
+public class UpdateSizeDTO {
     private Long productId;
     private String size;
     private int quantity;

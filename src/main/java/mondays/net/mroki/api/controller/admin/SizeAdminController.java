@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.converter.SizeConverter;
 import mondays.net.mroki.api.dto.ResponseDTO;
 import mondays.net.mroki.api.dto.sizeDTO.AddSizeDTO;
+import mondays.net.mroki.api.dto.sizeDTO.UpdateSizeDTO;
 import mondays.net.mroki.api.dto.sizeDTO.SizeUpdateDTO;
 import mondays.net.mroki.api.exception.SizeConvertException;
 import mondays.net.mroki.api.responseCode.ErrorCode;
@@ -21,7 +22,7 @@ import java.util.List;
 @RequestMapping("admin/size")
 @AllArgsConstructor
 @CrossOrigin
-@PreAuthorize("hasRole('ADMIN')")
+@PreAuthorize("hasRole('Admin')")
 public class SizeAdminController {
 
     @Qualifier("sizeServiceImpl")
@@ -48,14 +49,27 @@ public class SizeAdminController {
     }
 
     @PatchMapping
-    public ResponseEntity<ResponseDTO> updateSizeQuantity(@RequestBody AddSizeDTO addSizeDTO){
+    public ResponseEntity<ResponseDTO> updateSizeQuantity(@RequestBody UpdateSizeDTO updateSizeDTO){
         ResponseDTO response = new ResponseDTO();
         try {
-
+            service.updateSize(updateSizeDTO);
             response.setSuccessCode(SuccessCode.UPDATE_SIZE);
             return ResponseEntity.ok().body(response);
-        } catch (SizeConvertException ex) {
+        } catch (Exception ex) {
             response.setErrorCode(ErrorCode.UPDATE_SIZE);
+            return ResponseEntity.badRequest().body(response);
+        }
+    }
+
+    @PostMapping
+    public ResponseEntity<ResponseDTO> addSize(@RequestBody AddSizeDTO addSizeDTO){
+        ResponseDTO response = new ResponseDTO();
+        try {
+            service.addSize(addSizeDTO);
+            response.setSuccessCode(SuccessCode.ADD_SIZE);
+            return ResponseEntity.ok().body(response);
+        } catch (Exception ex) {
+            response.setErrorCode(ex.getMessage());
             return ResponseEntity.badRequest().body(response);
         }
     }

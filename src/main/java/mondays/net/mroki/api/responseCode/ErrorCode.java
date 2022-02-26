@@ -3,6 +3,8 @@ package mondays.net.mroki.api.responseCode;
 public class ErrorCode {
 
     public static final String  COMMENT_FAILED ="COMMENT_FAILED";
+    public static final String  ADD_SIZE ="ADD_SIZE";
+    public static final String  SIZE_IS_EXIST ="SIZE_IS_EXIST";
     public static final String  SIZE_NOT_FOUND ="SIZE_NOT_FOUND";
     public static final String  ID_CATEGORY_NOT_FOUND ="ID_CATEGORY_NOT_FOUND";
     public static final String  PRODUCT_NOT_FOUND ="PRODUCT_NOT_FOUND";
