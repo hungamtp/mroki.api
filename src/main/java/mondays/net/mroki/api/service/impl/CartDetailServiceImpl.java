@@ -8,14 +8,11 @@ import mondays.net.mroki.api.entity.Cart;
 import mondays.net.mroki.api.entity.CartDetail;
 import mondays.net.mroki.api.entity.Customer;
 import mondays.net.mroki.api.entity.Product;
-import mondays.net.mroki.api.exception.DataNotFoundException;
 import mondays.net.mroki.api.repository.CartDetailRepository;
 import mondays.net.mroki.api.repository.CartRepository;
 import mondays.net.mroki.api.repository.CustomerRepository;
 import mondays.net.mroki.api.responseCode.ErrorCode;
 import mondays.net.mroki.api.service.CartDetailService;
-import mondays.net.mroki.api.service.CartService;
-import mondays.net.mroki.api.service.CustomerService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

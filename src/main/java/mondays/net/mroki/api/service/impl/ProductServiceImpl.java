@@ -6,15 +6,12 @@ import mondays.net.mroki.api.dto.PageDTO;
 import mondays.net.mroki.api.dto.productDTO.ProductAdminDTO;
 import mondays.net.mroki.api.dto.productDTO.ProductDetailDTO;
 import mondays.net.mroki.api.entity.Product;
-import mondays.net.mroki.api.entity.Size;
-import mondays.net.mroki.api.exception.DataNotFoundException;
 import mondays.net.mroki.api.exception.ProductConvertException;
 import mondays.net.mroki.api.filter.ProductSpecification;
 import mondays.net.mroki.api.filter.SearchCriteria;
 import mondays.net.mroki.api.repository.ProductRepository;
 import mondays.net.mroki.api.responseCode.ErrorCode;
 import mondays.net.mroki.api.service.ProductService;
-import org.hibernate.boot.model.naming.IllegalIdentifierException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -23,7 +20,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

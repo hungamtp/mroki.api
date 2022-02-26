@@ -1,10 +1,10 @@
 //role
 INSERT INTO public."role"
 (id, role_name)
-VALUES(1, 'User');
+VALUES(1, 'USER');
 INSERT INTO public."role"
 (id, role_name)
-VALUES(2, 'Admin');
+VALUES(2, 'ADMIN');
 
 
 //user (password="hunghung")

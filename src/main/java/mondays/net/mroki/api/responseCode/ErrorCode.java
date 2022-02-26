@@ -3,6 +3,7 @@ package mondays.net.mroki.api.responseCode;
 public class ErrorCode {
 
     public static final String  COMMENT_FAILED ="COMMENT_FAILED";
+    public static final String  SIZE_NOT_FOUND ="SIZE_NOT_FOUND";
     public static final String  ID_CATEGORY_NOT_FOUND ="ID_CATEGORY_NOT_FOUND";
     public static final String  PRODUCT_NOT_FOUND ="PRODUCT_NOT_FOUND";
     public static final String  LOGIN_FAIL ="LOGIN_FAIL";
@@ -27,5 +28,6 @@ public class ErrorCode {
     public static final String  CART_NOT_FOUND ="CART_NOT_FOUND";
     public static final String  UPDATE_PASS ="CHANGE_PASS_FAIL";
     public static final String  SEND_EMAIL ="SEND_EMAIL_FAIL";
+    public static final String  UPDATE_SIZE ="UPDATE_SIZE";
 
 }

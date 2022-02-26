@@ -3,6 +3,7 @@ package mondays.net.mroki.api.controller.admin;
 import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.converter.SizeConverter;
 import mondays.net.mroki.api.dto.ResponseDTO;
+import mondays.net.mroki.api.dto.sizeDTO.AddSizeDTO;
 import mondays.net.mroki.api.dto.sizeDTO.SizeUpdateDTO;
 import mondays.net.mroki.api.exception.SizeConvertException;
 import mondays.net.mroki.api.responseCode.ErrorCode;
@@ -44,6 +45,19 @@ public class SizeAdminController {
             return ResponseEntity.badRequest().body(response);
         }
 
+    }
+
+    @PatchMapping
+    public ResponseEntity<ResponseDTO> updateSizeQuantity(@RequestBody AddSizeDTO addSizeDTO){
+        ResponseDTO response = new ResponseDTO();
+        try {
+
+            response.setSuccessCode(SuccessCode.UPDATE_SIZE);
+            return ResponseEntity.ok().body(response);
+        } catch (SizeConvertException ex) {
+            response.setErrorCode(ErrorCode.UPDATE_SIZE);
+            return ResponseEntity.badRequest().body(response);
+        }
     }
 
 
