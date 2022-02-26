@@ -3,8 +3,12 @@ package mondays.net.mroki.api.service.impl;
 import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.converter.DiscountConverter;
 import mondays.net.mroki.api.dto.discountDTO.AddDiscountDTO;
+import mondays.net.mroki.api.dto.discountDTO.AddDiscountForProductDTO;
 import mondays.net.mroki.api.entity.Discount;
+import mondays.net.mroki.api.entity.Product;
+import mondays.net.mroki.api.exception.DataNotFoundException;
 import mondays.net.mroki.api.repository.DiscountRepository;
+import mondays.net.mroki.api.repository.ProductRepository;
 import mondays.net.mroki.api.responseCode.ErrorCode;
 import mondays.net.mroki.api.service.DiscountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +23,7 @@ import java.util.Optional;
 public class DiscountServiceImpl implements DiscountService {
 
     private DiscountRepository discountRepository;
+    private ProductRepository productRepository;
     private DiscountConverter discountConverter;
 
     @Override
@@ -45,5 +50,19 @@ public class DiscountServiceImpl implements DiscountService {
     @Override
     public List<AddDiscountDTO> getAllDiscount() {
         return discountConverter.entitiesToDtos(discountRepository.findAll());
+    }
+
+    @Override
+    public void addDiscountForProduct(AddDiscountForProductDTO addDiscountForProductDTO) {
+        Optional<Product> product = Optional.ofNullable(productRepository.findById(addDiscountForProductDTO.getProductId()).orElseThrow(()
+                -> new DataNotFoundException(ErrorCode.PRODUCT_NOT_FOUND)));
+
+        discountRepository.findById(addDiscountForProductDTO.getDiscountId()).orElseThrow(
+                () -> new DataNotFoundException(ErrorCode.DISCOUNT_NOT_FOUND)
+        );
+
+        Product updateProduct = product.get();
+        updateProduct.setDiscount(new Discount(addDiscountForProductDTO.getDiscountId()));
+
     }
 }

@@ -4,6 +4,7 @@ public class SuccessCode {
 
     public static final String  SIGN_UP_SUCCESS ="SIGN_UP_SUCCESS";
     public static final String  ADD_DISCOUNT ="ADD_DISCOUNT";
+    public static final String  ADD_DISCOUNT_FOR_PRODUCT ="ADD_DISCOUNT_FOR_PRODUCT";
     public static final String  ADD_SIZE ="ADD_SIZE";
     public static final String  COMMENT_SUCCESS ="COMMENT_SUCCESS";
     public static final String  GET_ALL_COMMENT_SUCCESS ="GET_ALL_COMMENT_SUCCESS";

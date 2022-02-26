@@ -3,8 +3,10 @@ package mondays.net.mroki.api.controller.admin;
 import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.dto.ResponseDTO;
 import mondays.net.mroki.api.dto.discountDTO.AddDiscountDTO;
+import mondays.net.mroki.api.dto.discountDTO.AddDiscountForProductDTO;
 import mondays.net.mroki.api.dto.productDTO.ProductAddDTO;
 import mondays.net.mroki.api.exception.CategoryConverterException;
+import mondays.net.mroki.api.exception.DataNotFoundException;
 import mondays.net.mroki.api.responseCode.ErrorCode;
 import mondays.net.mroki.api.responseCode.SuccessCode;
 import mondays.net.mroki.api.service.DiscountService;
@@ -46,5 +48,17 @@ public class DiscountController {
             response.setData(discountService.getAllDiscount());
             response.setSuccessCode(SuccessCode.ADD_DISCOUNT);
             return ResponseEntity.ok().body(response);
+    }
+
+    @PutMapping
+    public ResponseEntity<ResponseDTO> addDiscountForProduct(@RequestBody AddDiscountForProductDTO addDiscountForProductDTO){
+        ResponseDTO response = new ResponseDTO();
+        try{
+        discountService.addDiscountForProduct(addDiscountForProductDTO);
+        response.setSuccessCode(SuccessCode.ADD_DISCOUNT_FOR_PRODUCT);
+        } catch (DataNotFoundException ex){
+            response.setErrorCode(ex.getMessage());
+        }
+        return ResponseEntity.ok().body(response);
     }
 }

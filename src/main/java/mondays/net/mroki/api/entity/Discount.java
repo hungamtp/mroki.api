@@ -27,4 +27,8 @@ public class Discount {
 
     @OneToMany(mappedBy = "discount")
     private List<Product> products;
+
+    public Discount(Long discountId) {
+        this.id = discountId;
+    }
 }
