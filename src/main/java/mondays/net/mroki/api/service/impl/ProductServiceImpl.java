@@ -129,7 +129,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public boolean isNameExist(String productName) {
-        return productRepository.findByName(productName) == null ? true : false;
+        return productRepository.findByName(productName) == null ? false : true;
     }
 
 }
