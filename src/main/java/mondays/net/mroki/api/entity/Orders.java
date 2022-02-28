@@ -29,6 +29,12 @@ public class Orders {
 
     private boolean isInArchiveBox;
 
+    private String phoneNumber;
+
+    private String customerName;
+
+    private String address;
+
     @ManyToOne
     private Customer customer;
 

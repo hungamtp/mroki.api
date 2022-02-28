@@ -3,6 +3,7 @@ package mondays.net.mroki.api.responseCode;
 public class ErrorCode {
 
     public static final String  COMMENT_FAILED ="COMMENT_FAILED";
+    public static final String  USER_NOT_FOUND ="USER_NOT_FOUND";
     public static final String  DISCOUNT_NOT_FOUND ="DISCOUNT_NOT_FOUND";
     public static final String  DATE_WRONG ="DATE_WRONG";
     public static final String  DISCOUNT_IS_EXIST ="DISCOUNT_IS_EXIST";

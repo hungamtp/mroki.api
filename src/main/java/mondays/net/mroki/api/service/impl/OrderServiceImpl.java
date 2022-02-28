@@ -1,15 +1,14 @@
 package mondays.net.mroki.api.service.impl;
 
 import lombok.AllArgsConstructor;
+import mondays.net.mroki.api.dto.customerDTO.CustomerOrderDTO;
 import mondays.net.mroki.api.dto.productDTO.ProductAddToCartDTO;
 import mondays.net.mroki.api.entity.Customer;
 import mondays.net.mroki.api.entity.OrderDetail;
 import mondays.net.mroki.api.entity.Orders;
 import mondays.net.mroki.api.entity.Product;
-import mondays.net.mroki.api.repository.OrderDetailRepository;
-import mondays.net.mroki.api.repository.OrderRepository;
-import mondays.net.mroki.api.repository.ProductRepository;
-import mondays.net.mroki.api.repository.SizeRepository;
+import mondays.net.mroki.api.repository.*;
+import mondays.net.mroki.api.responseCode.ErrorCode;
 import mondays.net.mroki.api.service.OrderService;
 import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.zip.DataFormatException;
 
 @Service
@@ -30,9 +30,11 @@ public class OrderServiceImpl implements OrderService {
 
     private ProductRepository productRepository;
 
+    private CustomerRepository customerRepository;
+
     private SizeRepository sizeRepository;
 
-    public List<String> order(List<ProductAddToCartDTO> cart, Long customerId) {
+    public List<String> order(List<ProductAddToCartDTO> cart, Long customerId, CustomerOrderDTO customerOrderDTO) {
 
         List<String> listOfProductIsNotEnough = new ArrayList<>();
         List<OrderDetail> orderDetails = new ArrayList<>();
@@ -65,6 +67,9 @@ public class OrderServiceImpl implements OrderService {
                  orders = Orders.builder()
                         .createdDate(LocalDate.now())
                         .orderDetails(orderDetails)
+                         .customerName(customerOrderDTO.getCustomerName())
+                         .address(customerOrderDTO.getAddress())
+                         .phoneNumber(customerOrderDTO.getPhoneNumber())
                         .build();
 
             }else{
@@ -73,6 +78,9 @@ public class OrderServiceImpl implements OrderService {
                         .createdDate(LocalDate.now())
                         .customer(Customer.builder().id(customerId).build())
                         .orderDetails(orderDetails)
+                         .customerName(customerOrderDTO.getCustomerName())
+                         .address(customerOrderDTO.getAddress())
+                         .phoneNumber(customerOrderDTO.getPhoneNumber())
                         .build();
             }
 

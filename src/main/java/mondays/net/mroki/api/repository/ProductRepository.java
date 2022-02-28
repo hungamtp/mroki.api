@@ -37,7 +37,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> , JpaSpe
     @Modifying
     @Transactional
     @Query(value = "UPDATE size SET quantity = " +
-            "((SELECT quantity FROM size WHERE product_Id = ?1 AND size = ?3 LIMIT 1) - ?2 ) " +
+            "((SELECT quantity FROM (SELECT * FROM size) AS sizeTable WHERE product_Id = ?1 AND size = ?3 LIMIT 1) - ?2 ) " +
             "WHERE product_Id = ?1 AND size =?3"
             , nativeQuery = true)
     void reduceQuantity(Long productId, int quantity, String size);

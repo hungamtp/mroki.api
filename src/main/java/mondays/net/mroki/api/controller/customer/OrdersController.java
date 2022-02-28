@@ -3,6 +3,7 @@ package mondays.net.mroki.api.controller.customer;
 
 import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.dto.ResponseDTO;
+import mondays.net.mroki.api.dto.customerDTO.CustomerOrderDTO;
 import mondays.net.mroki.api.dto.productDTO.ProductAddToCartDTO;
 import mondays.net.mroki.api.responseCode.ErrorCode;
 import mondays.net.mroki.api.responseCode.SuccessCode;
@@ -22,12 +23,11 @@ public class OrdersController {
     private final OrderService orderService;
 
     @PostMapping
-    public ResponseEntity<ResponseDTO> order(@RequestBody List<ProductAddToCartDTO> cart
-            , @RequestParam(required = false) Long customerId) {
+    public ResponseEntity<ResponseDTO> order(@RequestParam(required = false) Long customerId , @RequestBody CustomerOrderDTO customerOrderDTO) {
 
         ResponseDTO response = new ResponseDTO();
         try {
-            List<String> productIsNotEnough = orderService.order(cart, customerId);
+            List<String> productIsNotEnough = orderService.order(customerOrderDTO.getCart(), customerId , customerOrderDTO);
             if (productIsNotEnough == null) {
 
                 response.setSuccessCode(SuccessCode.ORDER_SUCCESS);
