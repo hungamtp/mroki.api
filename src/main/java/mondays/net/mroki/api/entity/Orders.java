@@ -35,6 +35,9 @@ public class Orders {
 
     private String address;
 
+    @Column(nullable = false)
+    private double totalBill;
+
     @ManyToOne
     private Customer customer;
 

@@ -15,6 +15,7 @@ public class ErrorCode {
     public static final String  LOGIN_FAIL ="LOGIN_FAIL";
     public static final String  WRONG_USERNAME_OR_PASSWORD ="WRONG_USERNAME_OR_PASSWORD";
     public static final String  PRODUCT_NAME_IS_EXIST ="PRODUCT_NAME_IS_EXIST";
+    public static final String  GET_ORDER ="GET_ORDER";
     public static final String  CONVERT_CATEGORY_ERROR ="CONVERT_CATEGORY_ERROR";
     public static final String  USERNAME_NOT_AVAILABLE ="USERNAME_NOT_AVAILABLE";
     public static final String  EMAIL_NOT_AVAILABLE ="EMAIL_NOT_AVAILABLE";

@@ -1,5 +1,6 @@
 package mondays.net.mroki.api.repository;
 
+import mondays.net.mroki.api.dto.order.OrderInListDTO;
 import mondays.net.mroki.api.entity.Customer;
 import mondays.net.mroki.api.entity.Orders;
 import mondays.net.mroki.api.repository.customRepo.OrderRepositoryCustom;
@@ -16,7 +17,6 @@ public interface OrderRepository extends JpaRepository<Orders, Long> , OrderRepo
     List<Orders> findOrdersByCustomer(Customer customer);
 
     List<Orders> findByPhoneNumber(String phoneNumber);
-
 
 
 }

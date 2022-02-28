@@ -1,16 +1,17 @@
 package mondays.net.mroki.api.service.impl;
 
 import lombok.AllArgsConstructor;
+import mondays.net.mroki.api.converter.OrderConverter;
 import mondays.net.mroki.api.dto.customerDTO.CustomerOrderDTO;
+import mondays.net.mroki.api.dto.order.OrderInListDTO;
+import mondays.net.mroki.api.dto.orderDetail.OrderDetailDTO;
 import mondays.net.mroki.api.dto.productDTO.ProductAddToCartDTO;
 import mondays.net.mroki.api.entity.Customer;
 import mondays.net.mroki.api.entity.OrderDetail;
 import mondays.net.mroki.api.entity.Orders;
 import mondays.net.mroki.api.entity.Product;
 import mondays.net.mroki.api.repository.*;
-import mondays.net.mroki.api.responseCode.ErrorCode;
 import mondays.net.mroki.api.service.OrderService;
-import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.zip.DataFormatException;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 @AllArgsConstructor
@@ -33,6 +34,8 @@ public class OrderServiceImpl implements OrderService {
     private CustomerRepository customerRepository;
 
     private SizeRepository sizeRepository;
+
+    private OrderConverter orderConverter;
 
     public List<String> order(List<ProductAddToCartDTO> cart, Long customerId, CustomerOrderDTO customerOrderDTO) {
 
@@ -61,7 +64,7 @@ public class OrderServiceImpl implements OrderService {
         else {
 
             // reduce quantity
-
+            AtomicReference<Float> totalBill = new AtomicReference<>((float) 0);
             Orders orders = null;
             if(customerId == null){
                  orders = Orders.builder()
@@ -92,6 +95,11 @@ public class OrderServiceImpl implements OrderService {
             }));
             cart.forEach(productAddToCartDTO -> {
                 productRepository.reduceQuantity(productAddToCartDTO.getId() , productAddToCartDTO.getQuantity(), productAddToCartDTO.getSize());
+                Optional<Product> product = productRepository.findById(productAddToCartDTO.getId());
+
+                totalBill.set(totalBill.get() + product.get().getPrice() * productAddToCartDTO.getQuantity());
+                savedOrder.setTotalBill(totalBill.get());
+                orderRepository.save(savedOrder);
             });
 
             return null;
@@ -102,4 +110,14 @@ public class OrderServiceImpl implements OrderService {
     public List<Orders> orders(Long customerId) {
         return orderRepository.findOrdersByCustomer(new Customer(customerId));
     }
+
+    @Override
+    public List<OrderInListDTO> findAllOrderByPhoneNumber(String phoneNumber) {
+        List<Orders> result = orderRepository.findByPhoneNumber(phoneNumber);
+        return orderConverter.entityToDTO(result);
+    }
+
+//    public List<OrderDetailDTO> getOrderDetails(Long orderId){
+//
+//    }
 }

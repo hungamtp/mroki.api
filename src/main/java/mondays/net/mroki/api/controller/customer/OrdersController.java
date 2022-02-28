@@ -8,6 +8,7 @@ import mondays.net.mroki.api.dto.productDTO.ProductAddToCartDTO;
 import mondays.net.mroki.api.responseCode.ErrorCode;
 import mondays.net.mroki.api.responseCode.SuccessCode;
 import mondays.net.mroki.api.service.OrderService;
+import mondays.net.mroki.api.service.impl.OrderServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,8 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 public class OrdersController {
 
-    @Autowired
-    private final OrderService orderService;
+    private final OrderServiceImpl orderService;
 
     @PostMapping
     public ResponseEntity<ResponseDTO> order(@RequestParam(required = false) Long customerId , @RequestBody CustomerOrderDTO customerOrderDTO) {
@@ -41,6 +41,22 @@ public class OrdersController {
         } catch (Exception ex) {
             response.setErrorCode(ErrorCode.ORDER_FAIL);
 
+            return ResponseEntity.badRequest().body(response);
+        }
+
+    }
+
+    @GetMapping
+    public ResponseEntity<ResponseDTO> getAllOrderByPhoneNumber(@RequestParam String phoneNumber) {
+
+        ResponseDTO response = new ResponseDTO();
+        try {
+
+            response.setData(orderService.findAllOrderByPhoneNumber(phoneNumber));
+            response.setSuccessCode(SuccessCode.GET_ORDER_SUCCESS);
+            return ResponseEntity.ok().body(response);
+        } catch (Exception ex) {
+            response.setErrorCode(ex.getMessage());
             return ResponseEntity.badRequest().body(response);
         }
 

@@ -9,6 +9,7 @@ public class SuccessCode {
     public static final String  COMMENT_SUCCESS ="COMMENT_SUCCESS";
     public static final String  GET_ALL_COMMENT_SUCCESS ="GET_ALL_COMMENT_SUCCESS";
     public static final String  ORDER_SUCCESS ="ORDER_SUCCESS";
+    public static final String  GET_ORDER_SUCCESS ="GET_ORDER_SUCCESS";
     public static final String  GET_PRODUCT_SUCCESS ="GET_PRODUCT_SUCCESS";
     public static final String  GET_PRODUCT_DETAIL_SUCCESS ="GET_PRODUCT_DETAIL_SUCCESS";
     public static final String  SAVE_PRODUCT_SUCCESS ="SAVE_PRODUCT_SUCCESS";
