@@ -12,7 +12,6 @@ import mondays.net.mroki.api.entity.Orders;
 import mondays.net.mroki.api.entity.Product;
 import mondays.net.mroki.api.repository.*;
 import mondays.net.mroki.api.service.OrderService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -117,7 +116,25 @@ public class OrderServiceImpl implements OrderService {
         return orderConverter.entityToDTO(result);
     }
 
-//    public List<OrderDetailDTO> getOrderDetails(Long orderId){
-//
-//    }
+    @Override
+    public List<OrderInListDTO> findAllOrderByCustomerId(Long customerId) {
+        List<Orders> result = orderRepository.findOrdersByCustomer(new Customer(customerId));
+        return orderConverter.entityToDTO(result);
+    }
+
+    public List<OrderDetailDTO> getOrderDetails(Long orderId){
+        List<OrderDetailDTO>  result = new ArrayList<>();
+        List<OrderDetail> orderDetails = orderDetailRepository.findByOrder(new Orders(orderId));
+        OrderDetailDTO orderDetailDTO = null;
+        for(var orderDetail : orderDetails){
+            orderDetailDTO = new OrderDetailDTO();
+            orderDetailDTO.setQuantity(orderDetail.getQuantity());
+            orderDetailDTO.setPrice(orderDetail.getProduct().getPrice());
+            orderDetailDTO.setSize(orderDetail.getSize());
+            orderDetailDTO.setProductId(orderDetail.getProduct().getId());
+            orderDetailDTO.setProductImage(orderDetail.getProduct().getProductImage().getThumbnail());
+            result.add(orderDetailDTO);
+        }
+        return  result;
+    }
 }

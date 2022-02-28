@@ -62,4 +62,36 @@ public class OrdersController {
 
     }
 
+    @GetMapping("/{customerId}")
+    public ResponseEntity<ResponseDTO> getAllOrderByPhoneNumber(@PathVariable Long customerId) {
+
+        ResponseDTO response = new ResponseDTO();
+        try {
+
+            response.setData(orderService.findAllOrderByCustomerId(customerId));
+            response.setSuccessCode(SuccessCode.GET_ORDER_SUCCESS);
+            return ResponseEntity.ok().body(response);
+        } catch (Exception ex) {
+            response.setErrorCode(ex.getMessage());
+            return ResponseEntity.badRequest().body(response);
+        }
+
+    }
+
+    @GetMapping("/orderDetail/{orderId}")
+    public ResponseEntity<ResponseDTO> getOrderDetail(@PathVariable Long orderId) {
+
+        ResponseDTO response = new ResponseDTO();
+        try {
+
+            response.setData(orderService.getOrderDetails(orderId));
+            response.setSuccessCode(SuccessCode.GET_ORDER_SUCCESS);
+            return ResponseEntity.ok().body(response);
+        } catch (Exception ex) {
+            response.setErrorCode(ex.getMessage());
+            return ResponseEntity.badRequest().body(response);
+        }
+
+    }
+
 }
