@@ -37,13 +37,14 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void save(CategoryAddDTO category) {
         Optional<Category> category2 = categoryRepository.findByName(category.getName());
-        category2.orElseThrow(
-                () -> new IllegalStateException(ErrorCode.CATEGORY_NAME_EXIST)
-        );
+        if(category2.isPresent()) {
+            throw new IllegalStateException(ErrorCode.CATEGORY_NAME_EXIST);
+        }
         Category category1 = new Category();
         category1.setName(category.getName());
         categoryRepository.save(category1);
     }
+
 
     @Override
     public void delete(Long id) {
