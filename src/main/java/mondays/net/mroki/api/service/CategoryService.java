@@ -24,6 +24,7 @@ public interface CategoryService {
 
     CategoryDTO getCategoryById(String id);
     List<ParentCategory> getAllCategoryAdmin();
+    void unDelete(Long id);
 
 
 

@@ -71,6 +71,22 @@ public class CategoryAdminController {
 
     }
 
+    @DeleteMapping("/unDelete/{categoryId}")
+    public ResponseEntity<ResponseDTO> unDeleteCategory(@PathVariable Long categoryId) {
+
+        ResponseDTO response = new ResponseDTO();
+
+        try {
+            response.setSuccessCode(SuccessCode.DELETE_CATEGORY_SUCCESS);
+            categoryService.unDelete(categoryId);
+            return ResponseEntity.ok().body(response);
+        } catch (IllegalStateException e) {
+            response.setErrorCode(e.getMessage());
+            return ResponseEntity.badRequest().body(response);
+        }
+
+    }
+
     @GetMapping
     public List<ParentCategory> getAllCategory() {
         return categoryService.getAllCategoryAdmin();
