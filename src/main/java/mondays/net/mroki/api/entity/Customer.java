@@ -32,6 +32,9 @@ public class Customer {
 
     private String phone;
 
+    @Column(nullable = false)
+    private boolean isActive;
+
     private boolean isVerifiedEmail;
 
     @ManyToOne(fetch = FetchType.EAGER)

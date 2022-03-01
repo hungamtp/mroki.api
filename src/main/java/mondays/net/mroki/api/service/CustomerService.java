@@ -20,4 +20,5 @@ public interface CustomerService {
     boolean findByEmail(String email);
 
     boolean updatePassword(EmailDTO user);
+    void activateDeactivate(Long customerId , boolean active);
 }

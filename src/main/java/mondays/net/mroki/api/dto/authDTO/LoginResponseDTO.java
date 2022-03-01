@@ -15,5 +15,6 @@ public class LoginResponseDTO {
     private Long userId;
     private String role;
     private String avatar;
+    private boolean isActive;
 
 }

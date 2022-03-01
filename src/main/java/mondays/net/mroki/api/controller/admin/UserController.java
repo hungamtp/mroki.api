@@ -2,12 +2,14 @@ package mondays.net.mroki.api.controller.admin;
 
 import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.dto.ResponseDTO;
+import mondays.net.mroki.api.dto.customerDTO.ActivateCustomerDTO;
 import mondays.net.mroki.api.dto.customerDTO.CustomerDTO;
 import mondays.net.mroki.api.dto.customerDTO.RoleDTO;
 import mondays.net.mroki.api.entity.Customer;
 import mondays.net.mroki.api.entity.Product;
 import mondays.net.mroki.api.filter.CustomerSpecificationBuilder;
 import mondays.net.mroki.api.filter.ProductSpecificationsBuilder;
+import mondays.net.mroki.api.responseCode.SuccessCode;
 import mondays.net.mroki.api.service.CustomerService;
 import mondays.net.mroki.api.service.impl.RoleServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +67,22 @@ public class UserController {
 
         response.setData(customerService.getAlLCustomer(pageable  , spec));
         return ResponseEntity.ok().body(response);
+    }
+
+    @PutMapping
+    public ResponseEntity<ResponseDTO> getAllUser(@RequestBody ActivateCustomerDTO activateCustomerDTO) {
+        ResponseDTO response = new ResponseDTO();
+
+        try{
+            customerService.activateDeactivate(activateCustomerDTO.getCustomerId(), activateCustomerDTO.isActive());
+            response.setSuccessCode(SuccessCode.UPDATE_ACTIVE);
+            return ResponseEntity.ok().body(response);
+        }catch (IllegalStateException ex){
+            response.setErrorCode(ex.getMessage());
+            return ResponseEntity.badRequest().body(response);
+        }
+
+
     }
 
 }

@@ -110,6 +110,7 @@ public class AuthController {
                         .role(customer.getRole().getRoleName())
                         .jwt("Bearer " + token)
                         .userId(customer.getId())
+                        .isActive(customer.isActive())
                         .build();
 
                 response.setData(loginResponse);

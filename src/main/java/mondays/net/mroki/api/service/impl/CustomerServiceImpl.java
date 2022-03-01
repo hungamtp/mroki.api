@@ -15,6 +15,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @AllArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
@@ -64,6 +66,17 @@ public class CustomerServiceImpl implements CustomerService {
     }
     public boolean isExist(String username) {
         return customerRepository.isExist(username);
+    }
+
+    public void activateDeactivate(Long customerId , boolean active){
+        Optional<Customer> customer = customerRepository.findById(customerId);
+        customer.orElseThrow(
+                () -> new IllegalStateException(ErrorCode.USER_NOT_FOUND)
+        );
+
+        Customer customer1 = customer.get();
+        customer1.setActive(active);
+        customerRepository.save(customer1);
     }
 
 
