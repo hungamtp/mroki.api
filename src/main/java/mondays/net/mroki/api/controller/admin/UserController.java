@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
 @AllArgsConstructor
 @RequestMapping("admin/user")
 @CrossOrigin
-@PreAuthorize("hasRole('ADMIN')")
+@PreAuthorize("hasRole('Admin')")
 public class UserController {
 
     @Autowired

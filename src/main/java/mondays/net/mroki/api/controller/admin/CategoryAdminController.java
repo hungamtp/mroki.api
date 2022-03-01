@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("admin/category")
 @AllArgsConstructor
 @CrossOrigin
-@PreAuthorize("hasRole('ADMIN')")
+@PreAuthorize("hasRole('Admin')")
 public class CategoryAdminController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CategoryAdminController.class);
