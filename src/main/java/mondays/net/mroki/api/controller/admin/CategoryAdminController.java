@@ -47,12 +47,13 @@ public class CategoryAdminController {
 
             categoryService.save(categoryDTO);
             response.setSuccessCode(SuccessCode.ADD_CATEGORY_SUCCESS);
+            return ResponseEntity.ok().body(response);
 
         } catch (IllegalStateException exception) {
-            throw new CategoryConverterException(exception.getMessage());
+            response.setErrorCode(exception.getMessage());
+            return ResponseEntity.badRequest().body(response);
         }
 
-        return ResponseEntity.ok().body(response);
     }
 
     @DeleteMapping("/{categoryId}")
