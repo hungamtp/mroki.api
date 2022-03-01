@@ -48,8 +48,8 @@ public class CategoryAdminController {
             categoryService.save(categoryDTO);
             response.setSuccessCode(SuccessCode.ADD_CATEGORY_SUCCESS);
 
-        } catch (CategoryConverterException exception) {
-            throw new CategoryConverterException(ErrorCode.CONVERT_CATEGORY_ERROR);
+        } catch (IllegalStateException exception) {
+            throw new CategoryConverterException(exception.getMessage());
         }
 
         return ResponseEntity.ok().body(response);
