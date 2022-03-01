@@ -3,7 +3,7 @@ package mondays.net.mroki.api.controller.admin;
 import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.converter.CategoryConverter;
 import mondays.net.mroki.api.dto.ResponseDTO;
-import mondays.net.mroki.api.dto.categoryDTO.CategoryDTO;
+import mondays.net.mroki.api.dto.categoryDTO.CategoryAddDTO;
 import mondays.net.mroki.api.exception.CategoryConverterException;
 import mondays.net.mroki.api.responseCode.ErrorCode;
 import mondays.net.mroki.api.responseCode.SuccessCode;
@@ -14,8 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 
 @RestController
 @RequestMapping("admin/category")
@@ -42,7 +40,7 @@ public class CategoryAdminController {
     }
 
     @PostMapping
-    public ResponseEntity<ResponseDTO> addCategory(@Valid @RequestBody CategoryDTO categoryDTO) {
+    public ResponseEntity<ResponseDTO> addCategory(@RequestBody CategoryAddDTO categoryDTO) {
 
         ResponseDTO response = new ResponseDTO();
         try {
@@ -58,17 +56,17 @@ public class CategoryAdminController {
     }
 
     @DeleteMapping("/{categoryId}")
-    public ResponseEntity<ResponseDTO> deleteCategory(@PathVariable String categoryId) {
+    public ResponseEntity<ResponseDTO> deleteCategory(@PathVariable Long categoryId) {
 
         ResponseDTO response = new ResponseDTO();
 
-        if (!categoryService.isExist(categoryId)) {
-            response.setErrorCode(ErrorCode.ID_CATEGORY_NOT_FOUND);
-            return ResponseEntity.badRequest().body(response);
-        } else {
+        try {
             response.setSuccessCode(SuccessCode.DELETE_CATEGORY_SUCCESS);
             categoryService.delete(categoryId);
             return ResponseEntity.ok().body(response);
+        } catch (IllegalStateException e) {
+            response.setErrorCode(e.getMessage());
+            return ResponseEntity.badRequest().body(response);
         }
 
     }

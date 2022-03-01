@@ -1,16 +1,19 @@
 package mondays.net.mroki.api.service.impl;
 
 import lombok.AllArgsConstructor;
+import mondays.net.mroki.api.dto.categoryDTO.CategoryAddDTO;
 import mondays.net.mroki.api.dto.categoryDTO.CategoryDTO;
 import mondays.net.mroki.api.dto.categoryDTO.ParentCategory;
 import mondays.net.mroki.api.entity.Category;
 import mondays.net.mroki.api.repository.CategoryRepository;
+import mondays.net.mroki.api.responseCode.ErrorCode;
 import mondays.net.mroki.api.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -32,11 +35,21 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void save(CategoryDTO category) {
+    public void save(CategoryAddDTO category) {
+        Category category1 = new Category();
+        category1.setName(category.getName());
+        categoryRepository.save(category1);
     }
 
     @Override
-    public void delete(String id) {
+    public void delete(Long id) {
+        Optional<Category> category = categoryRepository.findById(id);
+        category.orElseThrow(
+                () -> new IllegalStateException(ErrorCode.CATEGORY_NOT_FOUND)
+        );
+        Category category1 = category.get();
+        category1.setDeleted(true);
+        categoryRepository.save(category1);
     }
 
     @Override

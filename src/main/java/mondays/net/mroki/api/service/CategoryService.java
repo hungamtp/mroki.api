@@ -1,5 +1,6 @@
 package mondays.net.mroki.api.service;
 
+import mondays.net.mroki.api.dto.categoryDTO.CategoryAddDTO;
 import mondays.net.mroki.api.dto.categoryDTO.CategoryDTO;
 import mondays.net.mroki.api.dto.categoryDTO.ParentCategory;
 import mondays.net.mroki.api.entity.Category;
@@ -11,9 +12,9 @@ public interface CategoryService {
 
     List<ParentCategory> getAllCategory();
 
-    void save(CategoryDTO category);
+    void save(CategoryAddDTO category);
 
-    void delete(String id);
+    void delete(Long id);
 
     Category update(Category category);
 
