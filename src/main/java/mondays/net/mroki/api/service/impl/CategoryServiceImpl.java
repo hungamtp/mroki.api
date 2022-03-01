@@ -35,6 +35,17 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    public List<ParentCategory> getAllCategoryAdmin() {
+        List<Category> categories = categoryRepository.findByParentIsNull();
+        List<ParentCategory> parentCategories = new ArrayList<>();
+
+        for(Category category : categories){
+            parentCategories.add(new ParentCategory(category.getId() , category.getName(), category.getSubCategories()));
+        }
+        return parentCategories;
+    }
+
+    @Override
     public void save(CategoryAddDTO category) {
         Optional<Category> category2 = categoryRepository.findByName(category.getName());
         if(category2.isPresent()) {

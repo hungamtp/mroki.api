@@ -12,6 +12,7 @@ import java.util.Optional;
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 
     List<Category> findByParentIsNullAndIsDeletedFalse();
+    List<Category> findByParentIsNull();
 
     Optional<Category> findByName(String name);
 

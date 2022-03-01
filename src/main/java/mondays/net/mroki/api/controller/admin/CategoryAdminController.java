@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.converter.CategoryConverter;
 import mondays.net.mroki.api.dto.ResponseDTO;
 import mondays.net.mroki.api.dto.categoryDTO.CategoryAddDTO;
+import mondays.net.mroki.api.dto.categoryDTO.ParentCategory;
 import mondays.net.mroki.api.exception.CategoryConverterException;
 import mondays.net.mroki.api.responseCode.ErrorCode;
 import mondays.net.mroki.api.responseCode.SuccessCode;
@@ -14,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("admin/category")
@@ -26,10 +29,6 @@ public class CategoryAdminController {
 
     @Autowired
     private CategoryService categoryService;
-
-    @Autowired
-    private CategoryConverter converter;
-
 
     @GetMapping("/{id}")
     ResponseEntity<ResponseDTO> getCategoryById(@PathVariable String id) {
@@ -70,6 +69,11 @@ public class CategoryAdminController {
             return ResponseEntity.badRequest().body(response);
         }
 
+    }
+
+    @GetMapping
+    public List<ParentCategory> getAllCategory() {
+        return categoryService.getAllCategoryAdmin();
     }
 
 //    @PutMapping

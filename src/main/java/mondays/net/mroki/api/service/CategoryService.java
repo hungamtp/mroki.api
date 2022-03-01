@@ -23,6 +23,7 @@ public interface CategoryService {
     List<CategoryDTO> getALlSubcategory();
 
     CategoryDTO getCategoryById(String id);
+    List<ParentCategory> getAllCategoryAdmin();
 
 
 
