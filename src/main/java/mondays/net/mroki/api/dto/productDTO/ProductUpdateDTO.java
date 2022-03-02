@@ -32,7 +32,7 @@ public class ProductUpdateDTO {
 
     private String thumbnail;
 
-    LocalDate updatedDate;
+    LocalDate modifiedDate;
 
     private String image1;
     private String image2;

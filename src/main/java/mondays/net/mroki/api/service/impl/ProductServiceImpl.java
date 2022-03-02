@@ -89,7 +89,7 @@ public class ProductServiceImpl implements ProductService {
         updateProduct.setName(product.getName());
         updateProduct.setPrice(product.getPrice());
         updateProduct.setRetailPrice(product.getRetail());
-        updateProduct.setModifiedDate(product.getUpdatedDate());
+        updateProduct.setModifiedDate(product.getModifiedDate());
         updateProduct.setProductImage(new ProductImage(product.getThumbnail(), product.getImage1(), product.getImage2()));
     }
 
