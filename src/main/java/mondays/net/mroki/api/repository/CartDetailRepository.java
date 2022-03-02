@@ -20,6 +20,6 @@ public interface CartDetailRepository extends JpaRepository<CartDetail , Long> {
 
     List<CartDetail> findByCart(Cart cart);
 
-    Optional<CartDetail> findOneByProductAndSizeAndCart(Product product , int size , Cart cart);
+    Optional<CartDetail> findOneByProductAndSizeAndCart(Product product , String size , Cart cart);
 
 }

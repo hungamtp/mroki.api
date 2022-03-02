@@ -28,26 +28,4 @@ class CartRepositoryTest {
 
 
 
-    @Test
-    public void testIsProductExist(){
-        Optional<CartDetail> cartDetailOptional = cartDetailRepository.findOneByProductAndSizeAndCart(Product.builder().id(2L).build() , 41 , Cart.builder().id(1L).build());
-
-        assertEquals(true , cartDetailOptional.isPresent());
-    }
-    @Test
-    public void testIsNotProductExist(){
-        Optional<CartDetail> cartDetailOptional = cartDetailRepository.findOneByProductAndSizeAndCart(Product.builder().id(10L).build() , 41 , Cart.builder().id(1L).build());
-
-        assertEquals(false , cartDetailOptional.isPresent());
-    }
-
-    @Test
-    public void orderTest(){
-        List<OrderInListDTO> result = orderRepository.getOrderDetailByPhoneNumber("123");
-        Assert.assertEquals( orderRepository.getOrderDetailByPhoneNumber("123").size(),3);
-
-
-    }
-
-
 }
