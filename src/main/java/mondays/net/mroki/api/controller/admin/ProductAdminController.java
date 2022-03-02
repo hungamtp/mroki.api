@@ -67,9 +67,6 @@ public class ProductAdminController {
         ResponseDTO response = new ResponseDTO();
 
         try {
-            if(productService.isNameExist(productDTO.getName())){
-                throw new DuplicatedDataException(ErrorCode.PRODUCT_NAME_IS_EXIST);
-            }
 
             productService.save(converter.addDtoToEntity(productDTO));
             response.setSuccessCode(SuccessCode.SAVE_PRODUCT_SUCCESS);
