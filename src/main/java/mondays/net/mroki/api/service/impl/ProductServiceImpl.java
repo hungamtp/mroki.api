@@ -91,6 +91,7 @@ public class ProductServiceImpl implements ProductService {
         updateProduct.setRetailPrice(product.getRetail());
         updateProduct.setModifiedDate(product.getModifiedDate());
         updateProduct.setProductImage(new ProductImage(product.getThumbnail(), product.getImage1(), product.getImage2()));
+        productRepository.save(updateProduct);
     }
 
     public void save(Product product) {
