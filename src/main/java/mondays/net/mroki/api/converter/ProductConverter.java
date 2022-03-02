@@ -77,28 +77,6 @@ public class ProductConverter {
         return product;
     }
 
-    public Product updateDtoToEntity(ProductUpdateDTO dto) {
-
-        ProductImage productImage = ProductImage.builder().
-                thumbnail(dto.getThumbnail()).
-                image1(dto.getImage1()).
-                image2(dto.getImage2()).
-                build();
-
-        Product product = Product.builder()
-                .id(dto.getId())
-                .name(dto.getName())
-                .price(dto.getPrice())
-                .retailPrice(dto.getRetail())
-                .description(dto.getDescription())
-                .category(Category.builder().id(dto.getCategoryId()).build())
-                .productImage(productImage)
-                .createdDate(dto.getCreateDate())
-                .modifiedDate(LocalDate.now())
-                .build();
-        return product;
-    }
-
 
     public List<ProductCartDTO> dataToCartDto(List<Object[]> data) {
 
