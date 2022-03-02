@@ -5,7 +5,10 @@ import mondays.net.mroki.api.converter.ProductConverter;
 import mondays.net.mroki.api.dto.PageDTO;
 import mondays.net.mroki.api.dto.productDTO.ProductAdminDTO;
 import mondays.net.mroki.api.dto.productDTO.ProductDetailDTO;
+import mondays.net.mroki.api.dto.productDTO.ProductUpdateDTO;
+import mondays.net.mroki.api.entity.Category;
 import mondays.net.mroki.api.entity.Product;
+import mondays.net.mroki.api.entity.ProductImage;
 import mondays.net.mroki.api.exception.DataNotFoundException;
 import mondays.net.mroki.api.exception.ProductConvertException;
 import mondays.net.mroki.api.filter.ProductSpecification;
@@ -75,25 +78,21 @@ public class ProductServiceImpl implements ProductService {
 
 
     // admin service
-    public void updateProduct(Product product) {
+    public void updateProduct(ProductUpdateDTO product) {
 
-        if (!isExist(product.getId()))
-            throw new DataNotFoundException(ErrorCode.PRODUCT_NOT_FOUND);
-        else
-            productRepository.save(product);
-
+        Optional<Product> product1 = productRepository.findById(product.getId());
+        product1.orElseThrow(
+                () -> new IllegalStateException(ErrorCode.PRODUCT_NOT_FOUND)
+        );
+        Product updateProduct = product1.get();
+         updateProduct.setCategory(new Category(product.getCategoryId()));
+        updateProduct.setName(product.getName());
+        updateProduct.setPrice(product.getPrice());
+        updateProduct.setRetailPrice(product.getRetail());
+        updateProduct.setProductImage(new ProductImage(product.getThumbnail(), product.getImage1(), product.getImage2()));
     }
 
     public void save(Product product) {
-//        List<Size> size = new ArrayList<>();
-//
-//        for (int i = 35; i <= 47; i++) {
-//            size.add(Size.builder()
-//                    .size(i)
-//                    .quantity(100)
-//                    .build());
-//        }
-//        product.setSize(size);
 
         productRepository.save(product);
 

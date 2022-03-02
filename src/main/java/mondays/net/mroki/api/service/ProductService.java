@@ -4,6 +4,7 @@ package mondays.net.mroki.api.service;
 import mondays.net.mroki.api.dto.PageDTO;
 import mondays.net.mroki.api.dto.productDTO.ProductAdminDTO;
 import mondays.net.mroki.api.dto.productDTO.ProductDetailDTO;
+import mondays.net.mroki.api.dto.productDTO.ProductUpdateDTO;
 import mondays.net.mroki.api.entity.Product;
 import mondays.net.mroki.api.filter.SearchCriteria;
 import org.springframework.data.domain.Page;
@@ -25,7 +26,7 @@ public interface ProductService {
 
     void save(Product product);
 
-    void updateProduct(Product product);
+    void updateProduct(ProductUpdateDTO product);
 
     PageDTO findAllProductAdmin(Pageable pageable, Specification spec);
 

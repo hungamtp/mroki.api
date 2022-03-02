@@ -111,6 +111,9 @@ public class AuthController {
                         .jwt("Bearer " + token)
                         .userId(customer.getId())
                         .isActive(customer.isActive())
+                        .name(customer.getUsername())
+                        .address(customer.getPhone())
+                        .phone(customer.getPhone())
                         .build();
 
                 response.setData(loginResponse);

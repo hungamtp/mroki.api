@@ -16,5 +16,8 @@ public class LoginResponseDTO {
     private String role;
     private String avatar;
     private boolean isActive;
+    private String phone;
+    private String address;
+    private String name;
 
 }

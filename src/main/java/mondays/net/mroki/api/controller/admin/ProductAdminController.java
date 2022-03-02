@@ -93,7 +93,7 @@ public class ProductAdminController {
             return ResponseEntity.badRequest().body(response);
         }
 
-        productService.updateProduct(converter.updateDtoToEntity(product));
+        productService.updateProduct(product);
         response.setSuccessCode(SuccessCode.UPDATE_PRODUCT_SUCCESS);
         return ResponseEntity.ok().body(response);
 

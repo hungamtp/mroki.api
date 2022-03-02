@@ -92,7 +92,7 @@ public class ProductController {
             return ResponseEntity.ok().body(response);
 
         } catch (Exception ex) {
-            response.setErrorCode(ErrorCode.GET_PRODUCT_DETAIL_FAIL);
+            response.setErrorCode(ex.getMessage());
             return ResponseEntity.badRequest().body(response);
         }
 
