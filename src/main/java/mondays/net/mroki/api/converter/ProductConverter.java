@@ -2,6 +2,7 @@ package mondays.net.mroki.api.converter;
 
 import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.dto.PageDTO;
+import mondays.net.mroki.api.dto.discountDTO.DiscountDTO;
 import mondays.net.mroki.api.dto.productDTO.*;
 import mondays.net.mroki.api.entity.Category;
 import mondays.net.mroki.api.entity.Rate;
@@ -33,13 +34,16 @@ public class ProductConverter {
                 .build();
 
         dto.setSizes(sizeConverter.entityToDTO(product.getSize()));
-
+        if(product.getDiscount() != null) {
+            dto.setDiscountDTO(new DiscountDTO(product.getDiscount().getId(), product.getDiscount().getSaleOff()));
+        }
         float rate = 0;
 
         for (Rate c : product.getRates())
             rate += (float) c.getRate();
 
         dto.setRate(rate / (float) product.getRates().size());
+
 
         return dto;
     }
