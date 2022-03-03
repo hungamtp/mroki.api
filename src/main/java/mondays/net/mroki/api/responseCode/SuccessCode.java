@@ -28,6 +28,7 @@ public class SuccessCode {
     public static final String  UPDATE_PASS ="CHANGE_PASS_SUCCESS";
     public static final String  SEND_EMAIL ="SEND_EMAIL_SUCCESS";
     public static final String  UPDATE_SIZE ="UPDATE_SIZE";
+    public static final String  UPDATE_DISCOUNT ="UPDATE_DISCOUNT";
 
 
 }

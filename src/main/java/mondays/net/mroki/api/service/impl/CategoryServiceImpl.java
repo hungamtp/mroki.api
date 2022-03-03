@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.dto.categoryDTO.CategoryAddDTO;
 import mondays.net.mroki.api.dto.categoryDTO.CategoryDTO;
 import mondays.net.mroki.api.dto.categoryDTO.ParentCategory;
+import mondays.net.mroki.api.dto.categoryDTO.UpdateCategoryDTO;
 import mondays.net.mroki.api.entity.Category;
 import mondays.net.mroki.api.repository.CategoryRepository;
 import mondays.net.mroki.api.responseCode.ErrorCode;
@@ -80,9 +81,18 @@ public class CategoryServiceImpl implements CategoryService {
         categoryRepository.save(category1);
     }
 
+
+
     @Override
-    public Category update(Category category) {
-        return null;
+    public void update(UpdateCategoryDTO category) {
+        Optional<Category> category1 = categoryRepository.findById(category.getId());
+        category1.orElseThrow(
+                () -> new IllegalStateException(ErrorCode.CATEGORY_NOT_FOUND)
+        );
+        Category category2 = category1.get();
+        category2.setDeleted(category.isDeleted());
+        category2.setName(category.getName());
+        categoryRepository.save(category2);
     }
 
     @Override

@@ -111,8 +111,14 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderInListDTO> findAllOrderByPhoneNumber(String phoneNumber) {
-        List<Orders> result = orderRepository.findByPhoneNumber(phoneNumber);
+    public List<OrderInListDTO> findAllOrderByPhoneNumber(String phoneNumber , boolean isPhone) {
+        List<Orders> result = null;
+        if(isPhone){
+            result = orderRepository.findByPhoneNumber(phoneNumber);
+
+        }else {
+//            result = orderRepository.findByEmail(phoneNumber);
+        }
         return orderConverter.entityToDTO(result);
     }
 

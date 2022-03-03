@@ -13,6 +13,7 @@ public class DiscountConverter {
 
     public AddDiscountDTO entityToDto(Discount discount){
         return AddDiscountDTO.builder()
+                .id(discount.getId())
                 .saleOff(discount.getSaleOff())
                 .startDate(discount.getStartDate())
                 .endDate(discount.getEndDate())

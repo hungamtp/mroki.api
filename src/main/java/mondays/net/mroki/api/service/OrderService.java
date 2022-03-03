@@ -16,7 +16,7 @@ public interface OrderService {
 
     List<Orders> orders(Long customerId);
 
-    List<OrderInListDTO> findAllOrderByPhoneNumber(String phoneNumber);
+    List<OrderInListDTO> findAllOrderByPhoneNumber(String phoneNumber , boolean isPhone);
     List<OrderInListDTO> findAllOrderByCustomerId(Long customerId);
     List<OrderDetailDTO> getOrderDetails(Long orderId);
 }

@@ -1,15 +1,16 @@
 package mondays.net.mroki.api.dto.discountDTO;
 
+
 import lombok.*;
 
 import java.time.LocalDate;
 
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 @Builder
-public class AddDiscountDTO {
+public class UpdateDiscountDTO {
     private Long id;
     private int saleOff;
     private LocalDate startDate;
