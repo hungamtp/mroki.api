@@ -35,7 +35,7 @@ public class ProductConverter {
 
         dto.setSizes(sizeConverter.entityToDTO(product.getSize()));
         if(product.getDiscount() != null) {
-            dto.setDiscountDTO(new DiscountDTO(product.getDiscount().getId(), product.getDiscount().getSaleOff()));
+            dto.setDiscount(new DiscountDTO(product.getDiscount().getId(), product.getDiscount().getSaleOff()));
         }
         float rate = 0;
 
