@@ -54,7 +54,10 @@ public class DiscountController {
     public ResponseEntity<ResponseDTO> addDiscountForProduct(@RequestBody AddDiscountForProductDTO addDiscountForProductDTO){
         ResponseDTO response = new ResponseDTO();
         try{
-        discountService.addDiscountForProduct(addDiscountForProductDTO);
+            for(var productId : addDiscountForProductDTO.getProductId()){
+
+                discountService.addDiscountForProduct(productId , addDiscountForProductDTO.getDiscountId());
+            }
         response.setSuccessCode(SuccessCode.ADD_DISCOUNT_FOR_PRODUCT);
         } catch (DataNotFoundException ex){
             response.setErrorCode(ex.getMessage());

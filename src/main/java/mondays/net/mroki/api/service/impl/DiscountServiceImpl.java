@@ -53,16 +53,16 @@ public class DiscountServiceImpl implements DiscountService {
     }
 
     @Override
-    public void addDiscountForProduct(AddDiscountForProductDTO addDiscountForProductDTO) {
-        Optional<Product> product = Optional.ofNullable(productRepository.findById(addDiscountForProductDTO.getProductId()).orElseThrow(()
+    public void addDiscountForProduct(Long productId , Long discountId ) {
+        Optional<Product> product = Optional.ofNullable(productRepository.findById(productId).orElseThrow(()
                 -> new DataNotFoundException(ErrorCode.PRODUCT_NOT_FOUND)));
 
-        discountRepository.findById(addDiscountForProductDTO.getDiscountId()).orElseThrow(
+        discountRepository.findById(discountId).orElseThrow(
                 () -> new DataNotFoundException(ErrorCode.DISCOUNT_NOT_FOUND)
         );
 
         Product updateProduct = product.get();
-        updateProduct.setDiscount(new Discount(addDiscountForProductDTO.getDiscountId()));
+        updateProduct.setDiscount(new Discount(discountId));
         productRepository.save(updateProduct);
     }
 }

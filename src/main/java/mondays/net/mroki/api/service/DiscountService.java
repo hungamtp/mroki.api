@@ -10,5 +10,5 @@ import java.util.List;
 public interface DiscountService {
     void addDiscount(AddDiscountDTO addDiscountDTO);
     List<AddDiscountDTO> getAllDiscount();
-    void addDiscountForProduct(AddDiscountForProductDTO addDiscountForProductDTO);
+    void addDiscountForProduct(Long productId , Long discountId);
 }
