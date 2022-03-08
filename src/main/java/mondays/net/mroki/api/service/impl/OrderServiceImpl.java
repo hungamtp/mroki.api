@@ -2,6 +2,7 @@ package mondays.net.mroki.api.service.impl;
 
 import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.converter.OrderConverter;
+import mondays.net.mroki.api.dto.PageDTO;
 import mondays.net.mroki.api.dto.customerDTO.CustomerOrderDTO;
 import mondays.net.mroki.api.dto.order.OrderInListDTO;
 import mondays.net.mroki.api.dto.orderDetail.OrderDetailDTO;
@@ -10,8 +11,12 @@ import mondays.net.mroki.api.entity.Customer;
 import mondays.net.mroki.api.entity.OrderDetail;
 import mondays.net.mroki.api.entity.Orders;
 import mondays.net.mroki.api.entity.Product;
+import mondays.net.mroki.api.exception.ProductConvertException;
 import mondays.net.mroki.api.repository.*;
+import mondays.net.mroki.api.responseCode.ErrorCode;
 import mondays.net.mroki.api.service.OrderService;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -142,5 +147,18 @@ public class OrderServiceImpl implements OrderService {
             result.add(orderDetailDTO);
         }
         return  result;
+    }
+
+    @Override
+    public PageDTO findAllOrder(Pageable pageable, Specification specification) {
+
+        try {
+            PageDTO result = orderConverter.entityToProductHomePageDTO(
+                    orderRepository.findAll(specification, pageable));
+            return result;
+        } catch (ProductConvertException ex) {
+            throw new ProductConvertException(ErrorCode.PRODUCT_CONVERT_FAIL);
+        }
+
     }
 }

@@ -22,6 +22,7 @@ public class CustomerConverter {
                 .isVerifiedEmail(customer.isVerifiedEmail())
                 .roleName(customer.getRole().getRoleName())
                 .phone(customer.getPhone())
+                .isActive(customer.isActive())
                 .build();
     }
 

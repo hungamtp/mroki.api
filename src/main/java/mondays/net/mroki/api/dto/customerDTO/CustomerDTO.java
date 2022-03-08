@@ -18,4 +18,5 @@ public class CustomerDTO {
     private String email;
     private String roleName;
     private boolean isVerifiedEmail;
+    private boolean isActive;
 }
