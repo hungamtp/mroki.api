@@ -69,6 +69,17 @@ public class CategoryServiceImpl implements CategoryService {
         categoryRepository.save(category1);
     }
 
+    @Override
+    public void update(Long id, String name) {
+        Optional<Category> category = categoryRepository.findById(id);
+        category.orElseThrow(
+                () -> new IllegalStateException(ErrorCode.CATEGORY_NOT_FOUND)
+        );
+        Category category1 = category.get();
+        category1.setName(name);
+        categoryRepository.save(category1);
+    }
+
 
     @Override
     public void delete(Long id) {

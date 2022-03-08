@@ -38,6 +38,14 @@ public class CategoryAdminController {
         return ResponseEntity.ok().body(response);
     }
 
+    @PutMapping("/{id}")
+    ResponseEntity<ResponseDTO> updateCategory(@PathVariable Long id ,@RequestParam String name) {
+        ResponseDTO response = new ResponseDTO();
+        categoryService.update(id , name);
+        response.setSuccessCode(SuccessCode.UPDATE_CATEGORY_SUCCESS);
+        return ResponseEntity.ok().body(response);
+    }
+
     @PostMapping
     public ResponseEntity<ResponseDTO> addCategory(@RequestBody CategoryAddDTO categoryDTO) {
 
