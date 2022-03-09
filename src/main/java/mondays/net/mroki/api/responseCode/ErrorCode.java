@@ -38,5 +38,6 @@ public class ErrorCode {
     public static final String  UPDATE_PASS ="CHANGE_PASS_FAIL";
     public static final String  SEND_EMAIL ="SEND_EMAIL_FAIL";
     public static final String  UPDATE_SIZE ="UPDATE_SIZE";
+    public static final String  UPDATE_USER ="UPDATE_USER_FAIL";
 
 }

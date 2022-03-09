@@ -5,6 +5,8 @@ import mondays.net.mroki.api.converter.CustomerConverter;
 import mondays.net.mroki.api.dto.PageDTO;
 import mondays.net.mroki.api.dto.authDTO.EmailDTO;
 import mondays.net.mroki.api.dto.authDTO.LoginDTO;
+import mondays.net.mroki.api.dto.customerDTO.CustomerDTO;
+import mondays.net.mroki.api.dto.customerDTO.CustomerUpdateDTO;
 import mondays.net.mroki.api.entity.Customer;
 import mondays.net.mroki.api.exception.DuplicatedDataException;
 import mondays.net.mroki.api.repository.CustomerRepository;
@@ -77,6 +79,23 @@ public class CustomerServiceImpl implements CustomerService {
         Customer customer1 = customer.get();
         customer1.setActive(active);
         customerRepository.save(customer1);
+    }
+
+    @Override
+    public boolean updateCustomer(CustomerUpdateDTO dto) {
+        Customer customer = customerRepository.findById(dto.getId()).get();
+        try{
+            if(customer == null) return  false;
+            customer.setUsername(dto.getUsername());
+            customer.setAvatar(dto.getAvatar());
+            customer.setPhone(dto.getPhone());
+            customer.setEmail(dto.getEmail());
+            customerRepository.save(customer);
+            return true;
+        }catch (Exception e)
+        {
+            return false;
+        }
     }
 
 
