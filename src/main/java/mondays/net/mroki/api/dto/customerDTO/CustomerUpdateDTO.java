@@ -9,14 +9,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CustomerDTO {
+public class CustomerUpdateDTO {
 
     private Long id;
     private String username;
     private String avatar;
     private String phone;
     private String email;
-    private String roleName;
-    private boolean isVerifiedEmail;
-    private boolean isActive;
 }

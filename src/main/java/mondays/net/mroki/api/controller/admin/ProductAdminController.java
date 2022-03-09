@@ -85,11 +85,6 @@ public class ProductAdminController {
 
         ResponseDTO response = new ResponseDTO();
 
-        if (!productService.isExist(product.getId())) {
-            response.setErrorCode(ErrorCode.PRODUCT_NOT_FOUND);
-            return ResponseEntity.badRequest().body(response);
-        }
-
         productService.updateProduct(product);
         response.setSuccessCode(SuccessCode.UPDATE_PRODUCT_SUCCESS);
         return ResponseEntity.ok().body(response);

@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @Data
 public class AddCartDetailDTO {
     private int quantity;
-    private int size;
+    private String size;
     private Long productId;
 }

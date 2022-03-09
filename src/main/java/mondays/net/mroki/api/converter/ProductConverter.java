@@ -2,6 +2,7 @@ package mondays.net.mroki.api.converter;
 
 import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.dto.PageDTO;
+import mondays.net.mroki.api.dto.discountDTO.DiscountDTO;
 import mondays.net.mroki.api.dto.productDTO.*;
 import mondays.net.mroki.api.entity.Category;
 import mondays.net.mroki.api.entity.Rate;
@@ -33,13 +34,16 @@ public class ProductConverter {
                 .build();
 
         dto.setSizes(sizeConverter.entityToDTO(product.getSize()));
-
+        if(product.getDiscount() != null) {
+            dto.setDiscount(new DiscountDTO(product.getDiscount().getId(), product.getDiscount().getSaleOff()));
+        }
         float rate = 0;
 
         for (Rate c : product.getRates())
             rate += (float) c.getRate();
 
         dto.setRate(rate / (float) product.getRates().size());
+
 
         return dto;
     }
@@ -73,28 +77,6 @@ public class ProductConverter {
                 .category(Category.builder().id(dto.getCategoryId()).build())
                 .productImage(productImage)
                 .createdDate(LocalDate.now())
-                .build();
-        return product;
-    }
-
-    public Product updateDtoToEntity(ProductUpdateDTO dto) {
-
-        ProductImage productImage = ProductImage.builder().
-                thumbnail(dto.getThumbnail()).
-                image1(dto.getImage1()).
-                image2(dto.getImage2()).
-                build();
-
-        Product product = Product.builder()
-                .id(dto.getId())
-                .name(dto.getName())
-                .price(dto.getPrice())
-                .retailPrice(dto.getRetail())
-                .description(dto.getDescription())
-                .category(Category.builder().id(dto.getCategoryId()).build())
-                .productImage(productImage)
-                .createdDate(dto.getCreateDate())
-                .modifiedDate(LocalDate.now())
                 .build();
         return product;
     }

@@ -47,12 +47,12 @@ public class OrdersController {
     }
 
     @GetMapping
-    public ResponseEntity<ResponseDTO> getAllOrderByPhoneNumber(@RequestParam String phoneNumber) {
+    public ResponseEntity<ResponseDTO> getAllOrderByPhoneNumberOrEmail(@RequestParam String phoneNumberOrEmail , @RequestParam boolean isPhone) {
 
         ResponseDTO response = new ResponseDTO();
         try {
 
-            response.setData(orderService.findAllOrderByPhoneNumber(phoneNumber));
+            response.setData(orderService.findAllOrderByPhoneNumber(phoneNumberOrEmail , isPhone));
             response.setSuccessCode(SuccessCode.GET_ORDER_SUCCESS);
             return ResponseEntity.ok().body(response);
         } catch (Exception ex) {

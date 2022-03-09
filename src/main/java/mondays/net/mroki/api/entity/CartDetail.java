@@ -20,7 +20,7 @@ public class CartDetail {
 
     private int quantity;
 
-    private int size;
+    private String size;
 
     @ManyToOne
     private Product product;

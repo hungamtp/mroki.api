@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import mondays.net.mroki.api.dto.discountDTO.DiscountDTO;
 import mondays.net.mroki.api.dto.sizeDTO.SizeDTO;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public class ProductDTO{
     private String thumbnail;
     private float price;
     private List<SizeDTO> sizes;
+    private DiscountDTO discount;
 
 
 }

@@ -9,6 +9,7 @@ public class ErrorCode {
     public static final String  DISCOUNT_IS_EXIST ="DISCOUNT_IS_EXIST";
     public static final String  ADD_SIZE ="ADD_SIZE";
     public static final String  SIZE_IS_EXIST ="SIZE_IS_EXIST";
+    public static final String  NO_CART_DETAIL ="NO_CART_DETAIL";
     public static final String  CATEGORY_NAME_EXIST ="CATEGORY_NAME_EXIST";
     public static final String  SIZE_NOT_FOUND ="SIZE_NOT_FOUND";
     public static final String  ID_CATEGORY_NOT_FOUND ="ID_CATEGORY_NOT_FOUND";
@@ -37,5 +38,6 @@ public class ErrorCode {
     public static final String  UPDATE_PASS ="CHANGE_PASS_FAIL";
     public static final String  SEND_EMAIL ="SEND_EMAIL_FAIL";
     public static final String  UPDATE_SIZE ="UPDATE_SIZE";
+    public static final String  UPDATE_USER ="UPDATE_USER_FAIL";
 
 }

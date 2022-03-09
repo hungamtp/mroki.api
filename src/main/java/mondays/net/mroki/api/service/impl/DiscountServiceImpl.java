@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.converter.DiscountConverter;
 import mondays.net.mroki.api.dto.discountDTO.AddDiscountDTO;
 import mondays.net.mroki.api.dto.discountDTO.AddDiscountForProductDTO;
+import mondays.net.mroki.api.dto.discountDTO.RemoveProductDiscountDTO;
+import mondays.net.mroki.api.dto.discountDTO.UpdateDiscountDTO;
 import mondays.net.mroki.api.entity.Discount;
 import mondays.net.mroki.api.entity.Product;
 import mondays.net.mroki.api.exception.DataNotFoundException;
@@ -53,16 +55,40 @@ public class DiscountServiceImpl implements DiscountService {
     }
 
     @Override
-    public void addDiscountForProduct(AddDiscountForProductDTO addDiscountForProductDTO) {
-        Optional<Product> product = Optional.ofNullable(productRepository.findById(addDiscountForProductDTO.getProductId()).orElseThrow(()
+    public void addDiscountForProduct(Long productId , Long discountId ) {
+        Optional<Product> product = Optional.ofNullable(productRepository.findById(productId).orElseThrow(()
                 -> new DataNotFoundException(ErrorCode.PRODUCT_NOT_FOUND)));
 
-        discountRepository.findById(addDiscountForProductDTO.getDiscountId()).orElseThrow(
+        discountRepository.findById(discountId).orElseThrow(
                 () -> new DataNotFoundException(ErrorCode.DISCOUNT_NOT_FOUND)
         );
 
         Product updateProduct = product.get();
-        updateProduct.setDiscount(new Discount(addDiscountForProductDTO.getDiscountId()));
+        updateProduct.setDiscount(new Discount(discountId));
         productRepository.save(updateProduct);
+    }
+
+    @Override
+    public void removeDiscountFromProduct(RemoveProductDiscountDTO dto) {
+        Optional<Product> product = Optional.ofNullable(productRepository.findById(dto.getProductId()).orElseThrow(()
+                -> new DataNotFoundException(ErrorCode.PRODUCT_NOT_FOUND)));
+
+        Product updateProduct = product.get();
+        updateProduct.setDiscount(null);
+        productRepository.save(updateProduct);
+    }
+
+    public void updateDiscount(UpdateDiscountDTO discountDTO){
+        Optional<Discount> discount = discountRepository.findById(discountDTO.getId());
+
+        discount.orElseThrow(
+                () -> new IllegalStateException(ErrorCode.DISCOUNT_NOT_FOUND)
+        );
+
+        Discount updatedDiscount = discount.get();
+        updatedDiscount.setSaleOff(discountDTO.getSaleOff());
+        updatedDiscount.setStartDate(discountDTO.getStartDate());
+        updatedDiscount.setEndDate(discountDTO.getEndDate());
+        discountRepository.save(updatedDiscount);
     }
 }

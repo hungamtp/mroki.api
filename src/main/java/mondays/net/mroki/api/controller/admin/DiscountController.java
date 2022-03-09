@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.dto.ResponseDTO;
 import mondays.net.mroki.api.dto.discountDTO.AddDiscountDTO;
 import mondays.net.mroki.api.dto.discountDTO.AddDiscountForProductDTO;
+import mondays.net.mroki.api.dto.discountDTO.RemoveProductDiscountDTO;
+import mondays.net.mroki.api.dto.discountDTO.UpdateDiscountDTO;
 import mondays.net.mroki.api.dto.productDTO.ProductAddDTO;
 import mondays.net.mroki.api.exception.CategoryConverterException;
 import mondays.net.mroki.api.exception.DataNotFoundException;
@@ -54,8 +56,35 @@ public class DiscountController {
     public ResponseEntity<ResponseDTO> addDiscountForProduct(@RequestBody AddDiscountForProductDTO addDiscountForProductDTO){
         ResponseDTO response = new ResponseDTO();
         try{
-        discountService.addDiscountForProduct(addDiscountForProductDTO);
+            for(var productId : addDiscountForProductDTO.getProductId()){
+
+                discountService.addDiscountForProduct(productId , addDiscountForProductDTO.getDiscountId());
+            }
         response.setSuccessCode(SuccessCode.ADD_DISCOUNT_FOR_PRODUCT);
+        } catch (DataNotFoundException ex){
+            response.setErrorCode(ex.getMessage());
+        }
+        return ResponseEntity.ok().body(response);
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<ResponseDTO> updateDiscount(@RequestBody UpdateDiscountDTO updateDiscountDTO){
+        ResponseDTO response = new ResponseDTO();
+        try{
+            discountService.updateDiscount(updateDiscountDTO);
+            response.setSuccessCode(SuccessCode.UPDATE_DISCOUNT);
+        } catch (DataNotFoundException ex){
+            response.setErrorCode(ex.getMessage());
+        }
+        return ResponseEntity.ok().body(response);
+    }
+
+    @PutMapping("/remove")
+    public ResponseEntity<ResponseDTO> updateDiscount(@RequestBody RemoveProductDiscountDTO removeProductDiscountDTO){
+        ResponseDTO response = new ResponseDTO();
+        try{
+            discountService.removeDiscountFromProduct(removeProductDiscountDTO);
+            response.setSuccessCode(SuccessCode.UPDATE_DISCOUNT);
         } catch (DataNotFoundException ex){
             response.setErrorCode(ex.getMessage());
         }
