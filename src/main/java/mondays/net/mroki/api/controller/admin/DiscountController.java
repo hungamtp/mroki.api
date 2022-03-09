@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.dto.ResponseDTO;
 import mondays.net.mroki.api.dto.discountDTO.AddDiscountDTO;
 import mondays.net.mroki.api.dto.discountDTO.AddDiscountForProductDTO;
+import mondays.net.mroki.api.dto.discountDTO.RemoveProductDiscountDTO;
 import mondays.net.mroki.api.dto.discountDTO.UpdateDiscountDTO;
 import mondays.net.mroki.api.dto.productDTO.ProductAddDTO;
 import mondays.net.mroki.api.exception.CategoryConverterException;
@@ -71,6 +72,18 @@ public class DiscountController {
         ResponseDTO response = new ResponseDTO();
         try{
             discountService.updateDiscount(updateDiscountDTO);
+            response.setSuccessCode(SuccessCode.UPDATE_DISCOUNT);
+        } catch (DataNotFoundException ex){
+            response.setErrorCode(ex.getMessage());
+        }
+        return ResponseEntity.ok().body(response);
+    }
+
+    @PutMapping("/remove")
+    public ResponseEntity<ResponseDTO> updateDiscount(@RequestBody RemoveProductDiscountDTO removeProductDiscountDTO){
+        ResponseDTO response = new ResponseDTO();
+        try{
+            discountService.removeDiscountFromProduct(removeProductDiscountDTO);
             response.setSuccessCode(SuccessCode.UPDATE_DISCOUNT);
         } catch (DataNotFoundException ex){
             response.setErrorCode(ex.getMessage());

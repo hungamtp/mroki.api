@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.converter.DiscountConverter;
 import mondays.net.mroki.api.dto.discountDTO.AddDiscountDTO;
 import mondays.net.mroki.api.dto.discountDTO.AddDiscountForProductDTO;
+import mondays.net.mroki.api.dto.discountDTO.RemoveProductDiscountDTO;
 import mondays.net.mroki.api.dto.discountDTO.UpdateDiscountDTO;
 import mondays.net.mroki.api.entity.Discount;
 import mondays.net.mroki.api.entity.Product;
@@ -64,6 +65,16 @@ public class DiscountServiceImpl implements DiscountService {
 
         Product updateProduct = product.get();
         updateProduct.setDiscount(new Discount(discountId));
+        productRepository.save(updateProduct);
+    }
+
+    @Override
+    public void removeDiscountFromProduct(RemoveProductDiscountDTO dto) {
+        Optional<Product> product = Optional.ofNullable(productRepository.findById(dto.getProductId()).orElseThrow(()
+                -> new DataNotFoundException(ErrorCode.PRODUCT_NOT_FOUND)));
+
+        Product updateProduct = product.get();
+        updateProduct.setDiscount(null);
         productRepository.save(updateProduct);
     }
 
