@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import mondays.net.mroki.api.dto.ResponseDTO;
 import mondays.net.mroki.api.dto.customerDTO.ActivateCustomerDTO;
 import mondays.net.mroki.api.dto.customerDTO.CustomerDTO;
+import mondays.net.mroki.api.dto.customerDTO.CustomerUpdateDTO;
 import mondays.net.mroki.api.dto.customerDTO.RoleDTO;
 import mondays.net.mroki.api.entity.Customer;
 import mondays.net.mroki.api.entity.Product;
@@ -81,8 +82,19 @@ public class UserController {
             response.setErrorCode(ex.getMessage());
             return ResponseEntity.badRequest().body(response);
         }
+    }
+    @PostMapping
+    public ResponseEntity<ResponseDTO> updateUser(@RequestBody CustomerUpdateDTO dto) {
+        ResponseDTO response = new ResponseDTO();
 
-
+        try{
+            customerService.updateCustomer(dto) ;
+            response.setSuccessCode(SuccessCode.UPDATE_USER);
+            return ResponseEntity.ok().body(response);
+        }catch (IllegalStateException ex){
+            response.setErrorCode(ex.getMessage());
+            return ResponseEntity.badRequest().body(response);
+        }
     }
 
 }
