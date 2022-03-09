@@ -55,6 +55,11 @@ public class DiscountServiceImpl implements DiscountService {
     }
 
     @Override
+    public AddDiscountDTO getDiscountById(Long id) {
+        return discountConverter.entityToDto(discountRepository.findById(id).get());
+    }
+
+    @Override
     public void addDiscountForProduct(Long productId , Long discountId ) {
         Optional<Product> product = Optional.ofNullable(productRepository.findById(productId).orElseThrow(()
                 -> new DataNotFoundException(ErrorCode.PRODUCT_NOT_FOUND)));

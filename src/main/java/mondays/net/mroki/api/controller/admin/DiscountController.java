@@ -90,4 +90,16 @@ public class DiscountController {
         }
         return ResponseEntity.ok().body(response);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ResponseDTO> updateDiscount(@PathVariable Long id){
+        ResponseDTO response = new ResponseDTO();
+        try{
+            response.setData(discountService.getDiscountById(id));
+            response.setSuccessCode(SuccessCode.GET_DISCOUNT);
+        } catch (DataNotFoundException ex){
+            response.setErrorCode(ex.getMessage());
+        }
+        return ResponseEntity.ok().body(response);
+    }
 }

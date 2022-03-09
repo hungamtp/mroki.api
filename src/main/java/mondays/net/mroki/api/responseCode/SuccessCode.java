@@ -3,6 +3,7 @@ package mondays.net.mroki.api.responseCode;
 public class SuccessCode {
 
     public static final String  SIGN_UP_SUCCESS ="SIGN_UP_SUCCESS";
+    public static final String  GET_DISCOUNT ="GET_DISCOUNT";
     public static final String  ADD_DISCOUNT ="ADD_DISCOUNT";
     public static final String  ADD_DISCOUNT_FOR_PRODUCT ="ADD_DISCOUNT_FOR_PRODUCT";
     public static final String  ADD_SIZE ="ADD_SIZE";
