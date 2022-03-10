@@ -111,4 +111,23 @@ public class ProductAdminController {
         }
 
     }
+
+    @DeleteMapping("/undelete/{id}")
+    public ResponseEntity<ResponseDTO> undeleteProduct(@PathVariable Long id) {
+
+        ResponseDTO response = new ResponseDTO();
+
+        if (productService.isExist(id)) {
+
+            productService.undeleteProductById(id);
+            response.setSuccessCode(SuccessCode.UN_DELETE_PRODUCT_SUCCESS);
+            return ResponseEntity.ok().body(response);
+
+        } else {
+            response.setErrorCode(ErrorCode.PRODUCT_NOT_FOUND);
+            return ResponseEntity.badRequest().body(response);
+
+        }
+
+    }
 }

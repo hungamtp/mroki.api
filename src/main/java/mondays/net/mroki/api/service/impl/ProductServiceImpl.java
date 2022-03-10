@@ -111,6 +111,17 @@ public class ProductServiceImpl implements ProductService {
 
     }
 
+    public void undeleteProductById(Long id) {
+
+        if (isExist(id))
+        {
+            Product product = productRepository.findById(id).get();
+            product.setDelete(false);
+        }
+        else throw new DataNotFoundException(ErrorCode.PRODUCT_NOT_FOUND);
+
+    }
+
     public PageDTO findAllProductAdmin(Pageable pageable, Specification specification) {
 
         Page<Product> products = productRepository.findAll(specification, pageable);

@@ -35,6 +35,7 @@ public interface ProductService {
     Page<ProductAdminDTO> searchProduct(SearchCriteria searchCriteria);
 
     boolean isNameExist(String productName);
+    void undeleteProductById(Long id);
 
 
 }
