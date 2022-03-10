@@ -7,12 +7,14 @@ import mondays.net.mroki.api.dto.productDTO.ProductDetailDTO;
 import mondays.net.mroki.api.dto.productDTO.ProductUpdateDTO;
 import mondays.net.mroki.api.entity.Product;
 import mondays.net.mroki.api.filter.SearchCriteria;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
 
 public interface ProductService {
+    @Cacheable("product")
     PageDTO findAllProduct(Pageable pageable, Specification specification);
 
     ProductDetailDTO getProductById(Long id) throws Exception;
