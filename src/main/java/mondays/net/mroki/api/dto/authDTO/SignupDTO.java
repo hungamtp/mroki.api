@@ -15,14 +15,15 @@ import javax.validation.constraints.Size;
 @Builder
 public class SignupDTO {
     @NotBlank
-    @Size(min = 6, max = 16)
+    @Size(min = 6, max = 30)
     private String username;
 
     @NotBlank
-    @Size(min = 8, max = 16)
+    @Size(min = 8, max = 30)
     private String password;
 
     @Email
     @NotBlank
     private String email;
+    private String phone;
 }

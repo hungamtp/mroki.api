@@ -159,6 +159,12 @@ public class ProductConverter {
             result.setSaleOff(product.getDiscount().getSaleOff());
             return result;
         }
+        float rate = 0;
+
+        for (Rate c : product.getRates())
+            rate += (float) c.getRate();
+
+        result.setRate(rate / (float) product.getRates().size());
         return  result;
     }
 }

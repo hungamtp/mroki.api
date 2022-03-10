@@ -21,6 +21,7 @@ public class ParentCategory {
     private Long id;
 
     private String name;
+    private boolean isDeleted;
 
     List<Category> subCategories = new ArrayList<>();
 }
