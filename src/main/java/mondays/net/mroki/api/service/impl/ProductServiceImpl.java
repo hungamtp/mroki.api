@@ -73,7 +73,10 @@ public class ProductServiceImpl implements ProductService {
 
 
     public boolean isExist(Long productId) {
-        return productRepository.isExist(productId);
+        productRepository.findById(productId).orElseThrow(
+                () -> new IllegalStateException(ErrorCode.PRODUCT_NOT_FOUND)
+        );
+        return true;
     }
 
 
