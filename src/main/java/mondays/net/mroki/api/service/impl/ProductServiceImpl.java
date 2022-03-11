@@ -117,6 +117,7 @@ public class ProductServiceImpl implements ProductService {
         {
             Product product = productRepository.findById(id).get();
             product.setDelete(false);
+            productRepository.save(product);
         }
         else throw new DataNotFoundException(ErrorCode.PRODUCT_NOT_FOUND);
 
