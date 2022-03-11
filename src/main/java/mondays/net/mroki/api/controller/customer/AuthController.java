@@ -113,8 +113,9 @@ public class AuthController {
                         .userId(customer.getId())
                         .isActive(customer.isActive())
                         .name(customer.getUsername())
-                        .address(customer.getPhone())
+                        .address(customer.getAddress())
                         .phone(customer.getPhone())
+                        .email(customer.getEmail())
                         .build();
 
                 response.setData(loginResponse);

@@ -24,4 +24,5 @@ public class ParentCategory {
     private boolean isDeleted;
 
     List<Category> subCategories = new ArrayList<>();
+
 }
