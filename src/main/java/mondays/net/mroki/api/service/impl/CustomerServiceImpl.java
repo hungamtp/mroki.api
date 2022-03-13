@@ -29,6 +29,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public void save(Customer customer) {
 
+
         Customer c = customerRepository.findByUsername(customer.getUsername());
         if (c != null)
             throw new DuplicatedDataException(ErrorCode.USERNAME_NOT_AVAILABLE);
