@@ -67,6 +67,7 @@ public class AuthController {
                     .email(user.getEmail())
                     .role(Role.builder().id(1L).build())
                     .isVerifiedEmail(false)
+                    .isActive(true)
                     .build();
 
             customerService.save(customer);
