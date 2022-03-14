@@ -22,5 +22,5 @@ public interface CustomerService {
 
     boolean updatePassword(EmailDTO user);
     void activateDeactivate(Long customerId , boolean active);
-    boolean updateCustomer(CustomerUpdateDTO dto);
+    Customer updateCustomer(CustomerUpdateDTO dto);
 }

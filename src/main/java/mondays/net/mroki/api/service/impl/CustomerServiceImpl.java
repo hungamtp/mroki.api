@@ -83,19 +83,20 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public boolean updateCustomer(CustomerUpdateDTO dto) {
+    public Customer updateCustomer(CustomerUpdateDTO dto) {
         Customer customer = customerRepository.findById(dto.getId()).get();
         try{
-            if(customer == null) return  false;
+            if(customer == null) return  null;
             customer.setUsername(dto.getUsername());
             customer.setAvatar(dto.getAvatar());
             customer.setPhone(dto.getPhone());
             customer.setEmail(dto.getEmail());
+            customer.setAddress(dto.getAddress());
             customerRepository.save(customer);
-            return true;
+            return customer;
         }catch (Exception e)
         {
-            return false;
+            return null;
         }
     }
 

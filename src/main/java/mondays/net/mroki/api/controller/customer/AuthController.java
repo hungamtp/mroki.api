@@ -7,6 +7,7 @@ import mondays.net.mroki.api.dto.authDTO.EmailDTO;
 import mondays.net.mroki.api.dto.authDTO.LoginDTO;
 import mondays.net.mroki.api.dto.authDTO.LoginResponseDTO;
 import mondays.net.mroki.api.dto.authDTO.SignupDTO;
+import mondays.net.mroki.api.dto.customerDTO.CustomerUpdateDTO;
 import mondays.net.mroki.api.entity.Customer;
 import mondays.net.mroki.api.entity.Role;
 import mondays.net.mroki.api.exception.DuplicatedDataException;
@@ -149,6 +150,35 @@ public class AuthController {
         } catch (Exception e) {
             response.setErrorCode(ErrorCode.UPDATE_PASS);
             return ResponseEntity.ok().body(response);
+        }
+    }
+
+    @PutMapping("change-info")
+    public ResponseEntity<ResponseDTO> updateUser(@RequestBody CustomerUpdateDTO dto) {
+        ResponseDTO response = new ResponseDTO();
+        String defaultAvatar = "https://firebasestorage.googleapis.com/v0/b/timer-34f5a.appspot.com/" +
+                "o/avatar%2Favatar%20default.png?alt=media&token=b12a3df6-93f5-4662-8628-e34c94817c9f";
+        try{
+            Customer customer =  customerService.updateCustomer(dto) ;
+            LoginResponseDTO loginResponse = LoginResponseDTO.builder()
+                    .avatar(customer.getAvatar() == null || customer.getAvatar().equals("")
+                            ? defaultAvatar : customer.getAvatar())
+                    .username(customer.getUsername())
+                    .role(customer.getRole().getRoleName())
+                    .jwt("Bearer " + "token")
+                    .userId(customer.getId())
+                    .isActive(customer.isActive())
+                    .name(customer.getUsername())
+                    .address(customer.getAddress())
+                    .phone(customer.getPhone())
+                    .email(customer.getEmail())
+                    .build();
+            response.setSuccessCode(SuccessCode.UPDATE_USER);
+            response.setData(loginResponse);
+            return ResponseEntity.ok().body(response);
+        }catch (IllegalStateException ex){
+            response.setErrorCode(ex.getMessage());
+            return ResponseEntity.badRequest().body(response);
         }
     }
 

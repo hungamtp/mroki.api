@@ -24,7 +24,7 @@ import java.util.Optional;
 @CrossOrigin
 public class CommentController {
 
-    private final int PAGE_SIZE = 5;
+    private final int PAGE_SIZE = 100;
 
     @Autowired
     private final CommentService commentService;
