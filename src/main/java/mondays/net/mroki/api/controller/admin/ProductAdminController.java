@@ -42,9 +42,18 @@ public class ProductAdminController {
                                                      @RequestParam String sort,
                                                      @RequestParam String search) {
         ResponseDTO response = new ResponseDTO();
+        Pageable pageable = null;
+        if (!Optional.ofNullable(sort).isPresent()){
+            sort = "id";
+        }
+        else{
+            if(sort.contains("ASC")){
+                pageable = PageRequest.of(Optional.ofNullable(page).orElse(0), size, Sort.by(sort).ascending());
+            }else{
+                pageable = PageRequest.of(Optional.ofNullable(page).orElse(0), size, Sort.by(sort).descending());
 
-        if (!Optional.ofNullable(sort).isPresent()) sort = "id";
-        Pageable pageable = PageRequest.of(Optional.ofNullable(page).orElse(0), size, Sort.by(sort));
+            }
+        }
 
         ProductSpecificationsBuilder builder = new ProductSpecificationsBuilder();
         Pattern pattern = Pattern.compile("(\\w+?)(:|<|>)(\\w+?),");
