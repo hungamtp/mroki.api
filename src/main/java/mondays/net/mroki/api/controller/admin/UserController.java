@@ -83,18 +83,6 @@ public class UserController {
             return ResponseEntity.badRequest().body(response);
         }
     }
-    @PostMapping
-    public ResponseEntity<ResponseDTO> updateUser(@RequestBody CustomerUpdateDTO dto) {
-        ResponseDTO response = new ResponseDTO();
 
-        try{
-            customerService.updateCustomer(dto) ;
-            response.setSuccessCode(SuccessCode.UPDATE_USER);
-            return ResponseEntity.ok().body(response);
-        }catch (IllegalStateException ex){
-            response.setErrorCode(ex.getMessage());
-            return ResponseEntity.badRequest().body(response);
-        }
-    }
 
 }

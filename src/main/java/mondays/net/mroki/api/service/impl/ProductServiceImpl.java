@@ -73,7 +73,10 @@ public class ProductServiceImpl implements ProductService {
 
 
     public boolean isExist(Long productId) {
-        return productRepository.isExist(productId);
+        productRepository.findById(productId).orElseThrow(
+                () -> new IllegalStateException(ErrorCode.PRODUCT_NOT_FOUND)
+        );
+        return true;
     }
 
 
@@ -104,6 +107,18 @@ public class ProductServiceImpl implements ProductService {
 
         if (isExist(id))
             productRepository.deleteProductById(id);
+        else throw new DataNotFoundException(ErrorCode.PRODUCT_NOT_FOUND);
+
+    }
+
+    public void undeleteProductById(Long id) {
+
+        if (isExist(id))
+        {
+            Product product = productRepository.findById(id).get();
+            product.setDelete(false);
+            productRepository.save(product);
+        }
         else throw new DataNotFoundException(ErrorCode.PRODUCT_NOT_FOUND);
 
     }

@@ -42,9 +42,18 @@ public class ProductAdminController {
                                                      @RequestParam String sort,
                                                      @RequestParam String search) {
         ResponseDTO response = new ResponseDTO();
+        Pageable pageable = null;
+        if (!Optional.ofNullable(sort).isPresent()){
+            sort = "id";
+        }
+        else{
+            if(sort.contains("ASC")){
+                pageable = PageRequest.of(Optional.ofNullable(page).orElse(0), size, Sort.by(sort).ascending());
+            }else{
+                pageable = PageRequest.of(Optional.ofNullable(page).orElse(0), size, Sort.by(sort).descending());
 
-        if (!Optional.ofNullable(sort).isPresent()) sort = "id";
-        Pageable pageable = PageRequest.of(Optional.ofNullable(page).orElse(0), size, Sort.by(sort));
+            }
+        }
 
         ProductSpecificationsBuilder builder = new ProductSpecificationsBuilder();
         Pattern pattern = Pattern.compile("(\\w+?)(:|<|>)(\\w+?),");
@@ -102,6 +111,25 @@ public class ProductAdminController {
 
             productService.deleteProductById(id);
             response.setSuccessCode(SuccessCode.DELETE_PRODUCT_SUCCESS);
+            return ResponseEntity.ok().body(response);
+
+        } else {
+            response.setErrorCode(ErrorCode.PRODUCT_NOT_FOUND);
+            return ResponseEntity.badRequest().body(response);
+
+        }
+
+    }
+
+    @DeleteMapping("/undelete/{id}")
+    public ResponseEntity<ResponseDTO> undeleteProduct(@PathVariable Long id) {
+
+        ResponseDTO response = new ResponseDTO();
+
+        if (productService.isExist(id)) {
+
+            productService.undeleteProductById(id);
+            response.setSuccessCode(SuccessCode.UN_DELETE_PRODUCT_SUCCESS);
             return ResponseEntity.ok().body(response);
 
         } else {

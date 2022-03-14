@@ -32,6 +32,8 @@ public class Customer {
 
     private String phone;
 
+    private String address;
+
     @Column(nullable = false)
     private boolean isActive;
 

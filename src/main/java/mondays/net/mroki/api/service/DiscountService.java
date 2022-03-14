@@ -15,4 +15,5 @@ public interface DiscountService {
     void addDiscountForProduct(Long productId , Long discountId);
     void updateDiscount(UpdateDiscountDTO discountDTO);
     void removeDiscountFromProduct(RemoveProductDiscountDTO dto);
+    AddDiscountDTO getDiscountById(Long id);
 }

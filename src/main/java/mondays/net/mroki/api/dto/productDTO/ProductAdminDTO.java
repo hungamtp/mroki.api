@@ -26,4 +26,5 @@ public class ProductAdminDTO {
     private String image1;
     private String image2;
     private boolean deleted;
+    private float rate;
 }

@@ -30,7 +30,7 @@ public class CategoryServiceImpl implements CategoryService {
         List<ParentCategory> parentCategories = new ArrayList<>();
 
         for(Category category : categories){
-            parentCategories.add(new ParentCategory(category.getId() , category.getName(), category.getSubCategories()));
+            parentCategories.add(new ParentCategory(category.getId() , category.getName(),category.isDeleted(), category.getSubCategories()));
         }
         return parentCategories;
     }
@@ -41,7 +41,7 @@ public class CategoryServiceImpl implements CategoryService {
         List<ParentCategory> parentCategories = new ArrayList<>();
 
         for(Category category : categories){
-            parentCategories.add(new ParentCategory(category.getId() , category.getName(), category.getSubCategories()));
+            parentCategories.add(new ParentCategory(category.getId() , category.getName(),category.isDeleted() ,  category.getSubCategories()));
         }
         return parentCategories;
     }

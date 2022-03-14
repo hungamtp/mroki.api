@@ -16,4 +16,5 @@ public class CustomerUpdateDTO {
     private String avatar;
     private String phone;
     private String email;
+    private String address;
 }
