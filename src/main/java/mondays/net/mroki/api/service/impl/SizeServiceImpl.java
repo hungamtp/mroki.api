@@ -52,4 +52,12 @@ public class SizeServiceImpl implements SizeService {
 
         sizeRepository.save(newSize);
     }
+
+    @Override
+    public void delete(Long id) {
+        sizeRepository.findById(id).orElseThrow(
+            () -> new IllegalStateException(ErrorCode.SIZE_NOT_FOUND)
+        );
+        sizeRepository.deleteById(id);
+    }
 }
