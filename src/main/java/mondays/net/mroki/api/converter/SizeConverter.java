@@ -15,7 +15,7 @@ public class SizeConverter {
 
         return SizeUpdateDTO.builder()
                 .productId(size.getProduct().getId())
-                .id(size.getId())
+                .sizeId(size.getId())
                 .size(size.getSize())
                 .quantity(size.getQuantity())
                 .build();
