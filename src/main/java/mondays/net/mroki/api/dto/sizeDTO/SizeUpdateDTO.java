@@ -17,6 +17,8 @@ public class SizeUpdateDTO {
 
     @NotNull
     private Long productId;
+    @NotNull
+    private Long sizeId;
 
     @NotNull
     @Min(35)

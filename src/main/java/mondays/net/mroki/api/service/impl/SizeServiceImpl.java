@@ -22,7 +22,6 @@ public class SizeServiceImpl implements SizeService {
 
 
     public List<Size> findByProduct(Long productId){
-
        return sizeRepository.findByProduct(Product.builder().id(productId).build());
 
     }
