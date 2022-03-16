@@ -13,4 +13,5 @@ public interface SizeService {
     List<Size> findByProduct(Long productId);
     void updateSize(UpdateSizeDTO addSizeDTO) throws Exception;
     void addSize(AddSizeDTO addSizeDTO);
+    void delete(Long id);
 }

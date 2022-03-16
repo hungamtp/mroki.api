@@ -74,5 +74,18 @@ public class SizeAdminController {
         }
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ResponseDTO> deleteSize(@PathVariable Long sizeId){
+        ResponseDTO response = new ResponseDTO();
+        try {
+            service.delete(sizeId);
+            response.setSuccessCode(SuccessCode.ADD_SIZE);
+            return ResponseEntity.ok().body(response);
+        } catch (Exception ex) {
+            response.setErrorCode(ex.getMessage());
+            return ResponseEntity.badRequest().body(response);
+        }
+    }
+
 
 }
